@@ -18,7 +18,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <Router>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
           <Route exact path="/">
             <Redirect to="/co-health" />

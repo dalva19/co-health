@@ -5,9 +5,7 @@ import styled from "styled-components";
 const Nav = () => {
   return (
     <NavContainer>
-      <NavLink to="/" id="logo">
-        Co-Health
-      </NavLink>
+      <h2 id="logo">Co-Health</h2>
     </NavContainer>
   );
 };
@@ -16,7 +14,7 @@ export default Nav;
 
 const NavContainer = styled.div`
   position: fixed;
-  z-index: 999;
+  /* z-index: 999; */
   background: black;
   color: whitesmoke;
   margin: 0;
@@ -28,6 +26,7 @@ const NavContainer = styled.div`
     float: left;
     width: 150px;
     height: auto;
+    cursor: pointer;
   }
   a {
     color: #fff;

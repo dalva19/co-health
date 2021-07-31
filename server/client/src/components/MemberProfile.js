@@ -1,18 +1,24 @@
 import React from "react";
+//components
+import Nav from "./Nav";
+import styled from "styled-components";
 
 const MemberProfile = () => {
   //loads with profile info based on who is logged in
   return (
     <>
-      <div>
+      <Nav />
+      <MemberProfileContainer>
         <h2>Requests/Offers</h2>
         <p>Request items/Offer items</p>
-      </div>
-      <div>
         <h2>MAP and connections</h2>
-      </div>
+      </MemberProfileContainer>
     </>
   );
 };
+
+const MemberProfileContainer = styled.div`
+  padding-top: 10vh;
+`;
 
 export default MemberProfile;
