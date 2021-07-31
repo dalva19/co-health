@@ -5,7 +5,9 @@ import styled from "styled-components";
 const Nav = () => {
   return (
     <NavContainer>
-      <h2 id="logo">Co-Health</h2>
+      <NavLink to="/">
+        <h2 id="logo">Co-Health</h2>
+      </NavLink>
     </NavContainer>
   );
 };
@@ -14,10 +16,10 @@ export default Nav;
 
 const NavContainer = styled.div`
   position: fixed;
-  /* z-index: 999; */
+  z-index: 999;
   background: black;
   color: whitesmoke;
-  margin: 0;
+  margin-bottom: 5rem;
   width: 100%;
   min-height: 5vh;
   padding: 1.5rem;

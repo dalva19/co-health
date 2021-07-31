@@ -17,17 +17,15 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Router>
-        {/* <Nav /> */}
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/co-health" />
-          </Route>
-          <Route exact path="/co-health" component={HomePage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/member-profile" component={MemberPage} />
-        </Switch>
-      </Router>
+      <Nav />
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/co-health" />
+        </Route>
+        <Route exact path="/co-health" component={HomePage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/member-profile" component={MemberPage} />
+      </Switch>
     </>
   );
 };

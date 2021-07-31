@@ -1,11 +1,9 @@
 import React from "react";
-import Nav from "./Nav";
 import styled from "styled-components";
 
 const Login = () => {
   return (
     <>
-      <Nav />
       <LoginContainer>
         <form>
           <label>Username</label>

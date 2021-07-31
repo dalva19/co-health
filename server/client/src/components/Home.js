@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Home = () => {
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <HomeContainer>
         <h1>Welcome to Co-Health</h1>
         <h3>Helping mind the gap in community healthcare.</h3>
