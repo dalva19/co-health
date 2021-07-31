@@ -5,8 +5,10 @@ import {
   Redirect,
 } from "react-router-dom";
 import "./App.css";
-//components
-import Home from "./components/Home";
+//pages
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import MemberPage from "./pages/MemberPage";
 
 const App = () => {
   return (
@@ -14,9 +16,11 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/home" />
+            <Redirect to="/co-health" />
           </Route>
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/co-health" component={HomePage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/member-profile" component={MemberPage} />
         </Switch>
       </Router>
     </>
