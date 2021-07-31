@@ -15,6 +15,9 @@ mongoose.connect(
 //import routes
 const authRoute = require("./routes/auth");
 
+//middleware
+app.use(express.json());
+
 //route middleware
 app.use("/co-health/user", authRoute);
 
