@@ -4,16 +4,21 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import "./App.css";
+//style
+import GlobalStyle from "./styles/GlobalStyle";
 //pages
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MemberPage from "./pages/MemberPage";
+//components
+import Nav from "./components/Nav";
 
 const App = () => {
   return (
     <>
+      <GlobalStyle />
       <Router>
+        <Nav />
         <Switch>
           <Route exact path="/">
             <Redirect to="/co-health" />
