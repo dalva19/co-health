@@ -74,7 +74,7 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    //res.redirect("/login");
+    res.redirect("login");
     res.send({ user: user._id });
   } catch (err) {
     res.status(400).send(err);
@@ -84,9 +84,19 @@ router.post("/register", async (req, res) => {
 router.post(
   "/login",
   passport.authenticate("login", {
-    successRedirect: "/success", //testing
-    failureRedirect: "/login", //testing
+    successRedirect: "/co-health/profile",
+    failureRedirect: "login",
   })
 );
+
+router.get("/success", (req, res) => {
+  //redirect to frontend login form
+  res.send("you're logged in");
+});
+
+router.get("/login", (req, res) => {
+  //redirect to frontend login form
+  res.send("login in to co-health");
+});
 
 module.exports = router;

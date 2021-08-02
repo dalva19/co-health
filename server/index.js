@@ -4,6 +4,10 @@ const app = express();
 const cookieSession = require("cookie-session");
 const passport = require("passport");
 
+//import routes
+const authRoute = require("./routes/auth");
+const profileRoute = require("./routes/profile");
+
 //connect to database
 mongoose.connect(
   "mongodb://localhost/co-health",
@@ -24,30 +28,15 @@ app.use(
   })
 );
 
+//passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-//import routes
-const authRoute = require("./routes/auth");
-app.get("/success", (req, res) => {
-  res.send("Hey, hello from the server!");
-});
-app.get("/login", (req, res) => {
-  res.send("login failed. try again");
-});
 
 //middleware
 app.use(express.json());
 
 //route middleware
 app.use("/co-health/user", authRoute);
-
-// app.post(
-//   "/register",
-//   passport.authenticate("login", {
-//     successRedirect: "/success",
-//     failureRedirect: "/login",
-//   })
-// );
+app.use("/co-health/profile", profileRoute);
 
 app.listen(3000, () => console.log("Server is running on port 3000."));
