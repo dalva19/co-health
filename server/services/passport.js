@@ -16,10 +16,6 @@ passport.use(
   "local",
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }).then((user) => {
-      // if (err) {
-      //   return done(err);
-      // }
-      console.log(user);
       if (!user) {
         return done(null, false, { message: "Incorrect username or password" });
       }
@@ -35,15 +31,6 @@ passport.use(
           return done(false);
         }
       }
-      // else {
-      //   const myNewUser = new User({ username: username });
-
-      //   myNewUser.setPassword(password);
-
-      //   myNewUser.save(function (err, user) {
-      //     done(null, user);
-      //   });
-      // }
     });
   })
 );

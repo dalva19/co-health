@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 router.get("/", (req, res) => {
-  if (req.user) {
+  if (req.user.profileType === "healthcare member") {
     res.status(200);
     res.send(`user logged into profile`);
   }

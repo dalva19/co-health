@@ -1,7 +1,17 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema({
+const HealthcareMemberSchema = new mongoose.Schema({
+  name: { firstName: { type: String }, lastName: { type: String } },
+  address: {
+    streetNumber: { type: String },
+    street: { type: String },
+    state: { type: String },
+    zipcode: { type: Number },
+  },
+});
+
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -12,32 +22,26 @@ const userSchema = new mongoose.Schema({
   },
   hash: String,
   salt: String,
-  // username: {
-  //   type: String,
-  //   required: true,
-  // },
-  // password: {
-  //   type: String,
-  //   required: true,
-  //}
+  // profileType: { type: String },
+  profile: [HealthcareMemberSchema],
   date: {
     type: Date,
     default: Date.now,
   },
 });
 
-userSchema.methods.setPassword = function (password) {
+UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString();
   this.hash = crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
     .toString("hex");
 };
 
-userSchema.methods.validPassword = function (password) {
+UserSchema.methods.validPassword = function (password) {
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, "sha512")
     .toString("hex");
   return this.hash === hash;
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", UserSchema);
