@@ -1,10 +1,6 @@
 const router = require("express").Router();
 
 router.get("/", (req, res) => {
-  // if (!req.user) {
-  //   res.status(401);
-  //   return res.send("No");
-  // }
   if (req.user) {
     res.status(200);
     res.send(`user logged into profile`);

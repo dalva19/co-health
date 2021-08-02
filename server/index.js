@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const app = express();
 const cookieSession = require("cookie-session");
 const passport = require("passport");
-
 //import routes
 const authRoute = require("./routes/auth");
 const profileRoute = require("./routes/profile");
@@ -18,6 +17,8 @@ mongoose.connect(
   () => console.log("connected to db")
 );
 
+//middleware
+app.use(express.json());
 app.use(
   cookieSession({
     name: "session",
@@ -40,9 +41,6 @@ const authenticateRequest = function (req, res, next) {
     next();
   }
 };
-
-//middleware
-app.use(express.json());
 
 //route middleware
 app.use("/co-health/user", authRoute);
