@@ -74,7 +74,15 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    res.redirect("login");
+
+    req.login(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/co-health/profile/" + req.user.username);
+    });
+
+    // res.redirect("login");
     res.send({ user: user._id });
   } catch (err) {
     res.status(400).send(err);
@@ -89,14 +97,14 @@ router.post(
   })
 );
 
-router.get("/success", (req, res) => {
-  //redirect to frontend login form
-  res.send("you're logged in");
-});
-
 router.get("/login", (req, res) => {
   //redirect to frontend login form
   res.send("login in to co-health");
+});
+
+router.get("/logout", function (req, res) {
+  req.logout();
+  res.redirect("login");
 });
 
 module.exports = router;

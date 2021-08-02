@@ -32,11 +32,20 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const authenticateRequest = function (req, res, next) {
+  if (!req.isAuthenticated()) {
+    // Denied. Redirect to login
+    res.redirect("/co-health/user/login");
+  } else {
+    next();
+  }
+};
+
 //middleware
 app.use(express.json());
 
 //route middleware
 app.use("/co-health/user", authRoute);
-app.use("/co-health/profile", profileRoute);
+app.use("/co-health/profile", authenticateRequest, profileRoute);
 
 app.listen(3000, () => console.log("Server is running on port 3000."));
