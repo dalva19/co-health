@@ -13,21 +13,36 @@ router.get("/", async (req, res) => {
     return res.status(401).send("You must have a verified liscence.");
   }
 
+  //finds the offers based on user from Offer collection and populates corresponding requests
   try {
-    await User.findById({ _id: req.user._id })
-      .populate("offers")
-      .exec((err, user) => {
+    await Offer.find({ user: req.user._id })
+      .populate("request")
+      .exec((err, offer) => {
         if (err) {
           console.log(err);
         } else {
-          res.send({
-            offers: user.offers || null,
-          });
+          res.send(offer);
         }
       });
   } catch (err) {
     res.status(400).send(err);
   }
+
+  // try {
+  //   await User.findById({ _id: req.user._id })
+  //     .populate("offers")
+  //     .exec((err, user) => {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         res.send({
+  //           offers: user.offers || null,
+  //         });
+  //       }
+  //     });
+  // } catch (err) {
+  //   res.status(400).send(err);
+  // }
 });
 
 //can only make an offer to a specific request
@@ -65,6 +80,8 @@ router.post("/:requestID", async (req, res) => {
     }
   }
 });
+
+//PUT route for /:offerID
 
 router.delete("/:offerID", async (req, res) => {
   const offer = await Offer.findById({ _id: req.params.offerID });

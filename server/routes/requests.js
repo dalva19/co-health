@@ -5,8 +5,44 @@ const User = require("../models/User");
 const Offer = require("../models/Offer");
 mongoose.set("useFindAndModify", false);
 
+//need to add validation
+
+//finds the requests based on user from Request collection and populates corresponding offers
+router.get("/", async (req, res) => {
+  res.status(200);
+
+  try {
+    await Request.find({ user: req.user._id })
+      .populate("offers")
+      .exec((err, request) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(request);
+        }
+      });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+
+  // try {
+  //   await User.findById({ _id: req.user._id })
+  //     .populate("requests")
+  //     .exec((err, user) => {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         res.send({
+  //           requests: user.requests || null,
+  //         });
+  //       }
+  //     });
+  // } catch (err) {
+  //   res.status(400).send(err);
+  // }
+});
+
 router.post("/", async (req, res) => {
-  //need to add validation
   if (req.user.profileType === "community member") {
     const user = await User.findById({ _id: req.user._id });
 
@@ -29,26 +65,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  res.status(200);
-
-  try {
-    await User.findById({ _id: req.user._id })
-      .populate("requests")
-      .exec((err, user) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send({
-            requests: user.requests || null,
-          });
-        }
-      });
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
-
 //PUT on requests/:request
 //PUT with the accepted offer link
 
@@ -62,12 +78,14 @@ router.delete("/:request", async (req, res) => {
 
   try {
     const update = { $pull: { requests: request._id } };
+
     await Request.deleteOne({ _id: request._id });
     await User.findByIdAndUpdate(user._id, update, (err, doc) => {
       if (err) {
         console.log(err);
       }
     });
+
     res.status(200).send(`successfully deleted.`);
   } catch (err) {
     res.status(400).send(err);

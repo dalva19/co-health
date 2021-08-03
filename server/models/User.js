@@ -2,26 +2,6 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const Schema = mongoose.Schema;
 
-const HealthcareMemberSchema = new mongoose.Schema({
-  name: { firstName: { type: String }, lastName: { type: String } },
-  address: {
-    streetNumber: { type: String },
-    street: { type: String },
-    state: { type: String },
-    zipcode: { type: Number },
-  },
-});
-
-const CommunityMemberSchema = new mongoose.Schema({
-  name: { firstName: { type: String }, lastName: { type: String } },
-  address: {
-    streetNumber: { type: String },
-    street: { type: String },
-    state: { type: String },
-    zipcode: { type: Number },
-  },
-});
-
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -29,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   },
   hash: String,
   salt: String,
-  profileType: { type: String },
+  profileType: { type: String, required: true },
   email: {
     type: String,
     required: true,
