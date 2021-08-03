@@ -48,8 +48,8 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  requests: [{ type: Schema.Types.ObjectId, ref: "Request" }],
-  offers: [],
+  requests: [{ type: Schema.Types.ObjectId, ref: "Request" }], //community members || null for healcare members
+  offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }], //healthcare members || null for comm members
 });
 
 UserSchema.methods.setPassword = function (password) {
