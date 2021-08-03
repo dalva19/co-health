@@ -25,7 +25,7 @@ router.post("/register", async (req, res) => {
   }
 
   //create new user
-  if (req.body.profileType === "healthcare provider") {
+  if (req.body.profileType === "healthcare member") {
     const user = new User({
       username: req.body.username,
       email: req.body.email,
@@ -33,10 +33,15 @@ router.post("/register", async (req, res) => {
       name: { firstName: req.body.firstName, lastName: req.body.lastName },
       address: {
         street: req.body.street,
+        city: req.body.city,
         state: req.body.state,
         zipcode: parseInt(req.body.zipcode),
       },
-      credentials: { liscence: req.body.liscence, verified: false },
+      credentials: {
+        liscence: req.body.liscence,
+        liscenceNumber: req.body.liscenceNumber,
+        verified: req.body.verified,
+      },
     });
 
     user.setPassword(req.body.password);
@@ -48,7 +53,7 @@ router.post("/register", async (req, res) => {
         if (err) {
           return next(err);
         }
-        return res.redirect("/co-health/profile/" + req.user.username);
+        return res.redirect("/co-health/profile/");
       });
 
       // res.send({ user: user._id });
@@ -63,6 +68,7 @@ router.post("/register", async (req, res) => {
       name: { firstName: req.body.firstName, lastName: req.body.lastName },
       address: {
         street: req.body.street,
+        city: req.body.city,
         state: req.body.state,
         zipcode: parseInt(req.body.zipcode),
       },

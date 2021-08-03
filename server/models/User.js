@@ -37,11 +37,13 @@ const UserSchema = new mongoose.Schema({
   name: { firstName: { type: String }, lastName: { type: String } },
   address: {
     street: { type: String },
+    city: { type: String },
     state: { type: String },
-    zipcode: { type: Number, required: true },
+    zipcode: { type: Number },
   },
   credentials: {
     liscence: { type: String, default: null },
+    liscenceNumber: { type: String, default: null },
     verified: { type: Boolean, default: null },
   },
   date: {
