@@ -1,6 +1,8 @@
 const router = require("express").Router();
+const mongoose = require("mongoose");
 const Request = require("../models/Request");
 const User = require("../models/User");
+mongoose.set("useFindAndModify", false);
 
 //routes on co-health/profile
 
@@ -103,11 +105,48 @@ router.get("/requests", async (req, res) => {
   }
 });
 
-//put '/request'
-//delete '/request'
-// router.delete('/requests/:request', async (req, res) => {
-//   const update = {$pull: {requests: req._id}}
+// router.put("/requests/:request", async (req, res) => {
+//   res.status(200);
 
-// })
+//   try {
+//     await User.findById({ _id: req.user._id })
+//       .populate("requests")
+//       .exec((err, user) => {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           res.send({
+//             requests: user.requests || null,
+//           });
+//         }
+//       });
+//   } catch (err) {
+//     res.status(400).send(err);
+//   }
+// });
+
+//put '/request'
+
+router.delete("/requests/:request", async (req, res) => {
+  const request = await Request.findById({ _id: req.params.request });
+  const user = await User.findById({ _id: req.user._id });
+
+  if (!request) {
+    return res.status(404).send("Request not found");
+  }
+
+  try {
+    const update = { $pull: { requests: request._id } };
+    await Request.deleteOne({ _id: request._id });
+    await User.findByIdAndUpdate(user._id, update, (err, doc) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    res.status(200).send(`successfully deleted.`);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
 module.exports = router;
