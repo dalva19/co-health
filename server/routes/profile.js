@@ -15,4 +15,8 @@ router.get("/:username", (req, res) => {
   }
 });
 
+router.post("/request", (req, res) => {
+  console.log(req);
+});
+
 module.exports = router;

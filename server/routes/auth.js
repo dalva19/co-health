@@ -55,6 +55,35 @@ router.post("/register", async (req, res) => {
     } catch (err) {
       res.status(400).send(err);
     }
+  } else {
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      profileType: req.body.profileType,
+      name: { firstName: req.body.firstName, lastName: req.body.lastName },
+      address: {
+        street: req.body.street,
+        state: req.body.state,
+        zipcode: parseInt(req.body.zipcode),
+      },
+    });
+
+    user.setPassword(req.body.password);
+
+    try {
+      const savedUser = await user.save();
+
+      req.login(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect("/co-health/profile/" + req.user.username);
+      });
+
+      // res.send({ user: user._id });
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
 });
 
