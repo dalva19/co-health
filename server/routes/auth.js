@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const User = require("../models/User");
-
 //passport
 const passport = require("passport");
 const localLogin = require("../services/passport");
@@ -11,7 +10,7 @@ router.post("/register", async (req, res) => {
   if (!req.body.username || !req.body.password) {
     return res
       .status(422)
-      .send({ error: "Username, password, and profile type are required." });
+      .send({ error: "Username and password are required." });
   }
 
   //check if user is in db via email and username
@@ -26,42 +25,37 @@ router.post("/register", async (req, res) => {
   }
 
   //create new user
-  if (req.body.profileType === "healthcare member") {
+  if (req.body.profileType === "healthcare provider") {
     const user = new User({
       username: req.body.username,
       email: req.body.email,
+      profileType: req.body.profileType,
+      name: { firstName: req.body.firstName, lastName: req.body.lastName },
+      address: {
+        street: req.body.street,
+        state: req.body.state,
+        zipcode: parseInt(req.body.zipcode),
+      },
+      credentials: { liscence: req.body.liscence, verified: false },
     });
 
     user.setPassword(req.body.password);
-    user.profile.push({
-      name: {
-        firstName: `${req.body.firstName}`,
-        lastName: `${req.body.lastName}`,
-      },
-    });
-    user.save((err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(data);
-      }
-    });
+
+    try {
+      const savedUser = await user.save();
+
+      req.login(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect("/co-health/profile/" + req.user.username);
+      });
+
+      // res.send({ user: user._id });
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
-
-  // try {
-  //   const savedUser = await user.save();
-
-  //   req.login(user, function (err) {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     return res.redirect("/co-health/profile/" + req.user.username);
-  //   });
-
-  //   // res.send({ user: user._id });
-  // } catch (err) {
-  //   res.status(400).send(err);
-  // }
 });
 
 router.post(

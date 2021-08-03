@@ -1,7 +1,18 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
+const Schema = mongoose.Schema;
 
 const HealthcareMemberSchema = new mongoose.Schema({
+  name: { firstName: { type: String }, lastName: { type: String } },
+  address: {
+    streetNumber: { type: String },
+    street: { type: String },
+    state: { type: String },
+    zipcode: { type: Number },
+  },
+});
+
+const CommunityMemberSchema = new mongoose.Schema({
   name: { firstName: { type: String }, lastName: { type: String } },
   address: {
     streetNumber: { type: String },
@@ -16,18 +27,29 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  hash: String,
+  salt: String,
+  profileType: { type: String },
   email: {
     type: String,
     required: true,
   },
-  hash: String,
-  salt: String,
-  // profileType: { type: String },
-  profile: [HealthcareMemberSchema],
+  name: { firstName: { type: String }, lastName: { type: String } },
+  address: {
+    street: { type: String },
+    state: { type: String },
+    zipcode: { type: Number, required: true },
+  },
+  credentials: {
+    liscence: { type: String, default: null },
+    verified: { type: Boolean, default: null },
+  },
   date: {
     type: Date,
     default: Date.now,
   },
+  requests: [{ type: Schema.Types.ObjectId, ref: "Request" }],
+  offers: [],
 });
 
 UserSchema.methods.setPassword = function (password) {
