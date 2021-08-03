@@ -2,6 +2,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 const Request = require("../models/Request");
 const User = require("../models/User");
+const Offer = require("../models/Offer");
 mongoose.set("useFindAndModify", false);
 
 router.post("/", async (req, res) => {
@@ -49,6 +50,7 @@ router.get("/", async (req, res) => {
 });
 
 //PUT on requests/:request
+//PUT with the accepted offer link
 
 router.delete("/:request", async (req, res) => {
   const request = await Request.findById({ _id: req.params.request });

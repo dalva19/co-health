@@ -2,9 +2,36 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 const Offer = require("../models/Offer");
 const User = require("../models/User");
+const Request = require("../models/Request");
 mongoose.set("useFindAndModify", false);
 
-router.post("/", async (req, res) => {
+//get all offer you've made
+router.get("/", async (req, res) => {
+  res.status(200);
+
+  if (!req.user.credentials.verified) {
+    return res.status(401).send("You must have a verified liscence.");
+  }
+
+  try {
+    await User.findById({ _id: req.user._id })
+      .populate("offers")
+      .exec((err, user) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send({
+            offers: user.offers || null,
+          });
+        }
+      });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//can only make an offer to a specific request
+router.post("/:requestID", async (req, res) => {
   //need to add validation
 
   if (req.user.profileType === "healthcare member") {
@@ -15,18 +42,22 @@ router.post("/", async (req, res) => {
     }
 
     const user = await User.findById({ _id: req.user._id });
+    const request = await Request.findById({ _id: req.params.requestID });
 
     const offer = new Offer({
       text: req.body.text,
       username: req.user.username,
       user: user._id,
+      request: request._id,
       status: "pending",
     });
 
     try {
       await offer.save();
       user.offers.push(offer);
+      request.offers.push(offer);
       await user.save();
+      await request.save();
 
       res.send({ user: user._id });
     } catch (err) {
@@ -35,48 +66,33 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.get("/", async (req, res) => {
-//   res.status(200);
+router.delete("/:offerID", async (req, res) => {
+  const offer = await Offer.findById({ _id: req.params.offerID });
+  const user = await User.findById({ _id: req.user._id });
+  const requestID = offer.request;
 
-//   try {
-//     await User.findById({ _id: req.user._id })
-//       .populate("requests")
-//       .exec((err, user) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send({
-//             requests: user.requests || null,
-//           });
-//         }
-//       });
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
-// });
+  if (!offer) {
+    return res.status(404).send("Offer not found");
+  }
 
-// //PUT on requests/:request
+  try {
+    const update = { $pull: { offers: offer._id } };
 
-// router.delete("/:request", async (req, res) => {
-//   const request = await Request.findById({ _id: req.params.request });
-//   const user = await User.findById({ _id: req.user._id });
-
-//   if (!request) {
-//     return res.status(404).send("Request not found");
-//   }
-
-//   try {
-//     const update = { $pull: { requests: request._id } };
-//     await Request.deleteOne({ _id: request._id });
-//     await User.findByIdAndUpdate(user._id, update, (err, doc) => {
-//       if (err) {
-//         console.log(err);
-//       }
-//     });
-//     res.status(200).send(`successfully deleted.`);
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
-// });
+    await Offer.deleteOne({ _id: offer._id });
+    await User.findByIdAndUpdate(user._id, update, (err, doc) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    await Request.findByIdAndUpdate(requestID, update, (err, doc) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    res.status(200).send(`successfully deleted.`);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
 module.exports = router;
