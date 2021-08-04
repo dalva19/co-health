@@ -6,6 +6,7 @@ const passport = require("passport");
 //import routes
 const authRoute = require("./routes/auth");
 const profileRoute = require("./routes/profile");
+const homeRoute = require("./routes/home");
 
 //connect to database
 mongoose.connect(
@@ -43,7 +44,10 @@ const authenticateRequest = function (req, res, next) {
 };
 
 //route middleware
+app.use("/co-health/home", homeRoute);
 app.use("/co-health/user", authRoute);
 app.use("/co-health/profile", authenticateRequest, profileRoute);
 
 app.listen(3000, () => console.log("Server is running on port 3000."));
+
+module.exports = app;
