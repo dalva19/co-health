@@ -8,6 +8,7 @@ const RequestSchema = new mongoose.Schema({
   offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }], //users who make offers on ind request
   status: { type: String, default: null },
   acceptedOffer: { type: Schema.Types.ObjectId, ref: "Offer" },
+  date: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Request", RequestSchema);

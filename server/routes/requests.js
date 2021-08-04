@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
       await request.save();
       user.requests.push(request);
       await user.save();
-      res.status(200).send({ user: user._id });
+      res.status(200).send({ request: request._id });
     } catch (err) {
       res.status(400).send(err);
     }
@@ -64,15 +64,15 @@ router.post("/", async (req, res) => {
 });
 
 //PUT updates to accept or decline offer
-router.put("/:request/status/:status", async (req, res) => {
+router.put("/edit/:request", async (req, res) => {
   try {
     const request = await Request.findById({ _id: req.params.request });
     let update;
 
-    if (req.params.status === "true") {
-      update = { $set: { status: "offer accepted" } };
-    } else if (req.params.status === "false") {
-      update = { $set: { status: "offer declined" } };
+    if (req.body.text) {
+      update = {
+        $set: { text: req.body.text },
+      };
     } else {
       return res.status(400).send("Bad request.");
     }
