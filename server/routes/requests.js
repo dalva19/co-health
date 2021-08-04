@@ -9,8 +9,7 @@ mongoose.set("useFindAndModify", false);
 
 //finds the requests based on user from Request collection and populates corresponding offers
 router.get("/", async (req, res) => {
-  res.status(200);
-
+  // res.status(200);
   try {
     await Request.find({ user: req.user._id })
       .populate("offers")
@@ -18,7 +17,7 @@ router.get("/", async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          res.send(request);
+          res.status(200).send(request);
         }
       });
   } catch (err) {
@@ -50,43 +49,62 @@ router.post("/", async (req, res) => {
       text: req.body.text,
       username: req.user.username,
       user: user._id,
-      status: "pending",
+      status: "awaiting offer",
     });
 
     try {
       await request.save();
       user.requests.push(request);
       await user.save();
-
-      res.send({ user: user._id });
+      res.status(200).send({ user: user._id });
     } catch (err) {
       res.status(400).send(err);
     }
   }
 });
 
-//PUT on requests/:request
-//PUT with the accepted offer link
+//PUT updates to accept or decline offer
+router.put("/:request/status/:status", async (req, res) => {
+  try {
+    const request = await Request.findById({ _id: req.params.request });
+    let update;
+
+    if (req.params.status === "true") {
+      update = { $set: { status: "offer accepted" } };
+    } else if (req.params.status === "false") {
+      update = { $set: { status: "offer declined" } };
+    } else {
+      return res.status(400).send("Bad request.");
+    }
+
+    await Request.findByIdAndUpdate(request._id, update, (err, doc) => {
+      if (err) {
+        return err;
+      } else {
+        res.status(200).send(`successful edit on ${doc}`);
+      }
+    });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//PUT to change text of request
 
 router.delete("/:request", async (req, res) => {
-  const request = await Request.findById({ _id: req.params.request });
-  const user = await User.findById({ _id: req.user._id });
-
-  if (!request) {
-    return res.status(404).send("Request not found");
-  }
-
   try {
+    const request = await Request.findById({ _id: req.params.request });
+    const user = await User.findById({ _id: req.user._id });
     const update = { $pull: { requests: request._id } };
 
     await Request.deleteOne({ _id: request._id });
     await User.findByIdAndUpdate(user._id, update, (err, doc) => {
       if (err) {
-        console.log(err);
+        return err;
+      } else {
+        res.status(200).send(`successfully deleted ${doc}.`);
       }
     });
-
-    res.status(200).send(`successfully deleted.`);
   } catch (err) {
     res.status(400).send(err);
   }
