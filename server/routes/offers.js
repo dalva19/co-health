@@ -81,7 +81,65 @@ router.post("/:requestID", async (req, res) => {
   }
 });
 
-//PUT route for /:offerID
+//PUT route for /:offerID to edit text
+//limit this access to only healthcare members--helper method?
+router.put("/edit/:offerID", async (req, res) => {
+  try {
+    const offer = await Offer.findById({ _id: req.params.offerID });
+    let update;
+
+    if (req.body.text) {
+      update = {
+        $set: { text: req.body.text },
+      };
+    } else {
+      return res.status(400).send("Bad request.");
+    }
+
+    await Offer.findByIdAndUpdate(offer._id, update, (err, doc) => {
+      if (err) {
+        return err;
+      } else {
+        res.status(200).send(`successful edit on ${doc}`);
+      }
+    });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//PUT to edit offer status in Offer and Request
+router.put("/edit/status/:offerID", async (req, res) => {
+  try {
+    const offer = await Offer.findById({ _id: req.params.offerID });
+    const request = await Request.find({ _id: offer.request });
+    let update;
+
+    if (req.body.status) {
+      update = {
+        $set: { status: req.body.status },
+      };
+    } else {
+      return res.status(400).send("Bad request.");
+    }
+
+    await Offer.findByIdAndUpdate(offer._id, update, (err, doc) => {
+      if (err) {
+        return err;
+      }
+    });
+
+    //NOT working
+    await Request.findByIdAndUpdate(request._id, update, (err, doc) => {
+      if (err) {
+        return err;
+      }
+    });
+    res.send(request);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
 router.delete("/:offerID", async (req, res) => {
   const offer = await Offer.findById({ _id: req.params.offerID });

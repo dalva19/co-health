@@ -63,7 +63,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//PUT updates to accept or decline offer
+//PUT updates to edit request based on id
 router.put("/edit/:request", async (req, res) => {
   try {
     const request = await Request.findById({ _id: req.params.request });
@@ -88,8 +88,6 @@ router.put("/edit/:request", async (req, res) => {
     res.status(400).send(err);
   }
 });
-
-//PUT to change text of request
 
 router.delete("/:request", async (req, res) => {
   try {
