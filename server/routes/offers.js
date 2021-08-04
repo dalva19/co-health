@@ -112,30 +112,47 @@ router.put("/edit/:offerID", async (req, res) => {
 router.put("/edit/status/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById({ _id: req.params.offerID });
-    const request = await Request.find({ _id: offer.request });
-    let update;
+    const request = await Request.findById({ _id: offer.request });
+    let offerUpdate;
+    let requestUpdate;
 
-    if (req.body.status) {
-      update = {
+    if (req.body.status === "offer accepted") {
+      offerUpdate = {
         $set: { status: req.body.status },
       };
+
+      requestUpdate = {
+        $set: { status: req.body.status },
+      };
+    } else if (req.body.status === "offer declined") {
+      offerUpdate = {
+        $set: { status: req.body.status },
+      };
+
+      requestUpdate = {
+        $set: { status: "offers under review" },
+      };
     } else {
-      return res.status(400).send("Bad request.");
+      return res.status(400).send("Bad request");
     }
 
-    await Offer.findByIdAndUpdate(offer._id, update, (err, doc) => {
+    await Offer.findByIdAndUpdate(offer._id, offerUpdate, (err, doc) => {
       if (err) {
         return err;
+      } else {
+        console.log(doc);
       }
     });
 
-    //NOT working
-    await Request.findByIdAndUpdate(request._id, update, (err, doc) => {
+    await Request.findByIdAndUpdate(request._id, requestUpdate, (err, doc) => {
       if (err) {
         return err;
+      } else {
+        console.log(doc);
       }
     });
-    res.send(request);
+
+    res.status(200).send("status updated");
   } catch (err) {
     res.status(400).send(err);
   }
