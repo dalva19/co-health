@@ -3,10 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const cookieSession = require("cookie-session");
 const passport = require("passport");
-//import routes
-const authRoute = require("./routes/auth");
-const profileRoute = require("./routes/profile");
-const homeRoute = require("./routes/home");
+const routes = require("./routes/index");
 
 //connect to database
 mongoose.connect(
@@ -34,19 +31,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const authenticateRequest = function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    // Denied. Redirect to login
-    res.redirect("/co-health/user/login");
-  } else {
-    next();
-  }
-};
-
-//route middleware
-app.use("/co-health/home", homeRoute);
-app.use("/co-health/user", authRoute);
-app.use("/co-health/profile", authenticateRequest, profileRoute);
+//routes
+app.use("/co-health/", routes);
 
 app.listen(3000, () => console.log("Server is running on port 3000."));
 

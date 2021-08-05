@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
-const Request = require("../models/Request");
-const User = require("../models/User");
-const Offer = require("../models/Offer");
+const Request = require("../../models/Request");
+const User = require("../../models/User");
+const Offer = require("../../models/Offer");
 mongoose.set("useFindAndModify", false);
 
 //need to add validation
@@ -84,6 +84,57 @@ router.put("/edit/:request", async (req, res) => {
         res.status(200).send(`successful edit on ${doc}`);
       }
     });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//PUT to edit offer status in Offer and Request
+//made by the community member
+router.put("/edit/offer/status/:offerID", async (req, res) => {
+  try {
+    const offer = await Offer.findById({ _id: req.params.offerID });
+    const request = await Request.findById({ _id: offer.request });
+    let offerUpdate;
+    let requestUpdate;
+
+    if (req.body.status === "offer accepted") {
+      offerUpdate = {
+        $set: { status: req.body.status },
+      };
+
+      requestUpdate = {
+        $set: { status: req.body.status },
+      };
+    } else if (req.body.status === "offer declined") {
+      offerUpdate = {
+        $set: { status: req.body.status },
+      };
+
+      requestUpdate = {
+        $set: { status: "offers under review" },
+      };
+    } else {
+      return res.status(400).send("Bad request");
+    }
+
+    await Offer.findByIdAndUpdate(offer._id, offerUpdate, (err, doc) => {
+      if (err) {
+        return err;
+      } else {
+        console.log(doc);
+      }
+    });
+
+    await Request.findByIdAndUpdate(request._id, requestUpdate, (err, doc) => {
+      if (err) {
+        return err;
+      } else {
+        console.log(doc);
+      }
+    });
+
+    res.status(200).send("status updated");
   } catch (err) {
     res.status(400).send(err);
   }

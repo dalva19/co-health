@@ -1,10 +1,9 @@
 const router = require("express").Router();
-const User = require("../models/User");
+const User = require("../../models/User");
 const requestRoutes = require("./requests");
 const offersRoutes = require("./offers");
 
 //routes on co-health/profile
-
 router.get("/", async (req, res) => {
   res.status(200);
 
@@ -31,6 +30,13 @@ router.get("/", async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+// const healthcareMemberVerification = (req, res, next) => {
+//   if (req.profileType !== "healthcare member") {
+//     res.send("Cannot access");
+//     next();
+//   }
+// };
 
 router.use("/requests", requestRoutes);
 router.use("/offers", offersRoutes);

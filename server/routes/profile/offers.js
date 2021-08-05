@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
-const Offer = require("../models/Offer");
-const User = require("../models/User");
-const Request = require("../models/Request");
+const Offer = require("../../models/Offer");
+const User = require("../../models/User");
+const Request = require("../../models/Request");
 mongoose.set("useFindAndModify", false);
 
 //get all offer you've made
+
 router.get("/", async (req, res) => {
   res.status(200);
 
@@ -82,7 +83,6 @@ router.post("/:requestID", async (req, res) => {
 });
 
 //PUT route for /:offerID to edit text
-//limit this access to only healthcare members--helper method?
 router.put("/edit/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById({ _id: req.params.offerID });
@@ -103,56 +103,6 @@ router.put("/edit/:offerID", async (req, res) => {
         res.status(200).send(`successful edit on ${doc}`);
       }
     });
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
-
-//PUT to edit offer status in Offer and Request
-router.put("/edit/status/:offerID", async (req, res) => {
-  try {
-    const offer = await Offer.findById({ _id: req.params.offerID });
-    const request = await Request.findById({ _id: offer.request });
-    let offerUpdate;
-    let requestUpdate;
-
-    if (req.body.status === "offer accepted") {
-      offerUpdate = {
-        $set: { status: req.body.status },
-      };
-
-      requestUpdate = {
-        $set: { status: req.body.status },
-      };
-    } else if (req.body.status === "offer declined") {
-      offerUpdate = {
-        $set: { status: req.body.status },
-      };
-
-      requestUpdate = {
-        $set: { status: "offers under review" },
-      };
-    } else {
-      return res.status(400).send("Bad request");
-    }
-
-    await Offer.findByIdAndUpdate(offer._id, offerUpdate, (err, doc) => {
-      if (err) {
-        return err;
-      } else {
-        console.log(doc);
-      }
-    });
-
-    await Request.findByIdAndUpdate(request._id, requestUpdate, (err, doc) => {
-      if (err) {
-        return err;
-      } else {
-        console.log(doc);
-      }
-    });
-
-    res.status(200).send("status updated");
   } catch (err) {
     res.status(400).send(err);
   }
