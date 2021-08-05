@@ -6,14 +6,26 @@ const passport = require("passport");
 const routes = require("./routes/index");
 
 //connect to database
+const env = process.env.NODE_ENV || "development";
+if (env === "test") {
+  process.env.MONGODB_URI = "mongodb://localhost/co-health-test";
+} else {
+  process.env.MONGODB_URI = "mongodb://localhost/co-health";
+}
 mongoose.connect(
-  "mongodb://localhost/co-health",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
+  process.env.MONGODB_URI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("connected to db")
 );
+
+// mongoose.connect(
+//   "mongodb://localhost/co-health",
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   },
+//   () => console.log("connected to db")
+// );
 
 //middleware
 app.use(express.json());

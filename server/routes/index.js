@@ -5,7 +5,7 @@ const homeRoute = require("./home");
 
 const authenticateRequest = function (req, res, next) {
   if (!req.isAuthenticated()) {
-    // Denied. Redirect to login
+    // Redirect to login
     res.redirect("/co-health/user/login");
   } else {
     next();
