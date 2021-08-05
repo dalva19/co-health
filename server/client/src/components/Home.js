@@ -1,6 +1,6 @@
 import React from "react";
 //components
-import Nav from "./Nav";
+import Map from "./Map";
 import styled from "styled-components";
 
 const Home = () => {
@@ -11,6 +11,7 @@ const Home = () => {
         <h1>Welcome to Co-Health</h1>
         <h3>Helping mind the gap in community healthcare.</h3>
       </HomeContainer>
+      <Map />
     </>
   );
 };

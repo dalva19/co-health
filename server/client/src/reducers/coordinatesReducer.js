@@ -10,7 +10,7 @@ const coordinatesReducer = (state = DEFAULT_STATE, action) => {
     case FETCH_COORDINATES:
       return {
         ...state,
-        products: action.payload,
+        coordinates: action.payload,
         loaded: true,
       };
     default:
