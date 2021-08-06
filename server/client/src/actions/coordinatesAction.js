@@ -10,7 +10,7 @@ export const loadCoordinatesFromAddress = (address) => (dispatch) => {
 
   axios
     .get(
-      `${ROOT_URL}${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_GEOCODING_API_KEY}`
+      `${ROOT_URL}${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
     )
     .then(function (response) {
       dispatch({

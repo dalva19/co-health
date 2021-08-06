@@ -1,51 +1,50 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
+import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
 const Map = () => {
-  const dispatch = useDispatch();
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
-  const [address, setAddress] = useState("");
+  const [selectedData, setSelectedData] = useState(null);
 
-  const splitStreetName = () => {
-    const address = `${street} ${city} ${state} ${zip}`;
-    const addressSplit = address.split(" ");
-    const addressJoin = addressSplit.join("+,");
-    setAddress(addressJoin);
-  };
-
-  const handleGetCoordinatesButton = async () => {
-    splitStreetName();
-  };
-
-  useEffect(() => {
-    if (address) {
-      dispatch(loadCoordinatesFromAddress(address));
-    }
-  }, [address, dispatch]);
+  const markerDummyData = [
+    {
+      username: "user1",
+      request: "i need help getting my prescription",
+      coordinates: { lat: 35.9132, lng: -79.0558 },
+    },
+    {
+      username: "user2",
+      request: "i need help getting to my appt",
+      coordinates: { lat: 35.7915, lng: -78.7811 },
+    },
+  ];
 
   return (
     <div>
-      <h1>this is where the map will be</h1>
-      <form>
-        <label>Username</label>
-        <input />
-        <label>Password</label>
-        <input />
-        <label>Street</label>
-        <input onChange={(e) => setStreet(e.target.value)} vaule={street} />
-        <label>City</label>
-        <input onChange={(e) => setCity(e.target.value)} vaule={city} />
-        <label>State</label>
-        <input onChange={(e) => setState(e.target.value)} vaule={state} />
-        <label>Zipcode</label>
-        <input onChange={(e) => setZip(e.target.value)} vaule={zip} />
-      </form>
-
-      <button onClick={handleGetCoordinatesButton}>get coordinates</button>
+      <GoogleMap
+        defaultZoom={10}
+        defaultCenter={{ lat: 35.994, lng: -78.8986 }}
+      >
+        {markerDummyData.map((data) => (
+          <Marker
+            key={markerDummyData.indexOf(data)}
+            position={{ lat: data.coordinates.lat, lng: data.coordinates.lng }}
+            onClick={() => setSelectedData(data)}
+          />
+        ))}
+        {selectedData && (
+          <InfoWindow
+            position={{
+              lat: selectedData.coordinates.lat,
+              lng: selectedData.coordinates.lng,
+            }}
+            onCloseClick={() => setSelectedData(null)}
+          >
+            <div>
+              <h2>{selectedData.username}</h2>
+              <p>{selectedData.request}</p>
+            </div>
+          </InfoWindow>
+        )}
+      </GoogleMap>
     </div>
   );
 };
