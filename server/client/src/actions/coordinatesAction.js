@@ -1,12 +1,12 @@
 import axios from "axios";
 
 //variables
-export const FETCH_COORDINATES = "FETCH_COORDINATES";
+export const FETCH_COORDINATES = "fetch_coordinates";
+export const SET_COORDINATES = "set_coordinates";
 
 //action creators
 export const loadCoordinatesFromAddress = (address) => (dispatch) => {
   const ROOT_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=`;
-  console.log(process.env);
 
   axios
     .get(
@@ -22,3 +22,8 @@ export const loadCoordinatesFromAddress = (address) => (dispatch) => {
       console.log(error);
     });
 };
+
+// export const setHomeCoordinatesToDB = (lat, lng) => (dispatch) => {
+//   const ROOT_URL = `https://localhost:3000`;
+
+// };

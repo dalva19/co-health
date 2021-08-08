@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const { coordinates } = useSelector((state) => state.coordinates);
 
   //state
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [street, setStreet] = useState("114 chestnut ct ");
+  const [city, setCity] = useState("jacksonville");
+  const [state, setState] = useState("nc");
+  const [zip, setZip] = useState("28546");
   const [address, setAddress] = useState("");
 
   //helper functions
@@ -21,13 +24,37 @@ const Register = () => {
     setAddress(addressJoin);
   };
 
-  const handleGetCoordinatesButton = async () => {
+  const handleGetCoordinatesButton = () => {
     splitStreetName();
+  };
+
+  const makeReq = async () => {
+    try {
+      const userCoordinates = await coordinates;
+      return userCoordinates;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     if (address) {
       dispatch(loadCoordinatesFromAddress(address));
+      const userCoordinates = makeReq();
+
+      // const req = {
+      //   address: {
+      //     street: street,
+      //     city: city,
+      //     state: state,
+      //     zipcode: zip,
+      //   },
+      //   coordinates: {
+      //     lat: coordinates.lat,
+      //     lng: coordinates.lng,
+      //   },
+      // };
+      console.log(userCoordinates);
     }
   }, [address, dispatch]);
 
@@ -49,7 +76,7 @@ const Register = () => {
         <input onChange={(e) => setZip(e.target.value)} vaule={zip} />
       </form>
 
-      <button onClick={handleGetCoordinatesButton}>get coordinates</button>
+      <button onClick={handleGetCoordinatesButton}>submit</button>
     </>
   );
 };
