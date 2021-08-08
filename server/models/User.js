@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
     state: { type: String },
     zipcode: { type: Number },
   },
+  coordinates: {
+    lat: { type: Number },
+    lng: { type: Number },
+  },
   credentials: {
     liscence: { type: String, default: null },
     liscenceNumber: { type: String, default: null },

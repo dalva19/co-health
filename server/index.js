@@ -4,6 +4,8 @@ const app = express();
 const cookieSession = require("cookie-session");
 const passport = require("passport");
 const routes = require("./routes/index");
+const cors = require("cors");
+require("dotenv");
 
 //connect to database
 const env = process.env.NODE_ENV || "development";
@@ -32,16 +34,13 @@ app.use(express.json());
 app.use(
   cookieSession({
     name: "session",
-    keys: ["helloworld"],
-
-    // Cookie Options
+    keys: ["key1"],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   })
 );
-
-//passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 //routes
 app.use("/co-health/", routes);
