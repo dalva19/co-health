@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
 import { registerMember } from "../actions/memberProfileActions";
 
-const Register = () => {
+const UserRegistration = () => {
   const dispatch = useDispatch();
   const { coordinates, loaded } = useSelector((state) => state.coordinates);
 
@@ -62,9 +62,10 @@ const Register = () => {
         lng: coordinates.lng,
         profileType: profileType,
       };
+
       dispatch(registerMember(body));
     }
-  }, [address, dispatch, loaded]);
+  }, [address, dispatch, loaded]); //add dependencies to useeffect
 
   return (
     <>
@@ -140,4 +141,4 @@ const RegisterContainer = styled.div`
   padding-top: 10vh;
 `;
 
-export default Register;
+export default UserRegistration;
