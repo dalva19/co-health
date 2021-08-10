@@ -1,12 +1,24 @@
 import axios from "axios";
 
 //variables
-export const FETCH_COORDINATES = "fetch_coordinates";
-export const SET_COORDINATES = "set_coordinates";
+export const REGISTER_MEMBER = "register_member";
 
 //action creators
-export const loadCoordinatesFromAddress = (address) => (dispatch) => {
-  // const ROOT_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=`;
+export const registerMember = (body) => (dispatch) => {
+  const ROOT_URL = `http://localhost:8000`;
+  console.log(body);
+
+  axios
+    .post(`${ROOT_URL}/co-health/user/register`, body)
+    .then((response) => {
+      dispatch({
+        type: REGISTER_MEMBER,
+        payload: response,
+      });
+    })
+    .catch((error) => {
+      return error;
+    });
 
   // axios
   //   .get(
@@ -23,7 +35,7 @@ export const loadCoordinatesFromAddress = (address) => (dispatch) => {
   //   });
 
   dispatch({
-    type: FETCH_COORDINATES,
+    type: REGISTER_MEMBER,
   });
 };
 

@@ -1,0 +1,31 @@
+const dev = {
+  url: {
+    // API_AUTH_GOOGLE: `http://localhost:5000/api/auth/google`,
+    // API_AUTH_STATUS: `http://localhost:5000/api/auth/status`,
+    // API_PAYMENT_METHOD_CREATE: `http://localhost:5000/api/payment/methods/create`,
+    // API_NEW_SUBCRIPTION_POST: `http://localhost:5000/api/subscriptions/new`,
+    // API_ADMIN_STATUS: `http://localhost:5000/api/admin/dashboard`,
+    // API_CHECK_IF_BANNER: `http://localhost:5000/api/admin/banner`,
+    // API_POST_BANNER: `http://localhost:5000/api/admin/banner`,
+    // API_LOGOUT: `http://localhost:5000/api/auth/google/logout`,
+    // HOME: "http://localhost:3000/home",
+    // API_GET_PROFILE: `http://localhost:5000/api/user/profile`,
+    // API_GET_MATCHES: `http://localhost:5000/api/user/matches`,
+    // API_POST_CONNECTIONS: `http://localhost:5000/api/user/connections/update`,
+    // API_GET_CONNECTIONS: `http://localhost:5000/api/user/connections/get`,
+    // API_GET_ACCEPTED_CONNECTIONS: `http://localhost:5000/api/user/connections/get/accepted`,
+    // API_GET_CHANNELS: `http://localhost:5000/getChannels`,
+    // API_GET_CHAT_LOG: `http://localhost:5000/api/user/connections/get/chat-log`,
+    // API_COMPILE: `http://localhost:5000/api/compile`,
+    // AVAILIBILITY: "",
+    // UPCOMING: "",
+    // SETTINGS: "",
+    // ABOUT: "",
+    // CONTACT: "",
+    // DONATE: "",
+    PORT: "http://127.0.0.1:3000",
+    COHEALTH_CREATE_USER: `http://localhost:3000/co-healtn/user/register`,
+  },
+};
+
+export const config = process.env.NODE_ENV === `development` ? dev : "";

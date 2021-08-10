@@ -2,17 +2,18 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
+import { registerMember } from "../actions/memberProfileActions";
 
 const Register = () => {
   const dispatch = useDispatch();
   const { coordinates, loaded } = useSelector((state) => state.coordinates);
 
   //state
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("danna");
+  const [lastName, setLastName] = useState("alvarado");
+  const [email, setEmail] = useState("ssssss@email.com");
+  const [username, setUsername] = useState("username");
+  const [password, setPassword] = useState("password");
   const [street, setStreet] = useState("114 chestnut ct ");
   const [city, setCity] = useState("jacksonville");
   const [state, setState] = useState("nc");
@@ -49,22 +50,19 @@ const Register = () => {
       }
 
       const body = {
-        name: {
-          firstName: firstName,
-          lastName: lastName,
-        },
-        address: {
-          street: street,
-          city: city,
-          state: state,
-          zipcode: zip,
-        },
-        coordinates: {
-          lat: coordinates.lat,
-          lng: coordinates.lng,
-        },
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        password: password,
+        email: email,
+        street: street,
+        city: city,
+        state: state,
+        lat: coordinates.lat,
+        lng: coordinates.lng,
         profileType: profileType,
       };
+      dispatch(registerMember(body));
     }
   }, [address, dispatch, loaded]);
 
@@ -78,19 +76,59 @@ const Register = () => {
           vaule={firstName}
         />
         <label>Last Name</label>
-        <input onChange={(e) => setLastName(e.target.value)} vaule={lastName} />
+        <input
+          type="text"
+          onChange={(e) => setLastName(e.target.value)}
+          vaule={lastName}
+        />
         <label>Username</label>
-        <input onChange={(e) => setUsername(e.target.value)} vaule={username} />
+        <input
+          type="text"
+          onChange={(e) => setUsername(e.target.value)}
+          vaule={username}
+        />
         <label>Password</label>
-        <input onChange={(e) => setPassword(e.target.value)} vaule={password} />
+        <input
+          type="text"
+          onChange={(e) => setPassword(e.target.value)}
+          vaule={password}
+        />
         <label>Street</label>
-        <input onChange={(e) => setStreet(e.target.value)} vaule={street} />
+        <input
+          type="text"
+          onChange={(e) => setStreet(e.target.value)}
+          vaule={street}
+        />
         <label>City</label>
-        <input onChange={(e) => setCity(e.target.value)} vaule={city} />
+        <input
+          type="text"
+          onChange={(e) => setCity(e.target.value)}
+          vaule={city}
+        />
         <label>State</label>
-        <input onChange={(e) => setState(e.target.value)} vaule={state} />
+        <input
+          type="text"
+          onChange={(e) => setState(e.target.value)}
+          vaule={state}
+        />
         <label>Zipcode</label>
-        <input onChange={(e) => setZip(e.target.value)} vaule={zip} />
+        <input
+          type="text"
+          onChange={(e) => setZip(e.target.value)}
+          vaule={zip}
+        />
+        <label>Prifile Type</label>
+        <input
+          type="checkbox"
+          onChange={(e) => setHealthcareMember(!healthcareMember)}
+          // vaule={healthcareMember}
+          placeholder="Healthcare Member"
+        />
+        <input
+          type="checkbox"
+          onChange={(e) => setCommunityMember(!communityMember)}
+          // vaule={communityMember}
+        />
       </form>
 
       <button onClick={handleSubmitButton}>submit</button>
