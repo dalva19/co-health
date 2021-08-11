@@ -27,7 +27,7 @@ export const getMemberProfile = () => (dispatch) => {
       if (response.data) {
         dispatch({
           type: FETCH_MEMBER,
-          payload: response,
+          payload: response.data,
         });
       }
     })

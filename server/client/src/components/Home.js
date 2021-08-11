@@ -6,7 +6,6 @@ import { Redirect, Route } from "react-router-dom";
 //components
 import Map from "./Map";
 import styled from "styled-components";
-import MemberProfile from "./MemberProfile";
 
 const Home = () => {
   const dispatch = useDispatch();

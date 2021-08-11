@@ -30,6 +30,17 @@ mongoose.connect(
 // );
 
 //middleware
+const corsOptions = {
+  //To allow requests from client
+  origin: [
+    "http://localhost:3000",
+    "http://127.0.0.1",
+    // "http://104.142.122.231",
+  ],
+  credentials: true,
+  exposedHeaders: ["set-cookie"],
+};
+
 app.use(express.json());
 app.use(
   cookieSession({
@@ -40,11 +51,11 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+app.use(cors(corsOptions));
 
 //routes
 app.use("/co-health/", routes);
 
-app.listen(3000, () => console.log("Server is running on port 3000."));
+app.listen(8000, () => console.log("Server is running on port 8000."));
 
 module.exports = app;

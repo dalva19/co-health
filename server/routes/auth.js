@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const cors = require("cors");
 //passport
 const passport = require("passport");
 const localLogin = require("../services/passport");
@@ -103,7 +104,7 @@ router.post(
 
 router.get("/login", (req, res) => {
   //redirect to frontend login form
-  res.send("login in to co-health");
+  res.status(400).send("login in to co-health");
 });
 
 router.get("/logout", function (req, res) {
