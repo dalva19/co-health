@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
-import { registerStatus } from "../actions/memberProfileActions";
+import { registerStatus } from "../actions/registerActions";
 import { Redirect, Route } from "react-router-dom";
 
 const UserRegistration = () => {

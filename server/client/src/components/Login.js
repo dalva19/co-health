@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../actions/memberProfileActions";
+import { login } from "../actions/memberActions";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
@@ -11,7 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { loaded } = useSelector((state) => state.registration);
+  const { loaded } = useSelector((state) => state.member);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
