@@ -10,6 +10,7 @@ import GlobalStyle from "./styles/GlobalStyle";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MemberPage from "./pages/MemberPage";
+import RegistrationPage from "./pages/RegistrationPage";
 //components
 import Nav from "./components/Nav";
 
@@ -23,8 +24,9 @@ const App = () => {
           <Redirect to="/co-health" />
         </Route>
         <Route exact path="/co-health" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/member-profile" component={MemberPage} />
+        <Route exact path="/co-health/login" component={LoginPage} />
+        <Route exact path="/co-health/register" component={RegistrationPage} />
+        <Route exact path="/co-health/profile" component={MemberPage} />
       </Switch>
     </>
   );

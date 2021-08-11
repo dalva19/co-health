@@ -2,11 +2,17 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
-import { registerMember } from "../actions/memberProfileActions";
+import { registerStatus } from "../actions/memberProfileActions";
+import { Redirect, Route } from "react-router-dom";
 
 const UserRegistration = () => {
   const dispatch = useDispatch();
-  const { coordinates, loaded } = useSelector((state) => state.coordinates);
+
+  const { registered } = useSelector((state) => state.registration);
+
+  const { coordinates, coordinatesLoaded } = useSelector(
+    (state) => state.coordinates
+  );
 
   //state
   const [firstName, setFirstName] = useState("danna");
@@ -39,7 +45,7 @@ const UserRegistration = () => {
       dispatch(loadCoordinatesFromAddress(address));
     }
 
-    if (loaded) {
+    if (coordinatesLoaded) {
       let profileType;
       if (healthcareMember) {
         profileType = "healthcare member";
@@ -63,76 +69,87 @@ const UserRegistration = () => {
         profileType: profileType,
       };
 
-      dispatch(registerMember(body));
+      dispatch(registerStatus(body));
     }
-  }, [address, dispatch, loaded]); //add dependencies to useeffect
+  }, [address, dispatch, coordinatesLoaded]); //add dependencies to useeffect
 
   return (
     <>
-      <h1>Register Account</h1>
-      <form>
-        <label>First Name</label>
-        <input
-          onChange={(e) => setFirstName(e.target.value)}
-          vaule={firstName}
-        />
-        <label>Last Name</label>
-        <input
-          type="text"
-          onChange={(e) => setLastName(e.target.value)}
-          vaule={lastName}
-        />
-        <label>Username</label>
-        <input
-          type="text"
-          onChange={(e) => setUsername(e.target.value)}
-          vaule={username}
-        />
-        <label>Password</label>
-        <input
-          type="text"
-          onChange={(e) => setPassword(e.target.value)}
-          vaule={password}
-        />
-        <label>Street</label>
-        <input
-          type="text"
-          onChange={(e) => setStreet(e.target.value)}
-          vaule={street}
-        />
-        <label>City</label>
-        <input
-          type="text"
-          onChange={(e) => setCity(e.target.value)}
-          vaule={city}
-        />
-        <label>State</label>
-        <input
-          type="text"
-          onChange={(e) => setState(e.target.value)}
-          vaule={state}
-        />
-        <label>Zipcode</label>
-        <input
-          type="text"
-          onChange={(e) => setZip(e.target.value)}
-          vaule={zip}
-        />
-        <label>Prifile Type</label>
-        <input
-          type="checkbox"
-          onChange={(e) => setHealthcareMember(!healthcareMember)}
-          // vaule={healthcareMember}
-          placeholder="Healthcare Member"
-        />
-        <input
-          type="checkbox"
-          onChange={(e) => setCommunityMember(!communityMember)}
-          // vaule={communityMember}
-        />
-      </form>
+      <RegisterContainer>
+        <h1>Register Account</h1>
+        <form>
+          <label>First Name</label>
+          <input
+            onChange={(e) => setFirstName(e.target.value)}
+            vaule={firstName}
+          />
+          <label>Last Name</label>
+          <input
+            type="text"
+            onChange={(e) => setLastName(e.target.value)}
+            vaule={lastName}
+          />
+          <label>Username</label>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            vaule={username}
+          />
+          <label>Password</label>
+          <input
+            type="text"
+            onChange={(e) => setPassword(e.target.value)}
+            vaule={password}
+          />
+          <label>Email</label>
+          <input
+            type="text"
+            onChange={(e) => setEmail(e.target.value)}
+            vaule={email}
+          />
+          <label>Street</label>
+          <input
+            type="text"
+            onChange={(e) => setStreet(e.target.value)}
+            vaule={street}
+          />
+          <label>City</label>
+          <input
+            type="text"
+            onChange={(e) => setCity(e.target.value)}
+            vaule={city}
+          />
+          <label>State</label>
+          <input
+            type="text"
+            onChange={(e) => setState(e.target.value)}
+            vaule={state}
+          />
+          <label>Zipcode</label>
+          <input
+            type="text"
+            onChange={(e) => setZip(e.target.value)}
+            vaule={zip}
+          />
+          <label>Healthcare Member</label>
+          <input
+            type="checkbox"
+            onChange={(e) => setHealthcareMember(!healthcareMember)}
+            placeholder="Healthcare Member"
+          />
+          <label>Community Member</label>
+          <input
+            type="checkbox"
+            onChange={(e) => setCommunityMember(!communityMember)}
+          />
+        </form>
 
-      <button onClick={handleSubmitButton}>submit</button>
+        <button onClick={handleSubmitButton}>submit</button>
+      </RegisterContainer>
+
+      <Route exact path="/co-health/register">
+        {registered ? <Redirect to="/co-health/profile" /> : ""}
+      </Route>
     </>
   );
 };

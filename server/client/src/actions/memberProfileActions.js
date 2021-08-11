@@ -1,10 +1,11 @@
 import axios from "axios";
 
 //variables
-export const REGISTER_MEMBER = "register_member";
+export const SET_REGISTER_STATUS = "set_register_status";
+export const FETCH_MEMBER = "fetch_member";
 
 //action creators
-export const registerMember = (body) => (dispatch) => {
+export const registerStatus = (body) => (dispatch) => {
   const ROOT_URL = `http://localhost:8000`;
   console.log(body);
 
@@ -12,34 +13,41 @@ export const registerMember = (body) => (dispatch) => {
     .post(`${ROOT_URL}/co-health/user/register`, body)
     .then((response) => {
       dispatch({
-        type: REGISTER_MEMBER,
+        type: SET_REGISTER_STATUS,
         payload: response,
       });
     })
     .catch((error) => {
       return error;
     });
-
-  // axios
-  //   .get(
-  //     `${ROOT_URL}${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
-  //   )
-  //   .then(function (response) {
-  //     dispatch({
-  //       type: FETCH_COORDINATES,
-  //       payload: response.data.results[0].geometry.location,
-  //     });
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-
-  dispatch({
-    type: REGISTER_MEMBER,
-  });
 };
 
-// export const setHomeCoordinatesToDB = (lat, lng) => (dispatch) => {
-//   const ROOT_URL = `https://localhost:3000`;
+export const login = (body) => (dispatch) => {
+  const ROOT_URL = `http://localhost:8000`;
+  axios
+    .post(`${ROOT_URL}/co-health/user/login`, body, { withCredentials: true })
+    .then((response) => {
+      dispatch({
+        type: FETCH_MEMBER,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
-// };
+export const getMemberProfile = () => (dispatch) => {
+  const ROOT_URL = `http://localhost:8000`;
+  axios
+    .get(`${ROOT_URL}/co-health/profile/`, { withCredentials: true })
+    .then((response) => {
+      dispatch({
+        type: FETCH_MEMBER,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      return error;
+    });
+};

@@ -4,7 +4,7 @@ const DEFAULT_STATE = {
   //hard coding for testing
   //google geolocation working
   coordinates: { lat: 35.994, lng: -78.8986 },
-  loaded: false,
+  coordinatesLoaded: false,
 };
 
 const coordinatesReducer = (state = DEFAULT_STATE, action) => {
@@ -13,7 +13,7 @@ const coordinatesReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         // coordinates: action.payload,
-        loaded: true,
+        coordinatesLoaded: true,
       };
     default:
       return state;
