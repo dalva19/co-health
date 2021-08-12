@@ -15,9 +15,9 @@ const Home = () => {
   //move MAP to profile page
   const WrappedMap = withScriptjs(withGoogleMap(Map));
 
-  useEffect(() => {
-    dispatch(getMemberProfile());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getMemberProfile());
+  // }, [dispatch]);
 
   console.log(loaded);
   return (
