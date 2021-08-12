@@ -50,6 +50,7 @@ const NavContainer = styled.div`
     width: 150px;
     height: auto;
     cursor: pointer;
+    font-family: "Monserrat", sans-serif;
   }
   a {
     color: #fff;

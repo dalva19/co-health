@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../actions/memberActions";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+import Button from "./Button";
 import styled from "styled-components";
 
 const Login = () => {
@@ -52,7 +53,20 @@ const Login = () => {
 };
 
 const LoginContainer = styled.div`
-  padding-top: 10vh;
+  padding-top: 30vh;
+  text-align: center;
+  input {
+    width: 20%;
+  }
+  button {
+    border: none;
+    background-color: #0d2c32;
+    padding: 0.5rem 1rem;
+    color: #fce4b4;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    margin-left: 0.5rem;
+  }
 `;
 
 export default Login;

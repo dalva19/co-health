@@ -42,7 +42,14 @@ const Home = () => {
 };
 
 const HomeContainer = styled.div`
-  padding-top: 10vh;
+  padding-top: 15vh;
+  margin-left: 1rem;
+  h3 {
+    color: #d54a49;
+    font-family: "Montserrat", sans-serif;
+    font-weight: lighter;
+    font-style: italic;
+  }
 `;
 
 export default Home;
