@@ -1,8 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const Nav = () => {
+  const { pathname } = useLocation();
   return (
     <NavContainer>
       <NavLink to="/">
@@ -11,27 +13,46 @@ const Nav = () => {
       <div>
         <ul className="links">
           <li>
-            <NavLink to="/co-health/login">
-              <h4>login</h4>
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/co-health/register">
               <h4>sign up</h4>
             </NavLink>
+            <Line
+              transition={{ duration: 0.5 }}
+              initial={{ width: "0%" }}
+              animate={{
+                width: pathname === "/co-health/register" ? "40%" : "0%",
+              }}
+            />
+          </li>
+          <li>
+            <NavLink to="/co-health/login">
+              <h4>login</h4>
+            </NavLink>
+            <Line
+              transition={{ duration: 0.5 }}
+              initial={{ width: "0%" }}
+              animate={{
+                width: pathname === "/co-health/login" ? "40%" : "0%",
+              }}
+            />
           </li>
           <li className="logout">
             <NavLink to="/co-health/login">
               <h4>logout</h4>
             </NavLink>
+            <Line
+              transition={{ duration: 0.5 }}
+              initial={{ width: "0%" }}
+              animate={{
+                width: pathname === "/co-health/logout" ? "40%" : "0%",
+              }}
+            />
           </li>
         </ul>
       </div>
     </NavContainer>
   );
 };
-
-export default Nav;
 
 const NavContainer = styled.div`
   display: flex;
@@ -66,3 +87,14 @@ const NavContainer = styled.div`
     }
   }
 `;
+
+const Line = styled(motion.div)`
+  height: 0.3rem;
+  background: #f18457;
+  width: 0%;
+  position: absolute;
+  bottom: -80%;
+  left: 60%;
+`;
+
+export default Nav;

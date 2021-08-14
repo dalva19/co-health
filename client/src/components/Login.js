@@ -42,7 +42,7 @@ const Login = () => {
           <input type="text" onChange={handleUsernameText} value={username} />
           <label>Password</label>
           <input type="text" onChange={handlePasswordText} value={password} />
-          <button onClick={handleLoginSubmit}>Submit</button>
+          <button onClick={handleLoginSubmit}>submit</button>
         </form>
       </LoginContainer>
       <Route exact path="/co-health/login">
@@ -55,17 +55,15 @@ const Login = () => {
 const LoginContainer = styled.div`
   padding-top: 30vh;
   text-align: center;
-  input {
-    width: 20%;
-  }
-  button {
-    border: none;
-    background-color: #0d2c32;
-    padding: 0.5rem 1rem;
-    color: #fce4b4;
-    font-family: "Montserrat", sans-serif;
+  label {
+    margin-right: 0.5rem;
     font-weight: bold;
-    margin-left: 0.5rem;
+  }
+  input {
+    width: 25%;
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
   }
 `;
 
