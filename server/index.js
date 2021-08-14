@@ -5,7 +5,7 @@ const cookieSession = require("cookie-session");
 const passport = require("passport");
 const routes = require("./routes/index");
 const cors = require("cors");
-require("dotenv");
+require("dotenv/config");
 
 //connect to database
 const env = process.env.NODE_ENV || "development";
@@ -20,14 +20,14 @@ mongoose.connect(
   () => console.log("connected to db")
 );
 
-// mongoose.connect(
-//   "mongodb://localhost/co-health",
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   },
-//   () => console.log("connected to db")
-// );
+mongoose.connect(
+  "mongodb://localhost/co-health",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  () => console.log("connected to db")
+);
 
 //middleware
 const corsOptions = {
