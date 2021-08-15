@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 
-const Map = () => {
+const HomeMap = () => {
   const [selectedData, setSelectedData] = useState(null);
 
   const markerDummyData = [
@@ -49,4 +49,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default HomeMap;
