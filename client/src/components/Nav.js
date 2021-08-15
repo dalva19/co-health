@@ -66,7 +66,7 @@ const NavContainer = styled.div`
     }
     h4 {
       &:hover {
-        color: #f18457;
+        color: #fad39e;
       }
     }
   }

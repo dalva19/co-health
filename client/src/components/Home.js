@@ -27,7 +27,6 @@ const Home = () => {
     <>
       <Page>
         <Description>
-          {/* <h1>Welcome to Co-Health</h1> */}
           <TitleContainer>
             <h1>Helping</h1>
             <h1>
@@ -40,6 +39,7 @@ const Home = () => {
           <img src={together} alt="people" />
         </Image>
       </Page>
+
       {/* <div style={{ width: "100vw", height: "70vh" }}>
         <WrappedMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
