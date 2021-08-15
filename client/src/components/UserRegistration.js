@@ -135,16 +135,14 @@ const UserRegistration = () => {
           <input
             type="checkbox"
             onChange={(e) => setHealthcareMember(!healthcareMember)}
-            placeholder="Healthcare Member"
           />
           <label>Community Member</label>
           <input
             type="checkbox"
             onChange={(e) => setCommunityMember(!communityMember)}
           />
+          <button onClick={handleSubmitButton}>submit</button>
         </form>
-
-        <button onClick={handleSubmitButton}>submit</button>
       </RegisterContainer>
 
       <Route exact path="/co-health/register">
@@ -155,7 +153,27 @@ const UserRegistration = () => {
 };
 
 const RegisterContainer = styled.div`
-  padding-top: 10vh;
+  padding-top: 5vh;
+  h1 {
+    text-align: center;
+    padding-bottom: 2rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 35%;
+    input {
+      width: 50%;
+      padding-bottom: 0.5rem;
+    }
+    label {
+      padding-bottom: 0.5rem;
+    }
+    button {
+      width: 15%;
+      margin: 1rem 10rem;
+    }
+  }
 `;
 
 export default UserRegistration;

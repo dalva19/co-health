@@ -1,10 +1,8 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
 const Nav = () => {
-  const { pathname } = useLocation();
   return (
     <NavContainer>
       <NavLink to="/">
@@ -16,37 +14,16 @@ const Nav = () => {
             <NavLink to="/co-health/register">
               <h4>sign up</h4>
             </NavLink>
-            <Line
-              transition={{ duration: 0.5 }}
-              initial={{ width: "0%" }}
-              animate={{
-                width: pathname === "/co-health/register" ? "40%" : "0%",
-              }}
-            />
           </li>
           <li>
             <NavLink to="/co-health/login">
               <h4>login</h4>
             </NavLink>
-            <Line
-              transition={{ duration: 0.5 }}
-              initial={{ width: "0%" }}
-              animate={{
-                width: pathname === "/co-health/login" ? "40%" : "0%",
-              }}
-            />
           </li>
           <li className="logout">
             <NavLink to="/co-health/login">
               <h4>logout</h4>
             </NavLink>
-            <Line
-              transition={{ duration: 0.5 }}
-              initial={{ width: "0%" }}
-              animate={{
-                width: pathname === "/co-health/logout" ? "40%" : "0%",
-              }}
-            />
           </li>
         </ul>
       </div>
@@ -79,22 +56,29 @@ const NavContainer = styled.div`
   }
   .links {
     display: flex;
+    text-decoration: underline;
+    text-underline-offset: 15px;
     li {
       list-style: none;
       position: relative;
       padding-left: 5rem;
       padding-top: 0.5rem;
     }
+    h4 {
+      &:hover {
+        color: #f18457;
+      }
+    }
   }
 `;
 
-const Line = styled(motion.div)`
-  height: 0.3rem;
-  background: #f18457;
-  width: 0%;
-  position: absolute;
-  bottom: -80%;
-  left: 60%;
-`;
+// const Line = styled(motion.div)`
+//   height: 0.3rem;
+//   background: #f18457;
+//   width: 0%;
+//   position: absolute;
+//   bottom: -80%;
+//   left: 60%;
+// `;
 
 export default Nav;

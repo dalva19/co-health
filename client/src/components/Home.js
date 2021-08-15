@@ -7,7 +7,7 @@ import { Redirect, Route } from "react-router-dom";
 import Map from "./Map";
 //styling
 import styled from "styled-components";
-import { About, Description, Image } from "../styles/styles";
+import { Page, Description, Image } from "../styles/styles";
 import together from "../img/undraw_Together.svg";
 
 const Home = () => {
@@ -25,7 +25,7 @@ const Home = () => {
   console.log(loaded);
   return (
     <>
-      <About>
+      <Page>
         <Description>
           {/* <h1>Welcome to Co-Health</h1> */}
           <TitleContainer>
@@ -39,7 +39,7 @@ const Home = () => {
         <Image>
           <img src={together} alt="people" />
         </Image>
-      </About>
+      </Page>
       {/* <div style={{ width: "100vw", height: "70vh" }}>
         <WrappedMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}

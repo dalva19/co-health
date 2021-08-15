@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../actions/memberActions";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import Button from "./Button";
 import styled from "styled-components";
+import { Page } from "../styles/styles";
 
 const Login = () => {
   const dispatch = useDispatch();

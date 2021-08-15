@@ -2,7 +2,7 @@ import styled from "styled-components";
 // import { motion } from "framer-motion";
 
 // styled components
-export const About = styled.div`
+export const Page = styled.div`
   min-height: 90vh;
   display: flex;
   align-items: center;
