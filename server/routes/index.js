@@ -2,6 +2,8 @@ const router = require("express").Router();
 const authRoutes = require("./auth");
 const profileRoutes = require("./profile/profile");
 const homeRoute = require("./home");
+const requestRoutes = require("./profile/requests");
+const offerRoutes = require("./profile/offers");
 
 const authenticateRequest = function (req, res, next) {
   if (!req.isAuthenticated()) {
@@ -13,7 +15,9 @@ const authenticateRequest = function (req, res, next) {
 };
 
 router.use("/user", authRoutes);
-router.use("/home", homeRoute);
+router.use("/home", homeRoute); //not needed?
 router.use("/profile", authenticateRequest, profileRoutes);
+router.use("/profile/requests", requestRoutes);
+router.use("/profile/offers", offerRoutes);
 
 module.exports = router;

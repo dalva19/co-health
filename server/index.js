@@ -20,14 +20,14 @@ mongoose.connect(
   () => console.log("connected to db")
 );
 
-mongoose.connect(
-  "mongodb://localhost/co-health",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => console.log("connected to db")
-);
+// mongoose.connect(
+//   "mongodb://localhost/co-health",
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   },
+//   () => console.log("connected to db")
+// );
 
 //middleware
 const corsOptions = {

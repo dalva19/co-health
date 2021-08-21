@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
 
     const request = new Request({
       text: req.body.text,
-      username: req.user.username,
+      username: user.username,
       user: user._id,
       status: "awaiting offer",
     });

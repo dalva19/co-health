@@ -38,7 +38,4 @@ router.get("/", async (req, res) => {
 //   }
 // };
 
-router.use("/requests", requestRoutes);
-router.use("/offers", offersRoutes);
-
 module.exports = router;
