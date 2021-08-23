@@ -75,7 +75,7 @@ const NavContainer = styled.div`
   color: #fbe4b2;
   width: 100%;
   min-height: 10vh;
-  padding: 1rem 10rem 1rem 1rem;
+  padding: 1rem 2rem 1rem 2rem;
   #logo {
     width: 150px;
     height: auto;
