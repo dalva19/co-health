@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 //style
 import GlobalStyle from "./styles/GlobalStyle";
+import "bootstrap/dist/css/bootstrap.min.css";
 //pages
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -23,10 +24,18 @@ const App = () => {
         <Route exact path="/">
           <Redirect to="/co-health" />
         </Route>
-        <Route exact path="/co-health" component={HomePage} />
-        <Route exact path="/co-health/login" component={LoginPage} />
-        <Route exact path="/co-health/register" component={RegistrationPage} />
-        <Route exact path="/co-health/profile" component={MemberPage} />
+        <Route exact path="/co-health">
+          <HomePage />
+        </Route>
+        <Route exact path="/co-health/login">
+          <LoginPage />
+        </Route>
+        <Route exact path="/co-health/register">
+          <RegistrationPage />
+        </Route>
+        <Route exact path="/co-health/profile">
+          <MemberPage />
+        </Route>
       </Switch>
     </>
   );

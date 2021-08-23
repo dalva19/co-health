@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../actions/coordinatesAction";
 import { registerStatus } from "../actions/registerActions";
 import { Redirect, Route } from "react-router-dom";
-import ProfileType from "./account-setup/ProfileType";
+// import ProfileType from "./account-setup/ProfileType";
 
 const UserRegistration = () => {
   const dispatch = useDispatch();

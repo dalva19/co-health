@@ -15,6 +15,11 @@ const HomeMap = () => {
       request: "i need help getting to my appt",
       coordinates: { lat: 35.7915, lng: -78.7811 },
     },
+    {
+      username: "user3",
+      request: "i need help getting to my appt",
+      coordinates: { lat: 35.8915, lng: -78.8811 },
+    },
   ];
 
   return (

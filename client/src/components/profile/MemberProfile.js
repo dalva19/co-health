@@ -7,9 +7,9 @@ const MemberProfile = () => {
   return (
     <>
       <MemberProfileContainer>
-        <h2>Requests/Offers</h2>
+        {/* <h2>Requests/Offers</h2>
         <p>Request items/Offer items</p>
-        <h2>MAP and connections</h2>
+        <h2>MAP and connections</h2> */}
       </MemberProfileContainer>
     </>
   );

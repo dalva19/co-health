@@ -1,5 +1,5 @@
 import React from "react";
-import MemberProfile from "../components/MemberProfile";
+import MemberProfile from "../components/profile/MemberProfile";
 
 //basic framework
 //need to add authentication on server side
