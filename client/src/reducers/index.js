@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import CoordinatesReducer from "./coordinatesReducer";
-import MemberProfileReducer from "./registerReducer";
+import RegisterReducer from "./registerReducer";
 import MemberReducer from "./memberReducer";
 
 const rootReducer = combineReducers({
   coordinates: CoordinatesReducer,
-  registration: MemberProfileReducer,
+  registration: RegisterReducer,
   member: MemberReducer,
 });
 

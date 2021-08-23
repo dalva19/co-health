@@ -1,6 +1,5 @@
-import UserRegitration from "../components/UserRegistration";
+import UserRegitration from "../components/login/UserRegistration";
 
-//boiler plate to check routes
 const RegistrationPage = () => {
   return <UserRegitration />;
 };

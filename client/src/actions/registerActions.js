@@ -4,9 +4,8 @@ import axios from "axios";
 export const SET_REGISTER_STATUS = "set_register_status";
 
 //action creators
-export const registerStatus = (body) => (dispatch) => {
+export const registerUser = (body) => (dispatch) => {
   const ROOT_URL = `http://localhost:8000`;
-  console.log(body);
 
   axios
     .post(`${ROOT_URL}/co-health/user/register`, body)

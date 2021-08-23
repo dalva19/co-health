@@ -1,4 +1,4 @@
-import Login from "../components/Login";
+import Login from "../components/login/Login";
 
 //boiler plate to check routes
 const LoginPage = () => {

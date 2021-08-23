@@ -9,7 +9,6 @@ import together from "../img/undraw_Together.svg";
 
 const Home = () => {
   const dispatch = useDispatch();
-
   const { loaded } = useSelector((state) => state.member);
 
   // useEffect(() => {

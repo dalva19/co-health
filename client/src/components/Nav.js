@@ -7,7 +7,7 @@ import OffCanvasNav from "../components/profile/OffCanvasNav";
 
 const Nav = () => {
   const { loaded } = useSelector((state) => state.member);
-  const { username } = useSelector((state) => state.member.member);
+  const { username, avatar } = useSelector((state) => state.member.member);
 
   const options = [
     {
@@ -31,7 +31,12 @@ const Nav = () => {
               </NavLink>
             </div>
           </div>
-          <div>{username}</div>
+          <div className="logged-in-name">
+            <h4>{username}</h4>
+            <div>
+              {avatar ? <img src={avatar} alt="avatar" /> : <h4>Pic</h4>}
+            </div>
+          </div>
         </NavContainer>
       ) : (
         <NavContainer>
@@ -87,7 +92,6 @@ const NavContainer = styled.div`
   .bars-title {
     display: flex;
     justify-content: space-evenly;
-    padding-left: 5rem;
   }
   .bars {
     padding-right: 1.5rem;
@@ -95,6 +99,15 @@ const NavContainer = styled.div`
   .icon {
     color: white;
     cursor: pointer;
+  }
+  .logged-in-name {
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+    h4 {
+      font-size: 20px;
+      padding-right: 1rem;
+    }
   }
   a {
     color: #fff;
@@ -118,14 +131,5 @@ const NavContainer = styled.div`
     }
   }
 `;
-
-// const Line = styled(motion.div)`
-//   height: 0.3rem;
-//   background: #f18457;
-//   width: 0%;
-//   position: absolute;
-//   bottom: -80%;
-//   left: 60%;
-// `;
 
 export default Nav;
