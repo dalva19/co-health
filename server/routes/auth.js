@@ -48,16 +48,9 @@ router.post("/register", async (req, res) => {
     user.setPassword(req.body.password);
 
     try {
-      const savedUser = await user.save();
-
-      req.login(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        return res.redirect("/co-health/profile/");
-      });
-
-      // res.send({ user: user._id });
+      await user.save();
+      // res.redirect("/co-health");
+      res.send({ user: savedUser });
     } catch (err) {
       res.status(400).send(err);
     }
@@ -78,16 +71,9 @@ router.post("/register", async (req, res) => {
     user.setPassword(req.body.password);
 
     try {
-      const savedUser = await user.save();
-
-      req.login(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        return res.redirect("/co-health/profile/" + req.user.username);
-      });
-
-      // res.send({ user: user._id });
+      await user.save();
+      // res.redirect("/co-health");
+      res.send({ user: user._id });
     } catch (err) {
       res.status(400).send(err);
     }
