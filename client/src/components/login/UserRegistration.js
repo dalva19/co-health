@@ -19,6 +19,7 @@ const UserRegistration = () => {
   const [firstName, setFirstName] = useState("danna");
   const [lastName, setLastName] = useState("alvarado");
   const [email, setEmail] = useState("ssssss@email.com");
+  const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("username");
   const [password, setPassword] = useState("password");
   const [street, setStreet] = useState("114 chestnut ct ");
@@ -68,6 +69,8 @@ const UserRegistration = () => {
   const handleSelectInput = (e) => {
     setProfileType(e.target.value);
   };
+
+  console.log(avatar);
 
   return (
     <>
@@ -127,7 +130,11 @@ const UserRegistration = () => {
 
                 <Form.Group controlId="formFile" className="mb-3">
                   <Form.Label>Avatar</Form.Label>
-                  <Form.Control type="file" />
+                  <Form.Control
+                    type="file"
+                    value={avatar}
+                    onChange={(e) => setAvatar(e.target.value)}
+                  />
                 </Form.Group>
 
                 <hr></hr>

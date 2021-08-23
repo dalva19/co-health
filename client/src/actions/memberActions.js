@@ -19,6 +19,7 @@ export const login = (body) => (dispatch) => {
     });
 };
 
+//not working how i want it to
 export const getMemberProfile = () => (dispatch) => {
   const ROOT_URL = `http://localhost:8000`;
   axios

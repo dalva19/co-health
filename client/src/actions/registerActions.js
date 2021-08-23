@@ -9,10 +9,9 @@ export const registerUser = (body) => (dispatch) => {
 
   axios
     .post(`${ROOT_URL}/co-health/user/register`, body)
-    .then((response) => {
+    .then(() => {
       dispatch({
         type: SET_REGISTER_STATUS,
-        payload: response,
       });
     })
     .catch((error) => {
