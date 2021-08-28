@@ -12,6 +12,9 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MemberPage from "./pages/MemberPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import SettingsPage from "./pages/SettingsPage";
+import ActivityPage from "./pages/ActivityPage";
+import MessagesPage from "./pages/MessagesPage";
 //components
 import Nav from "./components/Nav";
 
@@ -37,13 +40,13 @@ const App = () => {
           <MemberPage />
         </Route>
         <Route exact path="/co-health/profile/settings">
-          <MemberPage />
+          <SettingsPage />
         </Route>
-        <Route exact path="/co-health/profile/offers">
-          <MemberPage />
+        <Route exact path="/co-health/profile/activity">
+          <ActivityPage />
         </Route>
         <Route exact path="/co-health/profile/messages">
-          <MemberPage />
+          <MessagesPage />
         </Route>
       </Switch>
     </>

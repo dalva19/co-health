@@ -33,10 +33,10 @@ const NavigationTabs = (props) => {
             className="tab-link"
             activeClassName="tab-link-active"
             exact
-            to="/co-health/profile/offers"
+            to="/co-health/profile/activity"
           >
             <Nav.Item>
-              <Nav.Link href="/co-health/profile/offers">Offers</Nav.Link>
+              <Nav.Link href="/co-health/profile/activity">Activity</Nav.Link>
             </Nav.Item>
           </LinkContainer>
 
@@ -60,7 +60,7 @@ const StyledNavTabs = styled.div`
   padding-left: 1rem;
   padding-bottom: 2rem;
   padding-top: 0;
-  margin-top: 0;
+  margin-top: 1rem;
 
   .tab-link a {
     color: gray;

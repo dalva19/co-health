@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import styled from "styled-components";
 

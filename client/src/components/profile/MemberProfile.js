@@ -15,15 +15,16 @@ const MemberProfile = () => {
         {member.profileType === "healthcare member" ? (
           <HealthCareProfile />
         ) : (
-          <CommunityProfile />
+          ""
         )}
+        {member.profileType === "community member" ? <CommunityProfile /> : ""}
       </MemberProfileContainer>
     </>
   );
 };
 
 const MemberProfileContainer = styled.div`
-  padding-top: 5vh;
+  /* padding-top: 1rem; */
 `;
 
 export default MemberProfile;
