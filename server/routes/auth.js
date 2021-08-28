@@ -5,6 +5,7 @@ const cors = require("cors");
 const passport = require("passport");
 const localLogin = require("../services/passport");
 
+//creates new user
 router.post("/register", async (req, res) => {
   //validation with Joi??
 
@@ -25,7 +26,7 @@ router.post("/register", async (req, res) => {
     return res.status(400).send("Username already exists.");
   }
 
-  //create new user
+  //new user based on profile type
   if (req.body.profileType === "healthcare member") {
     const user = new User({
       username: req.body.username,
