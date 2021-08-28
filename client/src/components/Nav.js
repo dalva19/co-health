@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 // import { useState } from "react";
 // import { Button, NavbarBrand, Offcanvas } from "react-bootstrap";
 import styled from "styled-components";
-import OffCanvasNav from "../components/profile/OffCanvasNav";
+// import OffCanvasNav from "../components/profile/OffCanvasNav";
 
 const Nav = () => {
   const { loaded } = useSelector((state) => state.member);
@@ -20,11 +20,11 @@ const Nav = () => {
       {loaded ? (
         <NavContainer>
           <div className="bars-title">
-            <div className="bars">
+            {/* <div className="bars">
               {options.map((props, idx) => (
                 <OffCanvasNav key={idx} {...props} />
               ))}
-            </div>
+            </div> */}
             <div>
               <NavLink to="/">
                 <h2 id="logo">Co-Health</h2>

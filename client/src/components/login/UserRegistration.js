@@ -11,66 +11,65 @@ const UserRegistration = () => {
 
   const { registered } = useSelector((state) => state.registration);
 
-  const { coordinates, coordinatesLoaded } = useSelector(
-    (state) => state.coordinates
-  );
+  // const { coordinates, coordinatesLoaded } = useSelector(
+  //   (state) => state.coordinates
+  // );
 
   //state
-  const [firstName, setFirstName] = useState("danna");
-  const [lastName, setLastName] = useState("alvarado");
   const [email, setEmail] = useState("ssssss@email.com");
-  const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("username");
   const [password, setPassword] = useState("password");
-  const [street, setStreet] = useState("114 chestnut ct ");
-  const [city, setCity] = useState("jacksonville");
-  const [state, setState] = useState("nc");
-  const [zip, setZip] = useState("28546");
-  const [address, setAddress] = useState("");
   const [profileType, setProfileType] = useState("");
+  // const [firstName, setFirstName] = useState("danna");
+  // const [lastName, setLastName] = useState("alvarado");
+  // const [avatar, setAvatar] = useState("");
+  // const [street, setStreet] = useState("114 chestnut ct ");
+  // const [city, setCity] = useState("jacksonville");
+  // const [state, setState] = useState("nc");
+  // const [zip, setZip] = useState("28546");
+  // const [address, setAddress] = useState("");
 
   //helper functions
-  const splitStreetName = () => {
-    const address = `${street} ${city} ${state} ${zip}`;
-    const addressSplit = address.split(" ");
-    const addressJoin = addressSplit.join("+,");
-    setAddress(addressJoin);
-  };
+  // const splitStreetName = () => {
+  //   const address = `${street} ${city} ${state} ${zip}`;
+  //   const addressSplit = address.split(" ");
+  //   const addressJoin = addressSplit.join("+,");
+  //   setAddress(addressJoin);
+  // };
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
-    splitStreetName();
+
+    const body = {
+      username: username,
+      password: password,
+      email: email,
+      profileType: profileType,
+    };
+
+    dispatch(registerUser(body));
   };
 
-  useEffect(() => {
-    if (address) {
-      dispatch(loadCoordinatesFromAddress(address));
-    }
+  // useEffect(() => {
+  //   if (address) {
+  //     dispatch(loadCoordinatesFromAddress(address));
+  //   }
 
-    if (coordinatesLoaded) {
-      const body = {
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        password: password,
-        email: email,
-        street: street,
-        city: city,
-        state: state,
-        lat: coordinates.lat,
-        lng: coordinates.lng,
-        profileType: profileType,
-      };
+  //   if (coordinatesLoaded) {
+  //     const body = {
+  //       username: username,
+  //       password: password,
+  //       email: email,
+  //       profileType: profileType,
+  //     };
 
-      dispatch(registerUser(body));
-    }
-  }, [address, dispatch, coordinatesLoaded]); //add dependencies to useeffect
+  //     dispatch(registerUser(body));
+  //   }
+  // }, [address, dispatch, coordinatesLoaded]); //add dependencies to useeffect
 
-  const handleSelectInput = (e) => {
+  const handleSelectProfileInput = (e) => {
     setProfileType(e.target.value);
   };
-
-  console.log(avatar);
 
   return (
     <>
@@ -87,7 +86,7 @@ const UserRegistration = () => {
                     required
                     className="mb-3"
                     type="input"
-                    onChange={handleSelectInput}
+                    onChange={handleSelectProfileInput}
                   >
                     <option value="">Choose...</option>
                     <option value="Healthcare Member">Healthcare Member</option>
@@ -128,7 +127,7 @@ const UserRegistration = () => {
                   </Form.Text>
                 </Form.Group>
 
-                <Form.Group controlId="formFile" className="mb-3">
+                {/* <Form.Group controlId="formFile" className="mb-3">
                   <Form.Label>Avatar</Form.Label>
                   <Form.Control
                     type="file"
@@ -197,7 +196,7 @@ const UserRegistration = () => {
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
                   />
-                </Form.Group>
+                </Form.Group> */}
 
                 <Button
                   variant="primary"

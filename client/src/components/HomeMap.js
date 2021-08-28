@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
+import styled from "styled-components";
 
 const HomeMap = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -7,17 +8,17 @@ const HomeMap = () => {
   const markerDummyData = [
     {
       username: "user1",
-      request: "i need help getting my prescription",
+      request: ["i need help getting my prescription", "test"],
       coordinates: { lat: 35.9132, lng: -79.0558 },
     },
     {
       username: "user2",
-      request: "i need help getting to my appt",
+      request: ["i need help getting to my appt", "test"],
       coordinates: { lat: 35.7915, lng: -78.7811 },
     },
     {
       username: "user3",
-      request: "i need help getting to my appt",
+      request: ["i need help getting to my appt", "test"],
       coordinates: { lat: 35.8915, lng: -78.8811 },
     },
   ];
@@ -43,15 +44,22 @@ const HomeMap = () => {
             }}
             onCloseClick={() => setSelectedData(null)}
           >
-            <div>
+            <StyledInfo>
               <h2>{selectedData.username}</h2>
-              <p>{selectedData.request}</p>
-            </div>
+              <p>{selectedData.request[0]}</p>
+              <p className="offer-link">Make an offer</p>
+            </StyledInfo>
           </InfoWindow>
         )}
       </GoogleMap>
     </div>
   );
 };
+
+const StyledInfo = styled.div`
+  .offer-link {
+    cursor: pointer;
+  }
+`;
 
 export default HomeMap;

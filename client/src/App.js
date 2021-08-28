@@ -36,6 +36,15 @@ const App = () => {
         <Route exact path="/co-health/profile">
           <MemberPage />
         </Route>
+        <Route exact path="/co-health/profile/settings">
+          <MemberPage />
+        </Route>
+        <Route exact path="/co-health/profile/offers">
+          <MemberPage />
+        </Route>
+        <Route exact path="/co-health/profile/messages">
+          <MemberPage />
+        </Route>
       </Switch>
     </>
   );
