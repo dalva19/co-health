@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { withScriptjs, withGoogleMap } from "react-google-maps";
-import Home from "../components/Home";
-import ServicesSection from "../components/ServicesSection";
+import Home from "../components/home/Home";
+import ServicesSection from "../components/home/ServicesSection";
 //components
-import HomeMap from "../components/HomeMap";
+import HomeMap from "../components/home/HomeMap";
 
 const HomePage = () => {
   const WrappedMap = withScriptjs(withGoogleMap(HomeMap));

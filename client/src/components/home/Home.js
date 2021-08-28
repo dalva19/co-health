@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getMemberProfile } from "../actions/memberActions";
+import { getMemberProfile } from "../../actions/memberActions";
 import { Redirect, Route } from "react-router-dom";
 //styling
 import styled from "styled-components";
-import { Page, Description, Image } from "../styles/styles";
-import together from "../img/undraw_Together.svg";
+import { Page, Description, Image } from "../../styles/styles";
+import together from "../../img/undraw_Together.svg";
 
 const Home = () => {
   const dispatch = useDispatch();

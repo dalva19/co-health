@@ -1,4 +1,4 @@
-import { Description } from "../styles/styles";
+import { Description } from "../../styles/styles";
 import styled from "styled-components";
 
 const ServicesSection = () => {
