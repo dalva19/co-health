@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Redirect, Route } from "react-router-dom";
 import { logout } from "../actions/memberActions";
 // import { useState } from "react";
 // import { Button, NavbarBrand, Offcanvas } from "react-bootstrap";

@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
 import { registerUser } from "../../actions/registerActions";
 
-const SettingsForm = () => {
+const SettingsForm = (props) => {
   const dispatch = useDispatch();
 
   const { registered } = useSelector((state) => state.registration);
@@ -77,98 +76,96 @@ const SettingsForm = () => {
   return (
     <>
       <SettingsFormContainer>
-        <Container className="register-container">
-          <Row>
-            <Col md={{ span: 4, offset: 4 }}>
-              <h2>Manage Personal Information</h2>
-              <hr></hr>
-              <Form>
-                <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Avatar</Form.Label>
-                  <Form.Control
-                    type="file"
-                    value={avatar}
-                    onChange={(e) => setAvatar(e.target.value)}
-                  />
-                </Form.Group>
+        <Modal onHide={props.handleClose} animation={false} show={props.show}>
+          <Modal.Header closeButton={props.handleClose}>
+            <Modal.Title>Manage Personal Information</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="formFile" className="mb-3">
+                <Form.Label>Avatar</Form.Label>
+                <Form.Control
+                  type="file"
+                  value={avatar}
+                  onChange={(e) => setAvatar(e.target.value)}
+                />
+              </Form.Group>
 
-                <hr></hr>
+              <Form.Group className="mb-3" controlId="formBasicFirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicFirstName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="First name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicLastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicLastName">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Last name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Form.Group>
+              <Form.Text className="text-muted">
+                Please enter your address to set your community home.
+              </Form.Text>
 
-                <Form.Text className="text-muted">
-                  Please enter your address to set your community home.
-                </Form.Text>
+              <Form.Group className="mb-3" controlId="formBasicStreetAddress">
+                <Form.Label>Street Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Street"
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicStreetAddress">
-                  <Form.Label>Street Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Street"
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
-                  />
-                </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicStateAddress">
+                <Form.Label>State</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="State"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicStateAddress">
-                  <Form.Label>State</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="State"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                  />
-                </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCityAddress">
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="City"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicCityAddress">
-                  <Form.Label>City</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicZipAddress">
+                <Form.Label>Zip Code</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Zip Code"
+                  value={zip}
+                  onChange={(e) => setZip(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicZipAddress">
-                  <Form.Label>Zip Code</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Zip Code"
-                    value={zip}
-                    onChange={(e) => setZip(e.target.value)}
-                  />
-                </Form.Group>
-
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={handleSubmitButton}
-                >
-                  Submit
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={handleSubmitButton}
+              >
+                Submit
+              </Button>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </Modal>
       </SettingsFormContainer>
     </>
   );
