@@ -1,7 +1,5 @@
 const router = require("express").Router();
 const User = require("../../models/User");
-// const requestRoutes = require("./requests");
-// const offersRoutes = require("./offers");
 
 //routes on co-health/profile
 router.get("/", async (req, res) => {
@@ -71,6 +69,7 @@ router.put("/settings", async (req, res) => {
     return err;
   }
 });
+
 // const healthcareMemberVerification = (req, res, next) => {
 //   if (req.profileType !== "healthcare member") {
 //     res.send("Cannot access");

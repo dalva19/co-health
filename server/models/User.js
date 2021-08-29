@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     street: { type: String },
     city: { type: String },
     state: { type: String },
-    zipcode: { type: String }, //fix-- saying NAN in db
+    zipcode: { type: String },
   },
   coordinates: {
     lat: { type: Number },
