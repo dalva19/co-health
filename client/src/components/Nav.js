@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { logout } from "../actions/memberActions";
 // import { useState } from "react";
 // import { Button, NavbarBrand, Offcanvas } from "react-bootstrap";
@@ -46,32 +47,29 @@ const Nav = () => {
           </div>
         </NavContainer>
       ) : (
-        <NavContainer>
-          <div>
-            <NavLink to="/">
-              <h2 id="logo">Co-Health</h2>
-            </NavLink>
-          </div>
-          <div>
-            <ul className="links">
-              <li>
-                <NavLink to="/co-health/register">
-                  <h4>sign up</h4>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/co-health/login">
-                  <h4>login</h4>
-                </NavLink>
-              </li>
-              {/* <li className="logout">
-                <NavLink to="/co-health/login">
-                  <h4>logout</h4>
-                </NavLink>
-              </li> */}
-            </ul>
-          </div>
-        </NavContainer>
+        <>
+          <NavContainer>
+            <div>
+              <NavLink to="/">
+                <h2 id="logo">Co-Health</h2>
+              </NavLink>
+            </div>
+            <div>
+              <ul className="links">
+                <li>
+                  <NavLink to="/co-health/register">
+                    <h4>sign up</h4>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/co-health/login">
+                    <h4>login</h4>
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </NavContainer>
+        </>
       )}
     </>
   );
