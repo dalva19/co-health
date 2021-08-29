@@ -2,6 +2,7 @@ import axios from "axios";
 
 //variables
 export const FETCH_MEMBER = "fetch_member";
+export const LOGOUT_MEMBER = "logout_member";
 
 //action creators
 export const login = (body) => (dispatch) => {
@@ -20,6 +21,7 @@ export const login = (body) => (dispatch) => {
 };
 
 //not working how i want it to
+//redux empties with refresh??
 export const getMemberProfile = () => (dispatch) => {
   const ROOT_URL = `http://localhost:8000`;
   axios
@@ -31,6 +33,20 @@ export const getMemberProfile = () => (dispatch) => {
           payload: response.data,
         });
       }
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const logout = () => (dispatch) => {
+  const ROOT_URL = `http://localhost:8000`;
+  axios
+    .get(`${ROOT_URL}/co-health/user/logout`)
+    .then((response) => {
+      dispatch({
+        type: LOGOUT_MEMBER,
+      });
     })
     .catch((error) => {
       return error;

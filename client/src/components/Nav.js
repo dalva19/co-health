@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { logout } from "../actions/memberActions";
 // import { useState } from "react";
 // import { Button, NavbarBrand, Offcanvas } from "react-bootstrap";
 import styled from "styled-components";
 // import OffCanvasNav from "../components/profile/OffCanvasNav";
 
 const Nav = () => {
+  const dispatch = useDispatch();
   const { loaded } = useSelector((state) => state.member);
   const { username, avatar } = useSelector((state) => state.member.member);
 
@@ -15,26 +17,31 @@ const Nav = () => {
     },
   ];
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <>
       {loaded ? (
         <NavContainer>
-          <div className="bars-title">
-            {/* <div className="bars">
-              {options.map((props, idx) => (
-                <OffCanvasNav key={idx} {...props} />
-              ))}
-            </div> */}
-            <div>
-              <NavLink to="/">
-                <h2 id="logo">Co-Health</h2>
-              </NavLink>
-            </div>
+          <div>
+            <NavLink to="/">
+              <h2 id="logo">Co-Health</h2>
+            </NavLink>
           </div>
+
           <div className="logged-in-name">
-            <h4>{username}</h4>
             <div>
               {avatar ? <img src={avatar} alt="avatar" /> : <h4>Pic</h4>}
+            </div>
+            <h4>Hi, {username}</h4>
+            <div>
+              <ul className="logout">
+                <li className="logout">
+                  <h4 onClick={handleLogout}>logout</h4>
+                </li>
+              </ul>
             </div>
           </div>
         </NavContainer>
@@ -57,11 +64,11 @@ const Nav = () => {
                   <h4>login</h4>
                 </NavLink>
               </li>
-              <li className="logout">
+              {/* <li className="logout">
                 <NavLink to="/co-health/login">
                   <h4>logout</h4>
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         </NavContainer>
@@ -105,7 +112,7 @@ const NavContainer = styled.div`
     justify-content: space-evenly;
     color: white;
     h4 {
-      font-size: 20px;
+      font-size: 18px;
       padding-right: 1rem;
     }
   }
@@ -122,6 +129,20 @@ const NavContainer = styled.div`
       position: relative;
       padding-left: 5rem;
       padding-top: 0.5rem;
+    }
+    h4 {
+      font-size: 18px;
+      &:hover {
+        color: #fad39e;
+      }
+    }
+  }
+  .logout {
+    text-decoration: underline;
+    text-underline-offset: 15px;
+    cursor: pointer;
+    li {
+      list-style: none;
     }
     h4 {
       font-size: 18px;

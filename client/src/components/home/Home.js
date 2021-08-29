@@ -11,7 +11,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { loaded } = useSelector((state) => state.member);
 
-  //rewrite to login with the cookies in local storage??
   // useEffect(() => {
   //   dispatch(getMemberProfile());
   // }, [dispatch]);

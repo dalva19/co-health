@@ -1,4 +1,5 @@
 import { FETCH_MEMBER } from "../actions/memberActions";
+import { LOGOUT_MEMBER } from "../actions/memberActions";
 
 const DEFAULT_STATE = {
   member: [],
@@ -12,6 +13,11 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
         ...state,
         member: action.payload,
         loaded: true,
+      };
+    case LOGOUT_MEMBER:
+      return {
+        member: [],
+        loaded: false,
       };
     default:
       return state;
