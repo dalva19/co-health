@@ -89,8 +89,8 @@ const UserRegistration = () => {
                     onChange={handleSelectProfileInput}
                   >
                     <option value="">Choose...</option>
-                    <option value="Healthcare Member">Healthcare Member</option>
-                    <option value="Community Member">Community Member</option>
+                    <option value="healthcare member">Healthcare Member</option>
+                    <option value="community member">Community Member</option>
                   </Form.Select>
                 </Form.Group>
 
