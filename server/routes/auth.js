@@ -26,19 +26,23 @@ router.post("/register", async (req, res) => {
     return res.status(400).send("Username already exists.");
   }
 
+  const user = {
+    username: req.body.username,
+    email: req.body.email,
+    profileType: req.body.profileType,
+    name: { firstName: req.body.firstName, lastName: req.body.lastName },
+    address: {
+      street: req.body.street,
+      city: req.body.city,
+      state: req.body.state,
+      zipcode: parseInt(req.body.zipcode),
+    },
+  };
+
   //new user based on profile type
   if (req.body.profileType === "healthcare member") {
-    const user = new User({
-      username: req.body.username,
-      email: req.body.email,
-      profileType: req.body.profileType,
-      name: { firstName: req.body.firstName, lastName: req.body.lastName },
-      address: {
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: parseInt(req.body.zipcode),
-      },
+    const newUser = new User({
+      ...user,
       credentials: {
         liscence: req.body.liscence,
         liscenceNumber: req.body.liscenceNumber,
@@ -46,35 +50,40 @@ router.post("/register", async (req, res) => {
       },
     });
 
-    user.setPassword(req.body.password);
+    newUser.setPassword(req.body.password);
 
     try {
-      await user.save();
-      // res.redirect("/co-health");
-      res.send({ user: savedUser });
+      const savedUser = await newUser.save();
+      res.status(200).send({
+        user: {
+          username: savedUser.username,
+          email: savedUser.email,
+          profileType: savedUser.profileType,
+          name: savedUser.name,
+          address: savedUser.address,
+          credentials: savedUser.credentials,
+        },
+      });
     } catch (err) {
       res.status(400).send(err);
     }
   } else {
-    const user = new User({
-      username: req.body.username,
-      email: req.body.email,
-      profileType: req.body.profileType,
-      name: { firstName: req.body.firstName, lastName: req.body.lastName },
-      address: {
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: parseInt(req.body.zipcode),
-      },
-    });
+    const newUser = new User({ ...user });
 
-    user.setPassword(req.body.password);
+    newUser.setPassword(req.body.password);
 
     try {
-      await user.save();
+      const savedUser = await user.save();
       // res.redirect("/co-health");
-      res.send({ user: user._id });
+      res.status(200).send({
+        user: {
+          username: savedUser.username,
+          email: savedUser.email,
+          profileType: savedUser.profileType,
+          name: savedUser.name,
+          address: savedUser.address,
+        },
+      });
     } catch (err) {
       res.status(400).send(err);
     }

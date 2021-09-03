@@ -13,9 +13,9 @@ const authenticateRequest = function (req, res, next) {
   }
 };
 
-router.use("/user", authRoutes);
-router.use("/profile", authenticateRequest, profileRoutes);
-router.use("/profile/requests", requestRoutes);
-router.use("/profile/offers", offerRoutes);
+router.use("/api/user", authRoutes);
+router.use("/api/profile", authenticateRequest, profileRoutes);
+router.use("/api/profile/requests", requestRoutes);
+router.use("/api/profile/offers", offerRoutes);
 
 module.exports = router;
