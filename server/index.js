@@ -39,7 +39,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors(corsOptions));
+app.use(cors());
 
 //routes
 app.use("/co-health/", routes);
