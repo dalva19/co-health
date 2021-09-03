@@ -40,7 +40,7 @@ app.use(passport.session());
 app.use(cors(corsOptions));
 
 //routes
-app.use("/co-health/", routes);
+// app.use("/co-health/", routes);
 
 //cofiguring client routes
 if (process.env.NODE_ENV === "production") {
