@@ -8,23 +8,20 @@ mongoose.set("useFindAndModify", false);
 //get all offer you've made
 
 router.get("/", async (req, res) => {
-  res.status(200);
-
   if (!req.user.credentials.verified) {
     return res.status(401).send("You must have a verified liscence.");
   }
 
   //finds the offers based on user from Offer collection and populates corresponding requests
   try {
-    await Offer.find({ user: req.user._id })
+    const offer = await Offer.find({ user: req.user._id })
       .populate("request")
       .exec((err, offer) => {
         if (err) {
-          console.log(err);
-        } else {
-          res.send(offer);
+          return err;
         }
       });
+    res.status(200).send(offer);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -69,13 +66,15 @@ router.post("/:requestID", async (req, res) => {
     });
 
     try {
-      await offer.save();
-      user.offers.push(offer);
-      request.offers.push(offer);
-      await user.save();
-      await request.save();
+      const savedOffer = await offer.save();
+      user.offers.push(savedOffer);
+      request.offers.push(savedOffer);
+      const savedUser = await user.save();
+      const savedRequest = await request.save();
 
-      res.send({ user: user._id });
+      res
+        .status(200)
+        .send({ user: user._id, request: savedRequest, offer: savedOffer });
     } catch (err) {
       res.status(400).send(err);
     }
@@ -96,13 +95,18 @@ router.put("/edit/:offerID", async (req, res) => {
       return res.status(400).send("Bad request.");
     }
 
-    await Offer.findByIdAndUpdate(offer._id, update, (err, doc) => {
-      if (err) {
-        return err;
-      } else {
-        res.status(200).send(`successful edit on ${doc}`);
+    const savedOfferEdit = await Offer.findByIdAndUpdate(
+      offer._id,
+      update,
+      { new: true },
+      (err, offer) => {
+        if (err) {
+          return err;
+        }
       }
-    });
+    ).populate("request");
+
+    res.status(200).send(savedOfferEdit);
   } catch (err) {
     res.status(400).send(err);
   }
