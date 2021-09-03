@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const Offer = require("../../models/Offer");
 const User = require("../../models/User");
 const Request = require("../../models/Request");
-mongoose.set("useFindAndModify", false);
+// mongoose.set("useFindAndModify", false);
 
 //get all offer you've made
-
 router.get("/", async (req, res) => {
   if (!req.user.credentials.verified) {
     return res.status(401).send("You must have a verified liscence.");

@@ -56,6 +56,7 @@ router.post("/register", async (req, res) => {
       const savedUser = await newUser.save();
       res.status(200).send({
         user: {
+          _id: savedUser._id,
           username: savedUser.username,
           email: savedUser.email,
           profileType: savedUser.profileType,
@@ -77,6 +78,7 @@ router.post("/register", async (req, res) => {
       // res.redirect("/co-health");
       res.status(200).send({
         user: {
+          _id: savedUser._id,
           username: savedUser.username,
           email: savedUser.email,
           profileType: savedUser.profileType,
@@ -93,7 +95,7 @@ router.post("/register", async (req, res) => {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/co-health/profile",
+    successRedirect: "/co-health/api/profile",
     failureRedirect: "login",
   })
 );

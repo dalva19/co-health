@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Request = require("../../models/Request");
 const User = require("../../models/User");
 const Offer = require("../../models/Offer");
-mongoose.set("useFindAndModify", false);
+// mongoose.set("useFindAndModify", false);
 
 //need to add validation
 

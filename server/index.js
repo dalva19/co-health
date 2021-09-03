@@ -1,33 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const app = express();
 const cookieSession = require("cookie-session");
-const passport = require("passport");
-const routes = require("./routes/index");
 const cors = require("cors");
 require("dotenv/config");
+const passport = require("passport");
+const routes = require("./routes/index");
+const keys = require("./config/keys");
+const app = express();
 
 //connect to database
-const env = process.env.NODE_ENV || "development";
-if (env === "test") {
-  process.env.MONGODB_URI = "mongodb://localhost/co-health-test";
-} else {
-  process.env.MONGODB_URI = "mongodb://localhost/co-health";
-}
 mongoose.connect(
-  process.env.MONGODB_URI,
+  keys.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("connected to db")
 );
-
-// mongoose.connect(
-//   "mongodb://localhost/co-health",
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   },
-//   () => console.log("connected to db")
-// );
 
 //middleware
 const corsOptions = {
@@ -56,6 +42,18 @@ app.use(cors(corsOptions));
 //routes
 app.use("/co-health/", routes);
 
-app.listen(8000, () => console.log("Server is running on port 8000."));
+//cofiguring client routes
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
+
+  // All other GET requests not handled before will return our React app
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+  });
+}
+//PORT
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => console.log("Server is running on port 8000."));
 
 module.exports = app;
