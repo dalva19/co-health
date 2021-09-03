@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
 require("dotenv/config");
+const { urlencoded } = require("express");
 const passport = require("passport");
 const routes = require("./routes/index");
 const keys = require("./config/keys");
@@ -28,6 +29,7 @@ const corsOptions = {
 };
 
 app.use(express.json());
+app.use(urlencoded({ extended: false }));
 app.use(
   cookieSession({
     name: "session",
@@ -40,17 +42,20 @@ app.use(passport.session());
 app.use(cors(corsOptions));
 
 //routes
-// app.use("/co-health/", routes);
+app.use("/co-health/", routes);
 
 //cofiguring client routes
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, "../client/build")));
+  // Serve build assets
+  app.use(express.static("client/build"));
 
-  // All other GET requests not handled before will return our React app
+  // Serve index.html from /build for base route (catch all)
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+    // eslint-disable-next-line no-undef
+    res.sendFile(path.resolve("client", "build", "index.html"));
   });
 }
+
 //PORT
 const PORT = process.env.PORT || 8000;
 

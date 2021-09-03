@@ -1,6 +1,6 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlus } from "@fortawesome/free-solid-svg-icons";
 //components
 import NavigationTabs from "./NavigationTabs";
 //styling
@@ -12,7 +12,7 @@ const CommunityProfile = () => {
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile" />
       <ProfileContainer>
-        <FontAwesomeIcon icon={faPlus} className="icon fa-2x plus " />
+        {/* <FontAwesomeIcon icon={faPlus} className="icon fa-2x plus " /> */}
         <p>Make a Request</p>
 
         <h1>Community Member</h1>
