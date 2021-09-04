@@ -24,9 +24,6 @@ const App = () => {
       <GlobalStyle />
       <Nav />
       <Switch>
-        <Route exact path="/">
-          <Redirect to="/co-health" />
-        </Route>
         <Route exact path="/co-health">
           <HomePage />
         </Route>
@@ -47,6 +44,10 @@ const App = () => {
         </Route>
         <Route exact path="/co-health/profile/messages">
           <MessagesPage />
+        </Route>
+
+        <Route exact path="/">
+          <Redirect to="/co-health" />
         </Route>
       </Switch>
     </>

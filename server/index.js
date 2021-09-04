@@ -7,6 +7,7 @@ const { urlencoded } = require("express");
 const passport = require("passport");
 const routes = require("./routes/index");
 const keys = require("./config/keys");
+
 const app = express();
 
 //PORT
@@ -59,6 +60,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT} .`));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
 
 module.exports = app;
