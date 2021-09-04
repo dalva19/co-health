@@ -45,7 +45,7 @@ app.use(passport.session());
 app.use(cors(corsOptions));
 
 //routes
-app.use("/co-health", routes);
+app.use(routes);
 
 //cofiguring client routes
 if (process.env.NODE_ENV === "production") {
@@ -59,6 +59,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => console.log("Server is running on port 8000."));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT} .`));
 
 module.exports = app;

@@ -13,9 +13,9 @@ const authenticateRequest = function (req, res, next) {
   }
 };
 
-router.use("/api/user", authRoutes);
-router.use("/api/profile", authenticateRequest, profileRoutes);
-router.use("/api/profile/requests", requestRoutes);
-router.use("/api/profile/offers", offerRoutes);
+router.use("/co-health/api/user", authRoutes);
+router.use("/co-health/api/profile", authenticateRequest, profileRoutes);
+router.use("/co-health/api/profile/requests", requestRoutes);
+router.use("/co-health/api/profile/offers", offerRoutes);
 
 module.exports = router;
