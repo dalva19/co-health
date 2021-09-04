@@ -9,6 +9,9 @@ const routes = require("./routes/index");
 const keys = require("./config/keys");
 const app = express();
 
+//PORT
+const PORT = process.env.PORT || 8000;
+
 //connect to database
 mongoose.connect(
   keys.MONGODB_URI,
@@ -42,7 +45,7 @@ app.use(passport.session());
 app.use(cors(corsOptions));
 
 //routes
-app.use("/co-health/", routes);
+app.use("/co-health", routes);
 
 //cofiguring client routes
 if (process.env.NODE_ENV === "production") {
@@ -55,9 +58,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve("client", "build", "index.html"));
   });
 }
-
-//PORT
-const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => console.log("Server is running on port 8000."));
 

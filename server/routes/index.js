@@ -7,7 +7,7 @@ const offerRoutes = require("./profile/offers");
 const authenticateRequest = function (req, res, next) {
   if (!req.isAuthenticated()) {
     // Redirect to login
-    res.redirect("/co-health/user/login");
+    res.redirect("/co-health/api/user/login");
   } else {
     next();
   }
