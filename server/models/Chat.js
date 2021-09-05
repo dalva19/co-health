@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ChatSchema = new mongoose.Schema({
+const ChatSchema = new Schema({
   status: { type: String },
   sender: { type: String },
   recipient: { type: String },

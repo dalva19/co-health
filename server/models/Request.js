@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const RequestSchema = new mongoose.Schema({
+const RequestSchema = new Schema({
   text: { type: String, required: true },
   username: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User" }, //user who makes request

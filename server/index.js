@@ -68,8 +68,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //io
+//how to join 2 members in a chat
 io.on("connection", (socket) => {
-  console.log("new web socket connection");
+  let chatRoom;
+
   socket.on("message", ({ username, message }) => {
     io.emit("message", { username, message });
   });

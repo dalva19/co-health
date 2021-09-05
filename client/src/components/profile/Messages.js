@@ -6,12 +6,13 @@ import NavigationTabs from "./NavigationTabs";
 //stylind
 import { InputGroup, FormControl } from "react-bootstrap";
 
-const socket = io.connect("http://localhost:8000");
+const socket = io.connect("http://localhost:8000"); //add process.env.PORT for when on heroku?
 
 const Messages = () => {
   const { username } = useSelector((state) => state.member.member);
 
   const [state, setState] = useState({ message: "", username: username });
+  //add chatlog from db??
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const Messages = () => {
     setState({ message: "", username });
   };
 
+  //add db chat and new messages
   const renderChat = () => {
     return chat.map(({ username, message }, index) => (
       <div key={index}>
@@ -42,7 +44,6 @@ const Messages = () => {
     ));
   };
 
-  //loads with profile info based on who is logged in
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile/messages" />
