@@ -70,8 +70,8 @@ if (process.env.NODE_ENV === "production") {
 //io
 io.on("connection", (socket) => {
   console.log("new web socket connection");
-  socket.on("message", ({ name, message }) => {
-    io.emit("message", { name, message });
+  socket.on("message", ({ username, message }) => {
+    io.emit("message", { username, message });
   });
 });
 

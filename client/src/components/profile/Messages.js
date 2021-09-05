@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import io from "socket.io-client";
-import { InputGroup, FormControl } from "react-bootstrap";
 //components
 import NavigationTabs from "./NavigationTabs";
+//stylind
+import { InputGroup, FormControl } from "react-bootstrap";
 
 const socket = io.connect("http://localhost:8000");
 
 const Messages = () => {
-  const [state, setState] = useState({ message: "", name: "" });
+  const { username } = useSelector((state) => state.member.member);
+
+  const [state, setState] = useState({ message: "", username: username });
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    socket.on("message", ({ name, message }) => {
-      setChat([...chat, { name, message }]);
+    socket.on("message", ({ username, message }) => {
+      setChat([...chat, { username, message }]);
     });
   });
 
@@ -23,16 +27,16 @@ const Messages = () => {
 
   const onMessageSubmit = (e) => {
     e.preventDefault();
-    const { name, message } = state;
-    socket.emit("message", { name, message });
-    setState({ message: "", name });
+    const { username, message } = state;
+    socket.emit("message", { username, message });
+    setState({ message: "", username });
   };
 
   const renderChat = () => {
-    return chat.map(({ name, message }, index) => (
+    return chat.map(({ username, message }, index) => (
       <div key={index}>
         <h3>
-          {name}: <span>{message}</span>
+          {username}: <span>{message}</span>
         </h3>
       </div>
     ));
@@ -45,17 +49,6 @@ const Messages = () => {
       <div>
         <form onSubmit={onMessageSubmit}>
           <h1>Messenger</h1>
-          <div className="name-field">
-            <InputGroup className="mb-3">
-              <InputGroup.Text>Name</InputGroup.Text>
-              <FormControl
-                aria-label="Name"
-                name="name"
-                onChange={(e) => onTextChange(e)}
-                value={state.name}
-              />
-            </InputGroup>
-          </div>
 
           <div>
             <InputGroup className="mb-3">
