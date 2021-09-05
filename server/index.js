@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const http = require("http");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
 require("dotenv/config");
@@ -9,6 +10,12 @@ const routes = require("./routes/index");
 const keys = require("./config/keys");
 
 const app = express();
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 //PORT
 const PORT = process.env.PORT || 8000;
@@ -60,6 +67,15 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+//io
+io.on("connection", (socket) => {
+  console.log("new web socket connection");
+  socket.on("message", ({ name, message }) => {
+    io.emit("message", { name, message });
+  });
+});
+
+//server
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
 
 module.exports = app;
