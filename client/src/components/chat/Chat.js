@@ -162,13 +162,13 @@ const Chat = () => {
   const handleJoin = () => {
     socket = io(ENDPOINT);
 
-    console.log(connectId);
-
     socket.emit("join", { username, room, connectId }, (error) => {
       if (error) {
         console.log(error);
       }
     });
+
+    //lift up to redux
     joined = true;
   };
 
@@ -181,8 +181,13 @@ const Chat = () => {
   const sendMessage = (event) => {
     event.preventDefault();
 
+    const log = {
+      message: message,
+      username: username,
+    };
+
     if (message) {
-      socket.emit("sendMessage", { message, username }, () => setMessage(""));
+      socket.emit("sendMessage", log, () => setMessage(""));
     }
   };
 

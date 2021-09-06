@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ChatSchema = new Schema({
-  status: { type: String },
+  connectId: { type: String },
   sender: { type: String },
   recipient: { type: String },
   chatLog: { type: Array },

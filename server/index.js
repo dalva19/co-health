@@ -8,6 +8,7 @@ const { urlencoded } = require("express");
 const passport = require("passport");
 const routes = require("./routes/index");
 const keys = require("./config/keys");
+const Chat = require("./models/Chat");
 
 const app = express();
 const server = http.createServer(app);
@@ -79,6 +80,7 @@ if (process.env.NODE_ENV === "production") {
 
 io.on("connect", (socket) => {
   let chatRoom;
+  let id;
 
   socket.on("join", ({ username, room, connectId }, callback) => {
     // const { error, user } = addUser({
@@ -92,7 +94,18 @@ io.on("connect", (socket) => {
 
     if (room === "chat") {
       chatRoom = `${connectId}chat`;
+      id = connectId;
       socket.join(chatRoom);
+
+      // const newChat = new Chat({
+      //   connectId: connectId,
+      // });
+
+      // try {
+      //   const savedChat = newChat.save();
+      // } catch (err) {
+      //   return err;
+      // }
     }
 
     console.log("connected to sockect io");
@@ -100,10 +113,19 @@ io.on("connect", (socket) => {
     callback();
   });
 
-  socket.on("sendMessage", ({ message, username }, callback) => {
+  socket.on("sendMessage", async (log, callback) => {
     // const user = getUser(socket.id);
+    const update = { $push: { chatLog: log } };
 
-    io.in(chatRoom).emit("message", { user: username, text: message });
+    try {
+      await Chat.findByIdAndUpdate({ _id: id }, update, {
+        new: true,
+      });
+    } catch (err) {
+      return err;
+    }
+
+    io.in(chatRoom).emit("message", { user: log.username, text: log.message });
 
     callback();
   });
