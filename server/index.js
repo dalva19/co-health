@@ -78,33 +78,32 @@ if (process.env.NODE_ENV === "production") {
 //how to join 2 members in a chat
 
 io.on("connect", (socket) => {
-  socket.on("join", ({ name, room }, callback) => {
-    const { error, user } = addUser({ id: socket.id, name, room });
+  let chatRoom;
 
-    if (error) return callback(error);
+  socket.on("join", ({ username, room, connectId }, callback) => {
+    // const { error, user } = addUser({
+    //   id: socket.id,
+    //   username,
+    //   room,
+    //   connectId,
+    // });
 
-    socket.join(user.room);
+    // if (error) return callback(error);
 
-    socket.emit("message", {
-      user: "admin",
-      text: `${user.name}, welcome to room ${user.room}.`,
-    });
-    socket.broadcast
-      .to(user.room)
-      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+    if (room === "chat") {
+      chatRoom = `${connectId}chat`;
+      socket.join(chatRoom);
+    }
 
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    });
+    console.log("connected to sockect io");
 
     callback();
   });
 
-  socket.on("sendMessage", (message, callback) => {
-    const user = getUser(socket.id);
+  socket.on("sendMessage", ({ message, username }, callback) => {
+    // const user = getUser(socket.id);
 
-    io.to(user.room).emit("message", { user: user.name, text: message });
+    io.in(chatRoom).emit("message", { user: username, text: message });
 
     callback();
   });

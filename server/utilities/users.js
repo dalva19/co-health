@@ -1,19 +1,20 @@
 const users = [];
 
-const addUser = ({ id, name, room }) => {
-  name = name.trim().toLowerCase();
+const addUser = ({ id, username, room, connectId }) => {
+  username = username.trim().toLowerCase();
   room = room.trim().toLowerCase();
 
   const existingUser = users.find(
-    (user) => user.room === room && user.name === name
+    (user) => user.room === room && user.username === username
   );
 
-  if (!name || !room) return { error: "Username and room are required." };
-  if (existingUser) return { error: "Username is taken." };
+  if (!username || !room) return { error: "Username and room are required." };
 
-  const user = { id, name, room };
+  const user = { id, username, room, connectId };
 
   users.push(user);
+
+  console.log(users);
 
   return { user };
 };
