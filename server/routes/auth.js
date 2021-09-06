@@ -68,13 +68,13 @@ router.post("/register", async (req, res) => {
     } catch (err) {
       res.status(400).send(err);
     }
-  } else {
+  } else if (req.body.profileType === "community member") {
     const newUser = new User({ ...user });
 
     newUser.setPassword(req.body.password);
 
     try {
-      const savedUser = await user.save();
+      const savedUser = await newUser.save();
       // res.redirect("/co-health");
       res.status(200).send({
         user: {

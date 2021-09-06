@@ -13,14 +13,14 @@ router.get("/", async (req, res) => {
 
   //finds the offers based on user from Offer collection and populates corresponding requests
   try {
-    const offer = await Offer.find({ user: req.user._id })
+    const offers = await Offer.find({ user: req.user._id })
       .populate("request")
       .exec((err, offer) => {
         if (err) {
           return err;
         }
       });
-    res.status(200).send(offer);
+    res.status(200).send(offers);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -83,7 +83,7 @@ router.post("/:requestID", async (req, res) => {
 //PUT route for /:offerID to edit text
 router.put("/edit/:offerID", async (req, res) => {
   try {
-    const offer = await Offer.findById({ _id: req.params.offerID });
+    const offer = await Offer.findById(req.params.offerID);
     let update;
 
     if (req.body.text) {

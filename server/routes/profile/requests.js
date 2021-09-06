@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Request = require("../../models/Request");
 const User = require("../../models/User");
 const Offer = require("../../models/Offer");
+const ObjectId = require("mongoose").Types.ObjectId;
 // mongoose.set("useFindAndModify", false);
 
 //need to add validation
@@ -10,11 +11,11 @@ const Offer = require("../../models/Offer");
 //finds the requests based on user from Request collection and populates corresponding offers
 router.get("/", async (req, res) => {
   try {
-    const requests = await Request.find({ user: req.user._id })
+    await Request.find({ user: new ObjectId(req.user._id) })
       .populate("offers")
-      .exec((err, request) => {
+      .exec((err, requests) => {
         if (err) {
-          console.log(err);
+          return err;
         } else {
           res.status(200).send(requests);
         }
@@ -41,8 +42,14 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  if (!req.body.text) {
+    return res.status(400).send("Bad request");
+  }
+
   if (req.user.profileType === "community member") {
-    const user = await User.findById({ _id: req.user._id });
+    const user = await User.findById({ _id: req.user._id }).populate(
+      "requests"
+    );
 
     const request = new Request({
       text: req.body.text,
@@ -55,7 +62,7 @@ router.post("/", async (req, res) => {
       const savedRequest = await request.save();
       user.requests.push(savedRequest);
       const savedUser = await user.save();
-      res.status(200).send(savedRequest);
+      res.status(200).send({ user: savedUser, newRequest: savedRequest });
     } catch (err) {
       res.status(400).send(err);
     }
@@ -65,7 +72,10 @@ router.post("/", async (req, res) => {
 //PUT updates to edit request based on id
 router.put("/edit/:request", async (req, res) => {
   try {
-    const request = await Request.findById({ _id: req.params.request });
+    const request = await Request.findById({
+      _id: req.params.request,
+    }).populate("user");
+
     let update;
 
     if (req.body.text) {
@@ -76,20 +86,10 @@ router.put("/edit/:request", async (req, res) => {
       return res.status(400).send("Bad request.");
     }
 
-    const requestEdit = await Request.findByIdAndUpdate(
-      request._id,
-      update,
-      { new: true },
-      (err, request) => {
-        if (err) {
-          return err;
-        }
-        //else {
-        //   res.status(200).send(`successful edit on ${request}`);
-        // }
-        res.status(200).send(requestEdit);
-      }
-    );
+    const requestEdit = await Request.findByIdAndUpdate(request._id, update, {
+      new: true,
+    });
+    res.status(200).send({ request: requestEdit });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -99,8 +99,8 @@ router.put("/edit/:request", async (req, res) => {
 //made by the community member
 router.put("/edit/offer/status/:offerID", async (req, res) => {
   try {
-    const offer = await Offer.findById({ _id: req.params.offerID });
-    const request = await Request.findById({ _id: offer.request });
+    const offer = await Offer.findById(req.params.offerID);
+    const request = await Request.findById(offer.request);
     let offerUpdate;
     let requestUpdate;
 
@@ -110,7 +110,7 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       };
 
       requestUpdate = {
-        $set: { status: req.body.status },
+        $set: { status: req.body.status, acceptedOffer: offer.id },
       };
     } else if (req.body.status === "offer declined") {
       offerUpdate = {
@@ -124,28 +124,19 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       return res.status(400).send("Bad request");
     }
 
-    await Offer.findByIdAndUpdate(offer._id, offerUpdate, (err, doc) => {
-      if (err) {
-        return err;
-      } else {
-        console.log(doc);
-      }
-    });
+    const offerStatusEdit = await Offer.findByIdAndUpdate(
+      offer._id,
+      offerUpdate,
+      { new: true }
+    ).populate("request");
 
     const requestStatusEdit = await Request.findByIdAndUpdate(
       request._id,
       requestUpdate,
-      { new: true },
-      (err, doc) => {
-        if (err) {
-          return err;
-        } else {
-          console.log(doc);
-        }
-      }
-    );
+      { new: true }
+    ).populate("acceptedOffer");
 
-    res.status(200).send(requestStatusEdit);
+    res.status(200).send({ request: requestStatusEdit });
   } catch (err) {
     res.status(400).send(err);
   }

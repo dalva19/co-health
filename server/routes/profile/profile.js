@@ -4,7 +4,9 @@ const User = require("../../models/User");
 //routes on co-health/profile
 router.get("/", async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate("requests");
+    const user = await User.findById(req.user._id)
+      .populate("requests")
+      .populate("offers");
 
     res.status(200).send({
       _id: user._id,

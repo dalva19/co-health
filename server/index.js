@@ -17,6 +17,13 @@ const io = require("socket.io")(server, {
   },
 });
 
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+} = require("./utilities/users");
+
 //PORT
 const PORT = process.env.PORT || 8000;
 
@@ -69,13 +76,107 @@ if (process.env.NODE_ENV === "production") {
 
 //io
 //how to join 2 members in a chat
-io.on("connection", (socket) => {
-  let chatRoom;
 
-  socket.on("message", ({ username, message }) => {
-    io.emit("message", { username, message });
+io.on("connect", (socket) => {
+  socket.on("join", ({ name, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
+
+    if (error) return callback(error);
+
+    socket.join(user.room);
+
+    socket.emit("message", {
+      user: "admin",
+      text: `${user.name}, welcome to room ${user.room}.`,
+    });
+    socket.broadcast
+      .to(user.room)
+      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUsersInRoom(user.room),
+    });
+
+    callback();
+  });
+
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit("message", { user: user.name, text: message });
+
+    callback();
+  });
+
+  socket.on("disconnect", () => {
+    const user = removeUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.name} has left.`,
+      });
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room),
+      });
+    }
   });
 });
+
+// let users = [];
+// const messages = {
+//   chat: [],
+//   general: [],
+// };
+// io.on("connection", (socket) => {
+//   // io.emit("message", { username, message });
+//   socket.on("join server"),
+//     (username) => {
+//       const user = {
+//         username,
+//         id: socket.id,
+//       };
+
+//       users.push(user);
+//       io.emit("new user", users);
+//     };
+
+//   socket.on("join room", (roomName, cb) => {
+//     socket.join(roomName);
+//     cb(messages[roomName]);
+//   });
+
+//   socket.on("send message", ({ content, to, sender, chatName, isChannel }) => {
+//     if (isChannel) {
+//       const payload = {
+//         content,
+//         chatName,
+//         sender,
+//       };
+
+//       socket.to(to).emit("new message", payload);
+//     } else {
+//       const payload = {
+//         content,
+//         chatName: sender,
+//         sender,
+//       };
+
+//       socket.to(to).emit("new message", payload);
+//     }
+
+//     if (messages[chatName]) {
+//       messages[chatName].push({ sender, content });
+//     }
+//   });
+
+//   socket.on("disconnec", () => {
+//     users = users.filter((u) => u.id !== socket.id);
+//     io.emit("new user", users);
+//   });
+// });
 
 //server
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
