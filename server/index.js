@@ -92,6 +92,8 @@ io.on("connect", (socket) => {
 
     // if (error) return callback(error);
 
+    console.log(connectId);
+
     if (room === "chat") {
       chatRoom = `${connectId}chat`;
       id = connectId;
@@ -103,6 +105,7 @@ io.on("connect", (socket) => {
         if (!chat) {
           const newChat = new Chat({
             connectId: connectId,
+            sender: username,
           });
           const savedChat = newChat.save();
         }
@@ -112,6 +115,7 @@ io.on("connect", (socket) => {
     }
 
     console.log("connected to sockect io");
+    console.log(chatRoom);
 
     callback();
   });
@@ -128,7 +132,10 @@ io.on("connect", (socket) => {
       return err;
     }
 
-    io.in(chatRoom).emit("message", { user: log.username, text: log.message });
+    io.in(chatRoom).emit("message", {
+      username: log.username,
+      message: log.message,
+    });
 
     callback();
   });

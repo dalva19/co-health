@@ -1,9 +1,9 @@
 import React from "react";
 
-const Message = ({ message: { text, user }, username }) => {
+const Message = ({ message, username }) => {
   let isSentByCurrentUser = false;
 
-  const trimmedName = user.trim().toLowerCase();
+  const trimmedName = message.username.trim().toLowerCase();
 
   if (username === trimmedName) {
     isSentByCurrentUser = true;
@@ -13,15 +13,15 @@ const Message = ({ message: { text, user }, username }) => {
     <div className="messageContainer justifyEnd">
       <p className="sentText pr-10">{trimmedName}</p>
       <div className="messageBox backgroundBlue">
-        <p className="messageText colorWhite">{text}</p>
+        <p className="messageText colorWhite">{message.message}</p>
       </div>
     </div>
   ) : (
     <div className="messageContainer justifyStart">
       <div className="messageBox backgroundLight">
-        <p className="messageText colorDark">{text}</p>
+        <p className="messageText colorDark">{message.message}</p>
       </div>
-      <p className="sentText pl-10 ">{user}</p>
+      <p className="sentText pl-10 ">{message.username}</p>
     </div>
   );
 };
