@@ -82,7 +82,7 @@ io.on("connect", (socket) => {
   let chatRoom;
   let id;
 
-  socket.on("join", ({ username, room, connectId }, callback) => {
+  socket.on("join", async ({ username, room, connectId }, callback) => {
     // const { error, user } = addUser({
     //   id: socket.id,
     //   username,
@@ -97,15 +97,18 @@ io.on("connect", (socket) => {
       id = connectId;
       socket.join(chatRoom);
 
-      // const newChat = new Chat({
-      //   connectId: connectId,
-      // });
+      try {
+        const chat = await Chat.findById(connectId);
 
-      // try {
-      //   const savedChat = newChat.save();
-      // } catch (err) {
-      //   return err;
-      // }
+        if (!chat) {
+          const newChat = new Chat({
+            connectId: connectId,
+          });
+          const savedChat = newChat.save();
+        }
+      } catch (err) {
+        return err;
+      }
     }
 
     console.log("connected to sockect io");

@@ -1,12 +1,10 @@
 import axios from "axios";
-
 //variables
 export const FETCH_MEMBER = "fetch_member";
 export const LOGOUT_MEMBER = "logout_member";
 
 //action creators
 export const login = (body) => (dispatch) => {
-  // const ROOT_URL = `http://localhost:8000`;
   axios
     .post(`/co-health/api/user/login`, body, { withCredentials: true })
     .then((response) => {
@@ -23,7 +21,6 @@ export const login = (body) => (dispatch) => {
 //not working how i want it to
 //redux empties with refresh??
 export const getMemberProfile = () => (dispatch) => {
-  // const ROOT_URL = `http://localhost:8000`;
   axios
     .get(`/co-health/api/profile/`, { withCredentials: true })
     .then((response) => {
@@ -40,7 +37,6 @@ export const getMemberProfile = () => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  // const ROOT_URL = `http://localhost:8000`;
   axios
     .get(`/co-health/api/user/logout`)
     .then((response) => {

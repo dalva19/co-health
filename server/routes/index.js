@@ -3,6 +3,7 @@ const authRoutes = require("./auth");
 const profileRoutes = require("./profile/profile");
 const requestRoutes = require("./profile/requests");
 const offerRoutes = require("./profile/offers");
+const chatRoutes = require("./chat");
 
 const authenticateRequest = function (req, res, next) {
   if (!req.isAuthenticated()) {
@@ -17,5 +18,6 @@ router.use("/co-health/api/user", authRoutes);
 router.use("/co-health/api/profile", authenticateRequest, profileRoutes);
 router.use("/co-health/api/profile/requests", requestRoutes);
 router.use("/co-health/api/profile/offers", offerRoutes);
+router.use("/co-health/api/chat", chatRoutes);
 
 module.exports = router;

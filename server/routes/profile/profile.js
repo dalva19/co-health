@@ -72,11 +72,4 @@ router.put("/settings", async (req, res) => {
   }
 });
 
-// const healthcareMemberVerification = (req, res, next) => {
-//   if (req.profileType !== "healthcare member") {
-//     res.send("Cannot access");
-//     next();
-//   }
-// };
-
 module.exports = router;

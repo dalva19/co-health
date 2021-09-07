@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
-// import TextContainer from "../TextContainer/TextContainer";
 import Messages from "./Messages";
 import InfoBar from "./InfoBar";
 import Input from "../chat/Input";
-import TextContainer from "./TextContainer";
 
 // import './Chat.css';
 const dummyData = [
@@ -203,7 +201,6 @@ const Chat = () => {
           sendMessage={sendMessage}
         />
       </div>
-      <TextContainer users={users} />
     </div>
   );
 };
