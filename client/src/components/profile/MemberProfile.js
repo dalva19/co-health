@@ -135,6 +135,7 @@ const MemberProfile = () => {
   const { member } = useSelector((state) => state.member);
 
   //fix to load all chats for a given user
+  //change chatAction to get all chats based on user ID of the person who is logged in
   useEffect(() => {
     const body = { connectId: dummyData[0].request.acceptedOffer };
     dispatch(getChat(body));
