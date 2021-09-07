@@ -165,6 +165,7 @@ const Chat = () => {
     }
     setConnectId(_id);
     setRoom(chatRoom);
+    setContact(true);
   };
 
   useEffect(() => {
