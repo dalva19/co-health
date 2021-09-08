@@ -98,15 +98,22 @@ router.put("/edit/:request", async (req, res) => {
 
 //PUT to edit offer status in Offer and Request
 //made by the community member
+//creates contact
+//creates chat
 router.put("/edit/offer/status/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById(req.params.offerID);
     const request = await Request.findById(offer.request);
-    const user = await User.findById(request.user);
-
+    const communityUser = await User.findById(request.user);
+    const healthcareUser = await User.findById(offer.user);
     let offerUpdate;
     let requestUpdate;
     let chat;
+
+    //return error if already accepted
+    if (req.body.status === request.status) {
+      return res.status(400).send("Bad request");
+    }
 
     if (req.body.status === "offer accepted") {
       offerUpdate = {
@@ -117,18 +124,43 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
         $set: { status: req.body.status, acceptedOffer: offer.id },
       };
 
-      //adds contact to user contact list
-      const newContact = offer.user;
-      user.contacts.push(newContact);
-      await user.save();
+      //adds contact to users contact list if not already connected
+      //creates new Chat if users not already connected
+      const existingCommunityContact = communityUser.contacts.find(
+        (contact) =>
+          contact.username.trim().toLowerCase() ===
+          healthcareUser.username.trim().toLowerCase()
+      );
+      const existingHealthcareContact = healthcareUser.contacts.find(
+        (contact) =>
+          contact.username.trim().toLowerCase() ===
+          communityUser.username.trim().toLowerCase()
+      );
 
-      //create chat for two users
-      const newChat = new Chat({
-        communityMember: user._id,
-        healthcareMember: offer.user,
-      });
+      if (!existingCommunityContact && !existingHealthcareContact) {
+        const newCommunityContact = {
+          username: communityUser.username,
+          user: communityUser._id,
+        };
 
-      chat = newChat.save();
+        const newHealthcareContact = {
+          username: healthcareUser.username,
+          user: healthcareUser._id,
+        };
+
+        chat = new Chat({
+          communityMember: communityUser._id,
+          healthcareMember: healthcareUser._id,
+        });
+
+        communityUser.contacts.push(newHealthcareContact);
+        healthcareUser.contacts.push(newCommunityContact);
+
+        await communityUser.save();
+        await healthcareUser.save();
+
+        chat = newChat.save();
+      }
     } else if (req.body.status === "offer declined") {
       offerUpdate = {
         $set: { status: req.body.status },
