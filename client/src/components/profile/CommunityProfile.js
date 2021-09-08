@@ -22,16 +22,15 @@ const CommunityProfile = () => {
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile" />
       <ProfileContainer>
-        <FontAwesomeIcon
-          icon={faPlus}
-          className="icon fa-2x plus "
-          onClick={handleShow}
-        />
-        <p>Make a Request</p>
+        <div className="add-request">
+          <FontAwesomeIcon
+            icon={faPlus}
+            className="icon fa-2x plus "
+            onClick={handleShow}
+          />
+        </div>
 
         {loaded ? <Requests requests={requests} /> : ""}
-
-        <h2>MAP and connections</h2>
       </ProfileContainer>
 
       <RequestForm
@@ -48,6 +47,9 @@ const ProfileContainer = styled.div`
   /* padding-top: 5vh; */
   padding-left: 2rem;
 
+  .add-request {
+    min-height: 20vh;
+  }
   .plus {
     cursor: pointer;
   }

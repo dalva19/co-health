@@ -1,20 +1,29 @@
 import Request from "./Request";
 //styling
-import { Row, Container } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
+import styled from "styled-components";
 
 //map requests to make ind request
-const Requests = (requests) => {
+const Requests = ({ requests }) => {
   return (
-    <>
-      <div className="requests">
-        {requests.requests.map((request, i) => (
-          <div key={i}>
-            <Request request={request} />
-          </div>
-        ))}
-      </div>
-    </>
+    <Col md={8}>
+      <Row>
+        <StyledCards>
+          {requests.map((request, i) => (
+            <div key={i}>
+              <Request request={request} />
+            </div>
+          ))}
+        </StyledCards>
+      </Row>
+    </Col>
   );
 };
+
+const StyledCards = styled.div`
+  min-height: 50vh;
+  display: flex;
+  flex-direction: row;
+`;
 
 export default Requests;
