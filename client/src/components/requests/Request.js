@@ -2,15 +2,14 @@
 import { Row, Container } from "react-bootstrap";
 
 //individual request items
-const Request = () => {
+const Request = (request) => {
   return (
-    <>
-      <Container>
-        <Row>
-          <h1>this is the requests container</h1>
-        </Row>
-      </Container>
-    </>
+    <div className="contactContainer">
+      <div>
+        <p className="request-username">{request.request.username}</p>
+        <p className="request-text">{request.request.text}</p>
+      </div>
+    </div>
   );
 };
 

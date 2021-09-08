@@ -1,15 +1,18 @@
+import Request from "./Request";
 //styling
 import { Row, Container } from "react-bootstrap";
 
 //map requests to make ind request
-const Requests = () => {
+const Requests = (requests) => {
   return (
     <>
-      <Container>
-        <Row>
-          <h1>this is the requests container</h1>
-        </Row>
-      </Container>
+      <div className="requests">
+        {requests.requests.map((request, i) => (
+          <div key={i}>
+            <Request request={request} />
+          </div>
+        ))}
+      </div>
     </>
   );
 };
