@@ -100,6 +100,7 @@ router.put("/edit/:request", async (req, res) => {
 //made by the community member
 //creates contact
 //creates chat
+//think about separating there into different routes???
 router.put("/edit/offer/status/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById(req.params.offerID);
