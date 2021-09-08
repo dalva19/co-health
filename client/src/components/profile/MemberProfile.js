@@ -130,16 +130,22 @@ const dummyData = [
   },
 ];
 
+const dummyContacts = [
+  {
+    _id: "6132b468fad052ba8ee058cc",
+  },
+];
+
 const MemberProfile = () => {
   const dispatch = useDispatch();
   const { member } = useSelector((state) => state.member);
 
   //fix to load all chats for a given user
   //change chatAction to get all chats based on user ID of the person who is logged in
-  useEffect(() => {
-    const body = { connectId: dummyData[0].request.acceptedOffer };
-    dispatch(getChat(body));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const body = { connectId: dummyData[0].request.acceptedOffer };
+  //   dispatch(getChat(body));
+  // }, [dispatch]);
 
   //loads with profile info based on who is logged in
   return (

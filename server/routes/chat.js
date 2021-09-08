@@ -1,11 +1,20 @@
 const router = require("express").Router();
 const Chat = require("../models/Chat");
+const User = require("../models/User");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 router.get("/", async (req, res) => {
   try {
-    const chat = await Chat.findOne({ connectId: req.body.connectId });
+    const chat = await Chat.find({
+      communityMember: req.query.communityMember,
+      healthcareMember: req.query.healthcareMember,
+    });
 
-    res.status(200).send(chat);
+    if (!chat) {
+      return res.status(404).send("No chats found");
+    }
+
+    res.status(200).send(chat[0]);
   } catch (err) {
     res.status(400).send(err);
   }

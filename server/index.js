@@ -82,7 +82,7 @@ io.on("connect", (socket) => {
   let chatRoom;
   let id;
 
-  socket.on("join", async ({ username, room, connectId }, callback) => {
+  socket.on("join", async ({ username, room, chatId }, callback) => {
     // const { error, user } = addUser({
     //   id: socket.id,
     //   username,
@@ -92,26 +92,24 @@ io.on("connect", (socket) => {
 
     // if (error) return callback(error);
 
-    console.log(connectId);
-
     if (room === "chat") {
-      chatRoom = `${connectId}chat`;
-      id = connectId;
+      id = chatId;
+      chatRoom = `${id}chat`;
       socket.join(chatRoom);
 
-      try {
-        const chat = await Chat.findById(connectId);
+      // try {
+      //   const chat = await Chat.findOne({ connectId: id });
 
-        if (!chat) {
-          const newChat = new Chat({
-            connectId: connectId,
-            sender: username,
-          });
-          const savedChat = newChat.save();
-        }
-      } catch (err) {
-        return err;
-      }
+      //   if (!chat) {
+      //     const newChat = new Chat({
+      //       connectId: connectId,
+      //       sender: username,
+      //     });
+      //     const savedChat = newChat.save();
+      //   }
+      // } catch (err) {
+      //   return err;
+      // }
     }
 
     console.log("connected to sockect io");
@@ -125,7 +123,7 @@ io.on("connect", (socket) => {
     const update = { $push: { chatLog: log } };
 
     try {
-      await Chat.findByIdAndUpdate({ _id: id }, update, {
+      await Chat.findByIdAndUpdate(id, update, {
         new: true,
       });
     } catch (err) {

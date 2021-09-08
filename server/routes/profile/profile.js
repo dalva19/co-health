@@ -18,6 +18,29 @@ router.get("/", async (req, res) => {
       credentials: user.credentials || null,
       requests: user.requests || null,
       offers: user.offers || null,
+      contacts: user.contacts || null,
+    });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//user can see other people's profiles
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+      .populate("requests")
+      .populate("offers");
+
+    res.status(200).send({
+      _id: user._id,
+      username: user.username,
+      profileType: user.profileType,
+      name: user.name,
+      avatar: user.avatar || null,
+      credentials: user.credentials || null,
+      requests: user.requests || null,
+      offers: user.offers || null,
     });
   } catch (err) {
     res.status(400).send(err);

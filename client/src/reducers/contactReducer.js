@@ -1,18 +1,16 @@
-import { FETCH_CHAT } from "../actions/chatActions";
+import { FETCH_CONTACT } from "../actions/contactAction";
 
 const DEFAULT_STATE = {
-  chats: [null],
-  chatRoom: null,
+  contact: [],
   loaded: false,
 };
 
 const chatReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-    case FETCH_CHAT:
+    case FETCH_CONTACT:
       return {
         ...state,
-        chats: action.payload,
-        chatRoom: "chat",
+        contact: action.payload,
         loaded: true,
       };
     default:

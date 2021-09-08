@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ChatSchema = new Schema({
-  connectId: { type: String },
-  sender: { type: String },
-  recipient: { type: String },
+  communityMember: { type: Schema.Types.ObjectId, ref: "User" },
+  healthcareMember: { type: Schema.Types.ObjectId, ref: "User" },
   chatLog: { type: Array },
 });
 

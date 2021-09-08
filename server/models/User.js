@@ -37,6 +37,7 @@ const UserSchema = new Schema({
   },
   requests: [{ type: Schema.Types.ObjectId, ref: "Request" }], //community members || null for healcare members
   offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }], //healthcare members || null for comm members
+  contacts: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 UserSchema.methods.setPassword = function (password) {

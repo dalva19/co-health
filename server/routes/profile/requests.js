@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Request = require("../../models/Request");
 const User = require("../../models/User");
 const Offer = require("../../models/Offer");
+const Chat = require("../../models/Chat");
 const ObjectId = require("mongoose").Types.ObjectId;
 // mongoose.set("useFindAndModify", false);
 
@@ -101,8 +102,11 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById(req.params.offerID);
     const request = await Request.findById(offer.request);
+    const user = await User.findById(request.user);
+
     let offerUpdate;
     let requestUpdate;
+    let chat;
 
     if (req.body.status === "offer accepted") {
       offerUpdate = {
@@ -112,6 +116,19 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       requestUpdate = {
         $set: { status: req.body.status, acceptedOffer: offer.id },
       };
+
+      //adds contact to user contact list
+      const newContact = offer.user;
+      user.contacts.push(newContact);
+      await user.save();
+
+      //create chat for two users
+      const newChat = new Chat({
+        communityMember: user._id,
+        healthcareMember: offer.user,
+      });
+
+      chat = newChat.save();
     } else if (req.body.status === "offer declined") {
       offerUpdate = {
         $set: { status: req.body.status },
@@ -136,7 +153,7 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       { new: true }
     ).populate("acceptedOffer");
 
-    res.status(200).send({ request: requestStatusEdit });
+    res.status(200).send({ request: requestStatusEdit, chat: chat });
   } catch (err) {
     res.status(400).send(err);
   }

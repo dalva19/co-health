@@ -1,18 +1,15 @@
 import axios from "axios";
 //variables
-export const FETCH_CHAT = "fetch_chat";
+export const FETCH_CONTACT = "fetch_contact";
 
 //action creators
-export const getChat = (body) => (dispatch) => {
+export const getContact = (id) => (dispatch) => {
   //body will have connectId
-
   axios
-    .get(
-      `/co-health/api/chat?communityMember=${body.communityMember}&healthcareMember=${body.healthcareMember}`
-    )
+    .get(`/co-health/api/profile/${id}`)
     .then((response) => {
       dispatch({
-        type: FETCH_CHAT,
+        type: FETCH_CONTACT,
         payload: response.data,
       });
     })
