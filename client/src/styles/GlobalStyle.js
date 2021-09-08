@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
       font-family: "Inter", sans-serif; 
     }
 
-  button {
+  /* button {
     font-weight: bold; 
     font-size: 1.1rem; 
     cursor: pointer; 
@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
       background-color: #AB417F; 
       color: white; 
     }
-  }
+  } */
   
 `;
 

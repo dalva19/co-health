@@ -16,7 +16,7 @@ import SettingsPage from "./pages/SettingsPage";
 import ActivityPage from "./pages/ActivityPage";
 import MessagesPage from "./pages/MessagesPage";
 //components
-import Nav from "./components/Nav";
+import Nav from "./components/nav/Nav";
 
 const App = () => {
   return (

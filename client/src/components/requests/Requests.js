@@ -1,8 +1,8 @@
 //styling
 import { Row, Container } from "react-bootstrap";
 
-//individual request items
-const Request = () => {
+//map requests to make ind request
+const Requests = () => {
   return (
     <>
       <Container>
@@ -14,4 +14,4 @@ const Request = () => {
   );
 };
 
-export default Request;
+export default Requests;

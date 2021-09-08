@@ -76,8 +76,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 //io
-//how to join 2 members in a chat
-
 io.on("connect", (socket) => {
   let chatRoom;
   let id;
