@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { postRequest } from "../../actions/requestActions";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 
@@ -6,10 +8,14 @@ const RequestForm = (props) => {
   //state
   const [text, setText] = useState("");
 
+  const dispatch = useDispatch();
+
   //helper functions
   const handleSubmitButton = (e) => {
     e.preventDefault();
-    //dispatch request action
+
+    const body = { text: text };
+    dispatch(postRequest(body));
   };
 
   return (

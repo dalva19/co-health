@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 });
 
 //user can see other people's profiles
-router.get("/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
       .populate("requests")

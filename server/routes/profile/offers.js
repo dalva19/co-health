@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Offer = require("../../models/Offer");
 const User = require("../../models/User");
 const Request = require("../../models/Request");
+const ObjectId = require("mongoose").Types.ObjectId;
 // mongoose.set("useFindAndModify", false);
 
 //get all offer you've made
@@ -13,13 +14,10 @@ router.get("/", async (req, res) => {
 
   //finds the offers based on user from Offer collection and populates corresponding requests
   try {
-    const offers = await Offer.find({ user: req.user._id })
-      .populate("request")
-      .exec((err, offer) => {
-        if (err) {
-          return err;
-        }
-      });
+    const offers = await Offer.find({
+      user: req.user._id,
+    }).populate("request");
+
     res.status(200).send(offers);
   } catch (err) {
     res.status(400).send(err);

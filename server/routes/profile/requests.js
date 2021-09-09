@@ -12,15 +12,11 @@ const ObjectId = require("mongoose").Types.ObjectId;
 //finds the requests based on user from Request collection and populates corresponding offers
 router.get("/", async (req, res) => {
   try {
-    await Request.find({ user: new ObjectId(req.user._id) })
-      .populate("offers")
-      .exec((err, requests) => {
-        if (err) {
-          return err;
-        } else {
-          res.status(200).send(requests);
-        }
-      });
+    const requests = await Request.find({
+      user: req.user._id,
+    }).populate("offers");
+
+    res.status(200).send(requests);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -203,7 +199,7 @@ router.delete("/:request", async (req, res) => {
       if (err) {
         return err;
       } else {
-        res.status(200).send(`successfully deleted ${doc}.`);
+        res.status(200).send({ deletedRequest: request });
       }
     });
   } catch (err) {

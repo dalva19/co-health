@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { getRequests } from "../../actions/requestActions";
 //components
 import NavigationTabs from "./NavigationTabs";
 import Requests from "../requests/Requests";
@@ -14,10 +15,19 @@ const CommunityProfile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { loaded } = useSelector((state) => state.member);
-  const { requests } = useSelector((state) => state.member.member);
+  const { requests } = useSelector((state) => state.requests);
+  const requestsLoaded = useSelector((state) => state.requests.loaded);
+  const memberLoaded = useSelector((state) => state.member.loaded);
 
-  //dispatch to get requests from store
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (memberLoaded) {
+      dispatch(getRequests());
+    }
+  }, [dispatch, memberLoaded]);
+
+  //dispatch to get requests from store??
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile" />
@@ -29,8 +39,7 @@ const CommunityProfile = () => {
             onClick={handleShow}
           />
         </div>
-
-        {loaded ? <Requests requests={requests} /> : ""}
+        {requestsLoaded ? <Requests requests={requests} /> : ""}
       </ProfileContainer>
 
       <RequestForm
@@ -46,7 +55,6 @@ const CommunityProfile = () => {
 const ProfileContainer = styled.div`
   /* padding-top: 5vh; */
   padding-left: 2rem;
-
   .add-request {
     min-height: 20vh;
   }
