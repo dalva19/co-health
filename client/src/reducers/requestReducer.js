@@ -64,7 +64,7 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
         requests: newRequestsList,
       };
     case DELETE_REQUEST:
-      const deletedRequest = action.payload.deletedRequest._id;
+      const deletedRequest = action.payload.deletedRequestId;
       const newRequestsState = state.requests.filter(
         (request) => request._id !== deletedRequest
       );

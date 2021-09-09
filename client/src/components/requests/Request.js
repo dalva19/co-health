@@ -1,9 +1,18 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { editRequest, deleteRequest } from "../../actions/requestActions";
 //styling
 import { Card, Accordion } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual request items
 const Request = ({ request }) => {
+  const [selectRequest, setSelectRequest] = useState("");
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteRequest(request._id));
+  };
   return (
     <StyledCard>
       <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
@@ -23,7 +32,7 @@ const Request = ({ request }) => {
         </Card.Body>
         <Card.Footer>
           <StyledFooter>
-            <p>Delete</p>
+            <p onClick={handleDelete}>Delete</p>
             <p>Edit</p>
             <p>Offers</p>
           </StyledFooter>

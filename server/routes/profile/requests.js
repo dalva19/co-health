@@ -195,13 +195,9 @@ router.delete("/:request", async (req, res) => {
     const update = { $pull: { requests: request._id } };
 
     await Request.deleteOne({ _id: request._id });
-    await User.findByIdAndUpdate(user._id, update, (err, doc) => {
-      if (err) {
-        return err;
-      } else {
-        res.status(200).send({ deletedRequest: request });
-      }
-    });
+    await User.findByIdAndUpdate(user._id, update);
+
+    res.status(200).send({ deletedRequestId: req.params.request });
   } catch (err) {
     res.status(400).send(err);
   }
