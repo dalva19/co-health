@@ -51,9 +51,10 @@ export const postRequest = (body) => (dispatch) => {
     });
 };
 
-export const editRequest = (requestId) => (dispatch) => {
+export const editRequest = (requestId, body) => (dispatch) => {
+  console.log(requestId);
   axios
-    .put(`/co-health/api/profile/requests/edit/${requestId}`)
+    .put(`/co-health/api/profile/requests/edit/${requestId}`, body)
     .then((response) => {
       dispatch({
         type: EDIT_REQUEST,
