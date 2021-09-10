@@ -20,4 +20,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:chatId", async (req, res) => {
+  try {
+    const chat = await Chat.findById(req.params.chatId);
+
+    if (!chat) {
+      return res.status(404).send("No chats found");
+    }
+
+    res.status(200).send(chat);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 module.exports = router;

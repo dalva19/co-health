@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
-import { registerUser } from "../../actions/registerActions";
+// import { useDispatch, useSelector } from "react-redux";
+// import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
+// import { registerUser } from "../../actions/registerActions";
 
 const SettingsForm = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { registered } = useSelector((state) => state.registration);
+  // const { registered } = useSelector((state) => state.registration);
 
-  const { coordinates, coordinatesLoaded } = useSelector(
-    (state) => state.coordinates
-  );
+  // const { coordinates, coordinatesLoaded } = useSelector(
+  //   (state) => state.coordinates
+  // );
 
   //state
   const [firstName, setFirstName] = useState("danna");
@@ -25,53 +25,53 @@ const SettingsForm = (props) => {
   const [address, setAddress] = useState("");
 
   //helper functions
-  const splitStreetName = () => {
-    const address = `${street} ${city} ${state} ${zip}`;
-    const addressSplit = address.split(" ");
-    const addressJoin = addressSplit.join("+,");
-    setAddress(addressJoin);
-  };
+  // const splitStreetName = () => {
+  //   const address = `${street} ${city} ${state} ${zip}`;
+  //   const addressSplit = address.split(" ");
+  //   const addressJoin = addressSplit.join("+,");
+  //   setAddress(addressJoin);
+  // };
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
 
-    splitStreetName();
+    // splitStreetName();
   };
 
-  useEffect(() => {
-    if (address) {
-      dispatch(loadCoordinatesFromAddress(address));
-    }
+  // useEffect(() => {
+  //   if (address) {
+  //     dispatch(loadCoordinatesFromAddress(address));
+  //   }
 
-    if (coordinatesLoaded) {
-      const body = {
-        firstName: firstName,
-        lastName: lastName,
-        avatar: avatar,
-        street: street,
-        city: city,
-        state: state,
-        zipCode: zip,
-        lat: coordinates.lat,
-        lng: coordinates.lng,
-      };
+  //   if (coordinatesLoaded) {
+  //     const body = {
+  //       firstName: firstName,
+  //       lastName: lastName,
+  //       avatar: avatar,
+  //       street: street,
+  //       city: city,
+  //       state: state,
+  //       zipCode: zip,
+  //       lat: coordinates.lat,
+  //       lng: coordinates.lng,
+  //     };
 
-      dispatch(registerUser(body));
-    }
-  }, [
-    address,
-    dispatch,
-    coordinatesLoaded,
-    firstName,
-    lastName,
-    avatar,
-    street,
-    city,
-    state,
-    zip,
-    coordinates.lat,
-    coordinates.lng,
-  ]);
+  //     dispatch(registerUser(body));
+  //   }
+  // }, [
+  //   address,
+  //   dispatch,
+  //   coordinatesLoaded,
+  //   firstName,
+  //   lastName,
+  //   avatar,
+  //   street,
+  //   city,
+  //   state,
+  //   zip,
+  //   coordinates.lat,
+  //   coordinates.lng,
+  // ]);
 
   return (
     <>

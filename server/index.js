@@ -81,15 +81,6 @@ io.on("connect", (socket) => {
   let id;
 
   socket.on("join", async ({ username, room, chatId }, callback) => {
-    // const { error, user } = addUser({
-    //   id: socket.id,
-    //   username,
-    //   room,
-    //   connectId,
-    // });
-
-    // if (error) return callback(error);
-
     if (room === "chat") {
       id = chatId;
       chatRoom = `${id}chat`;
@@ -97,6 +88,7 @@ io.on("connect", (socket) => {
     }
 
     console.log("connected to sockect io");
+    console.log(chatRoom);
 
     callback();
   });
@@ -121,18 +113,10 @@ io.on("connect", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    const user = removeUser(socket.id);
-
-    if (user) {
-      io.to(user.room).emit("message", {
-        user: "Admin",
-        text: `${user.name} has left.`,
-      });
-      io.to(user.room).emit("roomData", {
-        room: user.room,
-        users: getUsersInRoom(user.room),
-      });
+    if (chatRoom) {
+      socket.leave(chatRoom);
     }
+    console.log("disconnect");
   });
 });
 

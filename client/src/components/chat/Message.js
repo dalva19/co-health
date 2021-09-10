@@ -21,7 +21,7 @@ const Message = ({ message, username }) => {
       <div className="messageBox backgroundLight">
         <p className="messageText colorDark">{message.message}</p>
       </div>
-      <p className="sentText pl-10 ">{message.username}</p>
+      <p className="sentText">{message.username}</p>
     </div>
   );
 };

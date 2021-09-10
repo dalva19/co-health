@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import io from "socket.io-client";
+import socketIOClient from "socket.io-client";
 import Contacts from "./Contacts";
 import Messages from "./Messages";
 import InfoBar from "./InfoBar";
 import Input from "../chat/Input";
 import { getChat } from "../../actions/chatActions";
+import { setSocket } from "../../actions/socketActions";
 
-const ENDPOINT = "http://localhost:8000";
-
-let socket;
+const ENDPOINT = "http://localhost:8000"; //rewrite for process.env varible?
 
 const Chat = () => {
-  // const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const [connectId, setConnectId] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [selectContact, setSelectContact] = useState("");
@@ -24,24 +21,21 @@ const Chat = () => {
   );
   const { chatLog } = useSelector((state) => state.chat.chats);
   const chatId = useSelector((state) => state.chat.chats._id);
-  const { loaded } = useSelector((state) => state.chat);
-
+  const socketRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    socketRef.current = socketIOClient(ENDPOINT);
     setRoom("chat");
 
-    if (loaded) {
+    if (chatLog) {
       setMessages([...chatLog]);
-      setConnectId(chatId);
     }
-  }, [chatLog, loaded, chatId]);
+  }, [dispatch, chatLog, chatId]);
 
   useEffect(() => {
     if (selectContact) {
-      socket = io(ENDPOINT);
-      //add logic to match users based on user's chat log
-      //click on contact and bring up chat
+      dispatch(setSocket(socketRef.current));
       let body;
 
       if (profileType === "community member") {
@@ -60,41 +54,23 @@ const Chat = () => {
     }
   }, [selectContact, _id, dispatch, profileType]);
 
-  // const handleJoin = () => {
-  //   socket = io(ENDPOINT);
-  //   //add logic to match users based on user's chat log
-  //   //click on contact and bring up chat
-  //   let body;
-  //   // dispatch(getContact("6132b468fad052ba8ee058cc"));
-
-  //   if (profileType === "community member") {
-  //     body = {
-  //       communityMember: _id,
-  //       healthcareMember: selectContact,
-  //     };
-  //   } else if (profileType === "healthcare member") {
-  //     body = {
-  //       communityMember: selectContact,
-  //       healthcareMember: _id,
-  //     };
-  //   }
-
-  //   dispatch(getChat(body));
-  // };
-
   useEffect(() => {
     if (chatId) {
-      socket.emit("join", { username, room, chatId }, (error) => {
+      socketRef.current.emit("join", { username, room, chatId }, (error) => {
         if (error) {
           console.log(error);
         }
       });
 
-      socket.on("message", (message) => {
+      socketRef.current.on("message", (message) => {
         setMessages([...messages, message]);
       });
     }
-  }, [messages]);
+
+    socketRef.current.on("disconnect", () => {
+      setMessages([]);
+    });
+  }, [messages, chatId, dispatch, room, username]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -105,13 +81,12 @@ const Chat = () => {
     };
 
     if (message) {
-      socket.emit("sendMessage", log, () => setMessage(""));
+      socketRef.current.emit("sendMessage", log, () => setMessage(""));
     }
   };
 
-  //add contacts component that lists all contacts based on 2 users being matched
   return (
-    <div className="outerContainer">
+    <div className="chats-container">
       {contacts ? (
         <>
           <h2>Contacts</h2>
@@ -125,8 +100,7 @@ const Chat = () => {
         <h2>Contacts</h2>
       )}
 
-      {/* <button onClick={handleJoin}>Join</button> */}
-      <div className="container">
+      <div className="chats-container">
         <h1>this is where chats go</h1>
         <InfoBar room={room} />
         <Messages messages={messages} username={username} />

@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { disconnectChat } from "../../utilities/chatFunction";
 //components
 import NavigationTabs from "./NavigationTabs";
 
 const Activity = () => {
-  //loads with profile info based on who is logged in
+  const { socket } = useSelector((state) => state.socket.socket);
+  console.log("hello");
+
+  // useEffect(() => {
+  //   if (socket) {
+  //     disconnectChat(socket);
+  //   }
+  // }, [socket]);
+
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile/activity" />

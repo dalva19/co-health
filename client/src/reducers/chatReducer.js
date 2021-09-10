@@ -1,9 +1,8 @@
-import { FETCH_CHAT } from "../actions/chatActions";
+import { FETCH_CHAT, SET_LOADING } from "../actions/chatActions";
 
 const DEFAULT_STATE = {
   chats: [null],
-  chatRoom: null,
-  loaded: false,
+  loading: true,
 };
 
 const chatReducer = (state = DEFAULT_STATE, action) => {
@@ -12,8 +11,12 @@ const chatReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         chats: action.payload,
-        chatRoom: "chat",
-        loaded: true,
+        loading: false,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

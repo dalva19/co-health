@@ -1,6 +1,16 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getChatById } from "../../actions/chatActions";
 
 const Input = ({ setMessage, sendMessage, message }) => {
+  const chatId = useSelector((state) => state.chat.chats._id);
+  const dispatch = useDispatch();
+
+  const handleSendButton = (e) => {
+    sendMessage(e);
+    dispatch(getChatById(chatId));
+  };
+
   return (
     <form className="form">
       <input
@@ -13,7 +23,7 @@ const Input = ({ setMessage, sendMessage, message }) => {
           event.key === "Enter" ? sendMessage(event) : null
         }
       />
-      <button className="sendButton" onClick={(e) => sendMessage(e)}>
+      <button className="sendButton" onClick={handleSendButton}>
         Send
       </button>
     </form>

@@ -22,7 +22,7 @@ const Request = ({ request }) => {
     <>
       <StyledCard>
         <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
-          <Card.Header>Header</Card.Header>
+          <Card.Header>Status: {request.status}</Card.Header>
           <Card.Body>
             <Card.Title>Request</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
