@@ -5,8 +5,8 @@ import { disconnectChat } from "../../utilities/chatFunction";
 import NavigationTabs from "./NavigationTabs";
 
 const Activity = () => {
-  const { socket } = useSelector((state) => state.socket.socket);
-  console.log("hello");
+  // const { socket } = useSelector((state) => state.socket.socket);
+  // console.log("hello");
 
   // useEffect(() => {
   //   if (socket) {

@@ -6,7 +6,6 @@ import Messages from "./Messages";
 import InfoBar from "./InfoBar";
 import Input from "../chat/Input";
 import { getChat } from "../../actions/chatActions";
-import { setSocket } from "../../actions/socketActions";
 
 const ENDPOINT = "http://localhost:8000"; //rewrite for process.env varible?
 
@@ -15,6 +14,7 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [selectContact, setSelectContact] = useState("");
+  const [chatOpen, setChatOpen] = useState(false);
 
   const { username, profileType, _id, contacts } = useSelector(
     (state) => state.member.member
@@ -25,17 +25,15 @@ const Chat = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socketRef.current = socketIOClient(ENDPOINT);
     setRoom("chat");
-
+    socketRef.current = socketIOClient(ENDPOINT);
     if (chatLog) {
       setMessages([...chatLog]);
     }
-  }, [dispatch, chatLog, chatId]);
+  }, [chatLog]);
 
   useEffect(() => {
     if (selectContact) {
-      dispatch(setSocket(socketRef.current));
       let body;
 
       if (profileType === "community member") {
@@ -58,19 +56,22 @@ const Chat = () => {
     if (chatId) {
       socketRef.current.emit("join", { username, room, chatId }, (error) => {
         if (error) {
-          console.log(error);
+          return error;
         }
       });
-
-      socketRef.current.on("message", (message) => {
-        setMessages([...messages, message]);
-      });
     }
-
-    socketRef.current.on("disconnect", () => {
-      setMessages([]);
+    socketRef.current.on("message", (message) => {
+      setMessages([...messages, message]);
     });
-  }, [messages, chatId, dispatch, room, username]);
+  }, [messages, chatId, dispatch, room, username, chatOpen]);
+
+  const connectSocket = () => {
+    socketRef.current.emit("join", { username, room, chatId }, (error) => {
+      if (error) {
+        return error;
+      }
+    });
+  };
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -81,8 +82,14 @@ const Chat = () => {
     };
 
     if (message) {
-      socketRef.current.emit("sendMessage", log, () => setMessage(""));
+      socketRef.current.emit("sendMessage", { log, chatId }, () =>
+        setMessage("")
+      );
     }
+  };
+
+  const disconnectSocket = () => {
+    socketRef.current.disconnect();
   };
 
   return (
@@ -94,6 +101,10 @@ const Chat = () => {
             contacts={contacts}
             selectContact={setSelectContact}
             setSelectContact={setSelectContact}
+            chatOpen={chatOpen}
+            setChatOpen={setChatOpen}
+            connectSocket={connectSocket}
+            disconnectSocket={disconnectSocket}
           />
         </>
       ) : (
@@ -103,7 +114,7 @@ const Chat = () => {
       <div className="chats-container">
         <h1>this is where chats go</h1>
         <InfoBar room={room} />
-        <Messages messages={messages} username={username} />
+        <Messages messages={messages} username={username} chatOpen={chatOpen} />
         <Input
           message={message}
           setMessage={setMessage}

@@ -89,15 +89,17 @@ io.on("connect", (socket) => {
 
     console.log("connected to sockect io");
     console.log(chatRoom);
+    console.log(chatId);
 
     callback();
   });
 
-  socket.on("sendMessage", async (log, callback) => {
+  socket.on("sendMessage", async ({ log, chatId }, callback) => {
     const update = { $push: { chatLog: log } };
+    console.log(chatId);
 
     try {
-      await Chat.findByIdAndUpdate(id, update, {
+      await Chat.findByIdAndUpdate(chatId, update, {
         new: true,
       });
     } catch (err) {

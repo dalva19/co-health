@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import socketIOClient from "socket.io-client";
 
-const Contact = ({ contact, selectContact, setSelectContact }) => {
+const Contact = ({
+  contact,
+  selectContact,
+  setSelectContact,
+  chatOpen,
+  setChatOpen,
+  disconnectSocket,
+  connectSocket,
+}) => {
+  const socketRef = useRef();
+  const ENDPOINT = "http://localhost:8000";
+
   const handleContactClick = () => {
     setSelectContact(contact.user);
+
+    if (!chatOpen) {
+      setChatOpen(true);
+      socketRef.current = socketIOClient(ENDPOINT);
+    } else {
+      setChatOpen(false);
+      disconnectSocket();
+    }
   };
 
   return (

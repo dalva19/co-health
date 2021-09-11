@@ -5,7 +5,6 @@ import MemberReducer from "./memberReducer";
 import ChatReducer from "./chatReducer";
 import ContactReducer from "./contactReducer";
 import RequestReducer from "./requestReducer";
-import SocketReducer from "./socketReducer";
 
 const rootReducer = combineReducers({
   coordinates: CoordinatesReducer,
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
   chat: ChatReducer,
   selectedContact: ContactReducer,
   requests: RequestReducer,
-  socket: SocketReducer,
 });
 
 export default rootReducer;
