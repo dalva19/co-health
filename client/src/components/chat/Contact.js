@@ -1,28 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-import socketIOClient from "socket.io-client";
+import { useDispatch } from "react-redux";
 
 const Contact = ({
   contact,
-  selectContact,
   setSelectContact,
   chatOpen,
   setChatOpen,
-  disconnectSocket,
-  connectSocket,
+  leaveChatRoom,
+  resetChat,
 }) => {
-  const socketRef = useRef();
-  const ENDPOINT = "http://localhost:8000";
+  const dispatch = useDispatch();
 
   const handleContactClick = () => {
-    setSelectContact(contact.user);
-
     if (!chatOpen) {
       setChatOpen(true);
-      socketRef.current = socketIOClient(ENDPOINT);
+      setSelectContact(contact.user);
     } else {
       setChatOpen(false);
-      disconnectSocket();
+      setSelectContact("");
+      leaveChatRoom();
+      dispatch(resetChat());
     }
   };
 

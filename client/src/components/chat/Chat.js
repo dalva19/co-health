@@ -5,7 +5,7 @@ import Contacts from "./Contacts";
 import Messages from "./Messages";
 import InfoBar from "./InfoBar";
 import Input from "../chat/Input";
-import { getChat } from "../../actions/chatActions";
+import { getChat, resetChat } from "../../actions/chatActions";
 
 const ENDPOINT = "http://localhost:8000"; //rewrite for process.env varible?
 
@@ -88,6 +88,10 @@ const Chat = () => {
     }
   };
 
+  const leaveChatRoom = () => {
+    socketRef.current.emit("leaveRoom", { chatId });
+  };
+
   const disconnectSocket = () => {
     socketRef.current.disconnect();
   };
@@ -105,6 +109,8 @@ const Chat = () => {
             setChatOpen={setChatOpen}
             connectSocket={connectSocket}
             disconnectSocket={disconnectSocket}
+            leaveChatRoom={leaveChatRoom}
+            resetChat={resetChat}
           />
         </>
       ) : (

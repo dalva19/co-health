@@ -4,24 +4,24 @@ import Contact from "./Contact";
 
 const Contacts = ({
   contacts,
-  selectContact,
   setSelectContact,
   chatOpen,
   setChatOpen,
   disconnectSocket,
   connectSocket,
+  leaveChatRoom,
+  resetChat,
 }) => (
   <div className="contacts">
     {contacts.map((contact, i) => (
       <div key={i}>
         <Contact
           contact={contact}
-          selectContact={setSelectContact}
           setSelectContact={setSelectContact}
           chatOpen={chatOpen}
           setChatOpen={setChatOpen}
-          disconnectSocket={disconnectSocket}
-          connectSocket={connectSocket}
+          leaveChatRoom={leaveChatRoom}
+          resetChat={resetChat}
         />
       </div>
     ))}

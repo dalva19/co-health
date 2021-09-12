@@ -89,7 +89,6 @@ io.on("connect", (socket) => {
 
     console.log("connected to sockect io");
     console.log(chatRoom);
-    console.log(chatId);
 
     callback();
   });
@@ -112,6 +111,14 @@ io.on("connect", (socket) => {
     });
 
     callback();
+  });
+
+  socket.on("leaveRoom", async ({ chatId }) => {
+    if (chatRoom === `${chatId}chat`) {
+      socket.leave(chatRoom);
+    }
+
+    console.log("left chatroom");
   });
 
   socket.on("disconnect", () => {

@@ -1,7 +1,7 @@
 import axios from "axios";
 //variables
 export const FETCH_CHAT = "fetch_chat";
-export const SET_LOADING = "set_loading";
+export const RESET_CHAT = "reset_chat";
 
 //action creators
 export const getChat = (body) => (dispatch) => {
@@ -32,4 +32,8 @@ export const getChatById = (chatId) => (dispatch) => {
     .catch((error) => {
       return error;
     });
+};
+
+export const resetChat = () => (dispatch) => {
+  dispatch({ type: RESET_CHAT });
 };

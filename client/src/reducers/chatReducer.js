@@ -1,4 +1,4 @@
-import { FETCH_CHAT, SET_LOADING } from "../actions/chatActions";
+import { FETCH_CHAT, RESET_CHAT } from "../actions/chatActions";
 
 const DEFAULT_STATE = {
   chats: [null],
@@ -13,10 +13,10 @@ const chatReducer = (state = DEFAULT_STATE, action) => {
         chats: action.payload,
         loading: false,
       };
-    case SET_LOADING:
+    case RESET_CHAT:
       return {
         ...state,
-        loading: true,
+        chats: [null],
       };
     default:
       return state;
