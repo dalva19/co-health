@@ -122,17 +122,9 @@ router.delete("/:offerID", async (req, res) => {
     const update = { $pull: { offers: offer._id } };
 
     await Offer.deleteOne({ _id: offer._id });
-    await User.findByIdAndUpdate(user._id, update, (err, doc) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-    await Request.findByIdAndUpdate(requestID, update, (err, doc) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-    res.status(200).send(`successfully deleted.`);
+    await User.findByIdAndUpdate(user._id, update);
+    await Request.findByIdAndUpdate(requestID, update);
+    res.status(200).send({ deletedOfferId: req.params.offerID });
   } catch (err) {
     res.status(400).send(err);
   }

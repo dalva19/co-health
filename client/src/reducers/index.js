@@ -5,6 +5,7 @@ import MemberReducer from "./memberReducer";
 import ChatReducer from "./chatReducer";
 import ContactReducer from "./contactReducer";
 import RequestReducer from "./requestReducer";
+import OfferReducer from "./offerReducer";
 
 const rootReducer = combineReducers({
   coordinates: CoordinatesReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   chat: ChatReducer,
   selectedContact: ContactReducer,
   requests: RequestReducer,
+  offers: OfferReducer,
 });
 
 export default rootReducer;
