@@ -20,30 +20,25 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res.status(400).send(err);
   }
-
-  // try {
-  //   await User.findById({ _id: req.user._id })
-  //     .populate("requests")
-  //     .exec((err, user) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         res.send({
-  //           requests: user.requests || null,
-  //         });
-  //       }
-  //     });
-  // } catch (err) {
-  //   res.status(400).send(err);
-  // }
 });
 
 router.post("/", async (req, res) => {
+  const communityMember = "community member";
+
   if (!req.body.text) {
     return res.status(400).send("Bad request");
   }
 
-  if (req.user.profileType === "community member") {
+  if (!req.user.address.city) {
+    return res
+      .status(400)
+      .send("User must have a default community to make requests.");
+  }
+
+  if (
+    req.user.profileType.trim().toLowerCase() ===
+    communityMember.trim().toLowerCase()
+  ) {
     const user = await User.findById({ _id: req.user._id }).populate(
       "requests"
     );
@@ -53,6 +48,7 @@ router.post("/", async (req, res) => {
       username: user.username,
       user: user._id,
       status: "awaiting offer",
+      community: user.address.city,
     });
 
     try {
@@ -88,7 +84,7 @@ router.put("/edit/:request", async (req, res) => {
     });
     res.status(200).send({ request: requestEdit });
   } catch (err) {
-    res.status(400).send(err);    
+    res.status(400).send(err);
   }
 });
 
@@ -103,6 +99,7 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
     const request = await Request.findById(offer.request);
     const communityUser = await User.findById(request.user);
     const healthcareUser = await User.findById(offer.user);
+    const offerAccepted = "offer accepted";
     let offerUpdate;
     let requestUpdate;
     let chat;
@@ -112,7 +109,10 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       return res.status(400).send("Bad request");
     }
 
-    if (req.body.status === "offer accepted") {
+    if (
+      req.body.status.trim().toLowerCase() ===
+      offerAccepted.trim().toLowerCase()
+    ) {
       offerUpdate = {
         $set: { status: req.body.status },
       };

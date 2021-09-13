@@ -7,10 +7,6 @@ import { updateProfileSettings } from "../../actions/memberActions";
 
 const SettingsForm = (props) => {
   const dispatch = useDispatch();
-
-  // const { registered } = useSelector((state) => state.registration);
-
-  const { coordinatesLoaded } = useSelector((state) => state.coordinates);
   const coordinates = useSelector((state) => state.coordinates.coordinates);
 
   //state

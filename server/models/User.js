@@ -7,9 +7,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  hash: String,
-  salt: String,
-  avatar: { type: String },
+  hash: { type: String },
+  salt: { type: String, select: false },
+  avatar: { type: String, select: false },
   profileType: { type: String, required: true },
   email: {
     type: String,

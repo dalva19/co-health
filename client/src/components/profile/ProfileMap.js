@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import styled from "styled-components";
 
-const HomeMap = () => {
+const ProfileMap = () => {
   const [selectedData, setSelectedData] = useState(null);
 
   const markerDummyData = [
@@ -62,4 +62,4 @@ const StyledInfo = styled.div`
   }
 `;
 
-export default HomeMap;
+export default ProfileMap;

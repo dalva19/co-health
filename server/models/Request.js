@@ -8,6 +8,7 @@ const RequestSchema = new Schema({
   offers: [{ type: Schema.Types.ObjectId, ref: "Offer" }], //users who make offers on ind request
   status: { type: String, default: null },
   acceptedOffer: { type: Schema.Types.ObjectId, ref: "Offer" },
+  community: { type: String },
   date: { type: Date, default: Date.now },
 });
 
