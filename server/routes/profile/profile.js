@@ -51,6 +51,7 @@ router.put("/settings", async (req, res) => {
   if (!req.body.city || !req.body.state) {
     return res.status(400).send("City and state are required.");
   }
+
   const update = {
     name: {
       firstName: req.body.firstName || null,
@@ -61,7 +62,11 @@ router.put("/settings", async (req, res) => {
       street: req.body.street || null,
       city: req.body.city,
       state: req.body.state,
-      zipcode: req.body.zipcode || null,
+      zipcode: req.body.zipCode || null,
+    },
+    coordinates: {
+      lat: req.body.lat,
+      lng: req.body.lng,
     },
   };
 
@@ -83,6 +88,7 @@ router.put("/settings", async (req, res) => {
       requests: savedUser.requests || null,
       offers: savedUser.offers || null,
       contacts: savedUser.contacts || null,
+      coordinates: savedUser.coordinates || null,
     });
   } catch (err) {
     return err;

@@ -56,7 +56,7 @@ const SettingsForm = (props) => {
         lat: coordinates.lat,
         lng: coordinates.lng,
       };
-      console.log("dispatch");
+      console.log(body);
       dispatch(updateProfileSettings(body));
     }
   }, [
