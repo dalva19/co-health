@@ -4,7 +4,7 @@ import {
   FETCH_OFFER,
   FETCH_OFFERS,
   POST_OFFER,
-} from "../actions/requestActions";
+} from "../actions/offerActions";
 
 const DEFAULT_STATE = {
   offers: [null],

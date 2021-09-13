@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 //components
 import NavigationTabs from "./NavigationTabs";
+import ProfileMap from "./ProfileMap";
 //styling
 import styled from "styled-components";
 
@@ -11,6 +12,7 @@ const HealthCareProfile = () => {
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile" />
+      {/* <ProfileMap /> */}
       <ProfileContainer>
         <FontAwesomeIcon icon={faPlus} className="icon fa-2x plus " />
         <p>Make an offer</p>

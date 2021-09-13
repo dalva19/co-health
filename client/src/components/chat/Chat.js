@@ -17,7 +17,7 @@ const Chat = () => {
   const [chatOpen, setChatOpen] = useState(false);
 
   const { username, profileType, _id, contacts } = useSelector(
-    (state) => state.member.member
+    (state) => state.member.member[0]
   );
   const { chatLog } = useSelector((state) => state.chat.chats);
   const chatId = useSelector((state) => state.chat.chats._id);

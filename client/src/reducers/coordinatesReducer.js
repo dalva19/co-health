@@ -3,7 +3,7 @@ import { FETCH_COORDINATES } from "../actions/coordinatesAction";
 const DEFAULT_STATE = {
   //hard coding for testing
   //google geolocation working
-  coordinates: { lat: 35.994, lng: -78.8986 },
+  coordinates: null,
   coordinatesLoaded: false,
 };
 
@@ -12,7 +12,7 @@ const coordinatesReducer = (state = DEFAULT_STATE, action) => {
     case FETCH_COORDINATES:
       return {
         ...state,
-        // coordinates: action.payload,
+        coordinates: action.payload,
         coordinatesLoaded: true,
       };
     default:

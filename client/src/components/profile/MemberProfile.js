@@ -151,12 +151,16 @@ const MemberProfile = () => {
   return (
     <>
       <MemberProfileContainer>
-        {member.profileType === "healthcare member" ? (
+        {member[0].profileType === "healthcare member" ? (
           <HealthCareProfile />
         ) : (
           ""
         )}
-        {member.profileType === "community member" ? <CommunityProfile /> : ""}
+        {member[0].profileType === "community member" ? (
+          <CommunityProfile />
+        ) : (
+          ""
+        )}
       </MemberProfileContainer>
     </>
   );

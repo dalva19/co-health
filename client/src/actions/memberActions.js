@@ -2,6 +2,7 @@ import axios from "axios";
 //variables
 export const FETCH_MEMBER = "fetch_member";
 export const LOGOUT_MEMBER = "logout_member";
+export const UPDATE_SETTINGS = "update_settings";
 
 //action creators
 export const login = (body) => (dispatch) => {
@@ -43,6 +44,22 @@ export const logout = () => (dispatch) => {
       dispatch({
         type: LOGOUT_MEMBER,
       });
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const updateProfileSettings = (body) => (dispatch) => {
+  axios
+    .put(`/co-health/api/profile/settings`, body, { withCredentials: true })
+    .then((response) => {
+      if (response.data) {
+        dispatch({
+          type: UPDATE_SETTINGS,
+          payload: response.data,
+        });
+      }
     })
     .catch((error) => {
       return error;

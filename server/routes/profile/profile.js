@@ -68,16 +68,9 @@ router.put("/settings", async (req, res) => {
   const query = { _id: req.user._id };
 
   try {
-    const savedUser = await User.findOneAndUpdate(
-      query,
-      update,
-      { new: true },
-      (err, user) => {
-        if (err) {
-          return err;
-        }
-      }
-    ).populate("requests");
+    const savedUser = await User.findOneAndUpdate(query, update, {
+      new: true,
+    }).populate("requests");
 
     res.status(200).send({
       _id: savedUser._id,
@@ -89,6 +82,7 @@ router.put("/settings", async (req, res) => {
       credentials: savedUser.credentials || null,
       requests: savedUser.requests || null,
       offers: savedUser.offers || null,
+      contacts: savedUser.contacts || null,
     });
   } catch (err) {
     return err;
