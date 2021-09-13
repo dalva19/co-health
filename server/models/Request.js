@@ -9,6 +9,7 @@ const RequestSchema = new Schema({
   status: { type: String, default: null },
   acceptedOffer: { type: Schema.Types.ObjectId, ref: "Offer" },
   community: { type: String },
+  coordinates: { lat: Number, lng: Number },
   date: { type: Date, default: Date.now },
 });
 

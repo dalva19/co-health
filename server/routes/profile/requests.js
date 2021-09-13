@@ -39,9 +39,9 @@ router.post("/", async (req, res) => {
     req.user.profileType.trim().toLowerCase() ===
     communityMember.trim().toLowerCase()
   ) {
-    const user = await User.findById({ _id: req.user._id }).populate(
-      "requests"
-    );
+    const user = await User.findById({ _id: req.user._id })
+      .populate("requests")
+      .select({ hash: 0 });
 
     const request = new Request({
       text: req.body.text,
@@ -49,6 +49,7 @@ router.post("/", async (req, res) => {
       user: user._id,
       status: "awaiting offer",
       community: user.address.city,
+      coordinates: req.user.coordinates,
     });
 
     try {
