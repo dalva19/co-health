@@ -36,7 +36,7 @@ export const getOffer = (offerId) => (dispatch) => {
     });
 };
 
-export const postRequest = (body, requestId) => (dispatch) => {
+export const postOffer = (requestId, body) => (dispatch) => {
   axios
     .post(`/co-health/api/profile/offers/${requestId}`, body)
     .then((response) => {
@@ -50,7 +50,7 @@ export const postRequest = (body, requestId) => (dispatch) => {
     });
 };
 
-export const editRequest = (offerId, body) => (dispatch) => {
+export const editOffer = (offerId, body) => (dispatch) => {
   axios
     .put(`/co-health/api/profile/offers/edit/${offerId}`, body)
     .then((response) => {
@@ -64,7 +64,7 @@ export const editRequest = (offerId, body) => (dispatch) => {
     });
 };
 
-export const deleteRequest = (offerId) => (dispatch) => {
+export const deleteOffer = (offerId) => (dispatch) => {
   axios
     .delete(`/co-health/api/profile/offers/${offerId}`)
     .then((response) => {

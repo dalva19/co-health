@@ -8,15 +8,18 @@ import NavigationTabs from "./NavigationTabs";
 import ProfileMap from "./ProfileMap";
 
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
+import { getOffers } from "../../actions/offerActions";
 //styling
 import styled from "styled-components";
 
 const HealthCareProfile = () => {
   //loads with profile info based on who is logged in
   const dispatch = useDispatch();
+  const { credentials } = useSelector((state) => state.member.member[0]);
   const WrappedMap = withScriptjs(withGoogleMap(ProfileMap));
 
   useEffect(() => {
+    dispatch(getOffers());
     dispatch(getCommunityRequests());
   }, [dispatch]);
 

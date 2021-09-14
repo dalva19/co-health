@@ -41,18 +41,29 @@ router.get("/", async (req, res) => {
 });
 
 //can only make an offer to a specific request
-router.post("/:requestID", async (req, res) => {
+router.post("/:requestId", async (req, res) => {
   //need to add validation
 
-  if (req.user.profileType === "healthcare member") {
+  const healthCareMember = "healthcare member";
+  let request;
+  let user;
+
+  if (
+    req.user.profileType.trim().toLowerCase() ===
+    healthCareMember.trim().toLowerCase()
+  ) {
     if (!req.user.credentials.verified) {
       return res
         .status(401)
         .send("You must have a verified liscence to make an offer.");
     }
 
-    const user = await User.findById({ _id: req.user._id });
-    const request = await Request.findById({ _id: req.params.requestID });
+    try {
+      user = await User.findById({ _id: req.user._id });
+      request = await Request.findById({ _id: req.params.requestId });
+    } catch (err) {
+      return err;
+    }
 
     const offer = new Offer({
       text: req.body.text,

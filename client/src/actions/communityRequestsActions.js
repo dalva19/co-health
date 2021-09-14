@@ -7,7 +7,6 @@ export const getCommunityRequests = () => (dispatch) => {
   axios
     .get(`/co-health/api/requests`)
     .then((response) => {
-      console.log(response);
       dispatch({
         type: FETCH_COMMUNITY_REQUESTS,
         payload: response.data,
