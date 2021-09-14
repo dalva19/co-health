@@ -13,4 +13,7 @@ const RequestSchema = new Schema({
   date: { type: Date, default: Date.now },
 });
 
+//text index allows for text search of collection
+RequestSchema.index({ text: "text" });
+
 module.exports = mongoose.model("Request", RequestSchema);

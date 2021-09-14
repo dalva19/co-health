@@ -19,6 +19,7 @@ router.get("/", async (req, res) => {
       requests: user.requests || null,
       offers: user.offers || null,
       contacts: user.contacts || null,
+      coordinates: user.coordinates || null,
     });
   } catch (err) {
     res.status(400).send(err);

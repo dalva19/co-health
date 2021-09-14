@@ -8,8 +8,8 @@ const UserSchema = new Schema({
     required: true,
   },
   hash: { type: String },
-  salt: { type: String, select: false },
-  avatar: { type: String, select: false },
+  salt: { type: String },
+  avatar: { type: String },
   profileType: { type: String, required: true },
   email: {
     type: String,

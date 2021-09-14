@@ -1,37 +1,22 @@
 import { useState } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const ProfileMap = () => {
   const [selectedData, setSelectedData] = useState(null);
-
-  const markerDummyData = [
-    {
-      username: "user1",
-      request: ["i need help getting my prescription", "test"],
-      coordinates: { lat: 35.9132, lng: -79.0558 },
-    },
-    {
-      username: "user2",
-      request: ["i need help getting to my appt", "test"],
-      coordinates: { lat: 35.7915, lng: -78.7811 },
-    },
-    {
-      username: "user3",
-      request: ["i need help getting to my appt", "test"],
-      coordinates: { lat: 35.8915, lng: -78.8811 },
-    },
-  ];
+  const { requests } = useSelector((state) => state.communityRequests);
+  const { coordinates } = useSelector((state) => state.member.member[0]);
 
   return (
     <div>
       <GoogleMap
         defaultZoom={10}
-        defaultCenter={{ lat: 35.994, lng: -78.8986 }}
+        defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}
       >
-        {markerDummyData.map((data) => (
+        {requests.map((data) => (
           <Marker
-            key={markerDummyData.indexOf(data)}
+            key={requests.indexOf(data)}
             position={{ lat: data.coordinates.lat, lng: data.coordinates.lng }}
             onClick={() => setSelectedData(data)}
           />
@@ -46,7 +31,7 @@ const ProfileMap = () => {
           >
             <StyledInfo>
               <h2>{selectedData.username}</h2>
-              <p>{selectedData.request[0]}</p>
+              <p>{selectedData.text}</p>
               <p className="offer-link">Make an offer</p>
             </StyledInfo>
           </InfoWindow>
