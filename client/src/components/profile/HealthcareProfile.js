@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withScriptjs, withGoogleMap } from "react-google-maps";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlus } from "@fortawesome/free-solid-svg-icons";
 //components
 import NavigationTabs from "./NavigationTabs";
 import ProfileMap from "./ProfileMap";
-
+import Offers from "../offers/Offers";
+//actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers } from "../../actions/offerActions";
 //styling
@@ -16,6 +17,7 @@ const HealthCareProfile = () => {
   //loads with profile info based on who is logged in
   const dispatch = useDispatch();
   const { credentials } = useSelector((state) => state.member.member[0]);
+  const { offers, loaded } = useSelector((state) => state.offers);
   const WrappedMap = withScriptjs(withGoogleMap(ProfileMap));
 
   useEffect(() => {
@@ -37,12 +39,10 @@ const HealthCareProfile = () => {
       </div>
 
       <ProfileContainer>
-        <FontAwesomeIcon icon={faPlus} className="icon fa-2x plus " />
-        <p>Make an offer</p>
-
-        <h2>Requests cards</h2>
-        <h2>MAP and connections</h2>
+        <h2>Offer cards</h2>
       </ProfileContainer>
+
+      {loaded ? <Offers offers={offers} /> : ""}
     </>
   );
 };

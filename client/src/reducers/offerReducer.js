@@ -8,6 +8,7 @@ import {
 
 const DEFAULT_STATE = {
   offers: [null],
+  loaded: false,
 };
 
 const offerReducer = (state = DEFAULT_STATE, action) => {
@@ -16,6 +17,7 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         offers: action.payload,
+        loaded: true,
       };
     case FETCH_OFFER:
       return {

@@ -1,17 +1,16 @@
-import Request from "./Request";
+import Offer from "./Offer";
 //styling
 import { Container, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 
-//map requests to make ind request
-const Requests = ({ requests }) => {
+const Offers = ({ offers }) => {
   return (
     <Col md={8}>
       <Row>
         <StyledCards>
-          {requests.map((request, i) => (
+          {offers.map((offer, i) => (
             <div key={i}>
-              <Request request={request} />
+              <Offer offer={offer} />
             </div>
           ))}
         </StyledCards>
@@ -26,4 +25,4 @@ const StyledCards = styled.div`
   flex-direction: row;
 `;
 
-export default Requests;   
+export default Offers;
