@@ -50,7 +50,7 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       );
       return {
         ...state,
-        requests: newOffersState,
+        offers: newOffersState,
       };
     default:
       return state;

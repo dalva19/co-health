@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteOffer } from "../../actions/offerActions";
 //styling
 import { Card, Accordion } from "react-bootstrap";
 import styled from "styled-components";
@@ -12,11 +13,11 @@ const Offer = ({ offer }) => {
   // const handleShow = () => setShow(true);
   const offers = useSelector((state) => state.offers.offers);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const handleDelete = () => {
-  //   dispatch(deleteRequest(request._id));
-  // };
+  const handleDelete = () => {
+    dispatch(deleteOffer(offer._id));
+  };
 
   return (
     <>
@@ -38,7 +39,7 @@ const Offer = ({ offer }) => {
           </Card.Body>
           <Card.Footer>
             <StyledFooter>
-              <p>Delete</p>
+              <p onClick={handleDelete}>Delete</p>
               <p>Edit</p>
             </StyledFooter>
           </Card.Footer>
