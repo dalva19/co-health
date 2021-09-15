@@ -10,13 +10,13 @@ const SettingsForm = (props) => {
   const coordinates = useSelector((state) => state.coordinates.coordinates);
 
   //state
-  const [firstName, setFirstName] = useState("danna");
-  const [lastName, setLastName] = useState("alvarado");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [street, setStreet] = useState("114 chestnut ct ");
-  const [city, setCity] = useState("jacksonville");
-  const [state, setState] = useState("nc");
-  const [zip, setZip] = useState("28546");
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
   const [address, setAddress] = useState("");
 
   //helper functions
@@ -29,7 +29,6 @@ const SettingsForm = (props) => {
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
-
     splitStreetName();
   };
 
@@ -106,7 +105,7 @@ const SettingsForm = (props) => {
               </Form.Group>
 
               <Form.Text className="text-muted">
-                Please enter your address to set your community home.
+                Please enter your address to set your default community.
               </Form.Text>
 
               <Form.Group className="mb-3" controlId="formBasicStreetAddress">

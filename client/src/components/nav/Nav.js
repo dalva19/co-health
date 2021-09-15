@@ -9,13 +9,7 @@ import styled from "styled-components";
 const Nav = () => {
   const dispatch = useDispatch();
   const { loaded } = useSelector((state) => state.member);
-  const { username, avatar } = useSelector((state) => state.member.member);
-
-  const options = [
-    {
-      backdrop: false,
-    },
-  ];
+  const member = useSelector((state) => state.member.member);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -32,10 +26,10 @@ const Nav = () => {
           </div>
 
           <div className="logged-in-name">
-            <div>
+            {/* <div>
               {avatar ? <img src={avatar} alt="avatar" /> : <h4>Pic</h4>}
-            </div>
-            <h4>Hi, {username}</h4>
+            </div> */}
+            <h4>Hi, {member[0].username}</h4>
             <div>
               <ul className="logout">
                 <li className="logout">

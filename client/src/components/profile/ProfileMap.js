@@ -2,7 +2,9 @@ import { useState } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { useSelector } from "react-redux";
 import OfferForm from "../offers/OfferForm";
+//styling
 import styled from "styled-components";
+import { Spinner } from "react-bootstrap";
 
 const ProfileMap = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -29,53 +31,61 @@ const ProfileMap = () => {
 
   return (
     <>
-      <div>
-        <GoogleMap
-          defaultZoom={10}
-          defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}
-        >
-          {requests.map((data) => (
-            <Marker
-              key={requests.indexOf(data)}
-              position={{
-                lat: data.coordinates.lat,
-                lng: data.coordinates.lng,
-              }}
-              onClick={() => setSelectedData(data)}
-            />
-          ))}
-          {selectedData && (
-            <InfoWindow
-              position={{
-                lat: selectedData.coordinates.lat,
-                lng: selectedData.coordinates.lng,
-              }}
-              onCloseClick={() => setSelectedData(null)}
+      {requests ? (
+        <>
+          <div>
+            <GoogleMap
+              defaultZoom={10}
+              defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}
             >
-              <StyledInfo>
-                <h2 id={selectedData._id} onClick={handleUsername}>
-                  {selectedData.username}
-                </h2>
-                <p>{selectedData.text}</p>
-                <p
-                  className="offer-link"
-                  id={selectedData._id}
-                  onClick={handleMakeAnOffer}
+              {requests.map((data) => (
+                <Marker
+                  key={requests.indexOf(data)}
+                  position={{
+                    lat: data.coordinates.lat,
+                    lng: data.coordinates.lng,
+                  }}
+                  onClick={() => setSelectedData(data)}
+                />
+              ))}
+              {selectedData && (
+                <InfoWindow
+                  position={{
+                    lat: selectedData.coordinates.lat,
+                    lng: selectedData.coordinates.lng,
+                  }}
+                  onCloseClick={() => setSelectedData(null)}
                 >
-                  Make an offer
-                </p>
-              </StyledInfo>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-      </div>
-      <OfferForm
-        requestId={requestId}
-        show={show}
-        setShow={setShow}
-        handleClose={handleClose}
-        handleShow={handleShow}
-      />
+                  <StyledInfo>
+                    <h2 id={selectedData._id} onClick={handleUsername}>
+                      {selectedData.username}
+                    </h2>
+                    <p>{selectedData.text}</p>
+                    <p
+                      className="offer-link"
+                      id={selectedData._id}
+                      onClick={handleMakeAnOffer}
+                    >
+                      Make an offer
+                    </p>
+                  </StyledInfo>
+                </InfoWindow>
+              )}
+            </GoogleMap>
+          </div>
+          <OfferForm
+            requestId={requestId}
+            show={show}
+            setShow={setShow}
+            handleClose={handleClose}
+            handleShow={handleShow}
+          />
+        </>
+      ) : (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      )}
     </>
   );
 };

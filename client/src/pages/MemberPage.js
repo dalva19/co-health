@@ -11,9 +11,11 @@ const MemberPage = () => {
       {loaded ? (
         <MemberProfile />
       ) : (
-        <Route exact path="/co-health/profile">
-          <Redirect to="/" />
-        </Route>
+        <>
+          <Route exact path="/co-health/profile">
+            <Redirect to="/" />
+          </Route>
+        </>
       )}
     </>
   );

@@ -11,7 +11,9 @@ const Settings = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { credentials } = useSelector((state) => state.member);
+  const { credentials, name, address } = useSelector(
+    (state) => state.member.member[0]
+  );
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile/settings" />
@@ -19,8 +21,8 @@ const Settings = () => {
       <Container>
         <Row>
           <h2>Settings</h2>
-          <Col>
-            {credentials ? (
+          <Col md={6}>
+            <>
               <Table bordered hover>
                 <thead>
                   <tr>
@@ -30,79 +32,77 @@ const Settings = () => {
                 <tbody>
                   <tr>
                     <td>First Name</td>
-                    <td>NAME</td>
+                    <td>{name.firstName}</td>
                   </tr>
                   <tr>
                     <td>Last Name</td>
-                    <td>Last NAME</td>
+                    <td>{name.lastName}</td>
                   </tr>
                   <tr>
                     <td>Community</td>
-                    <td>Durham</td>
+                    <td>{address.city}</td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Table bordered hover>
+                <thead>
+                  <tr>
+                    <th colSpan="2">Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Street</td>
+                    <td>{address.street}</td>
                   </tr>
                   <tr>
+                    <td>City</td>
+                    <td>{address.city}</td>
+                  </tr>
+                  <tr>
+                    <td>State</td>
+                    <td>{address.state}</td>
+                  </tr>
+                  <tr>
+                    <td>Zipcode</td>
+                    <td>{address.zipcode}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </>
+            <Button onClick={handleShow}>Manage Info</Button>
+          </Col>
+          {credentials.license ? (
+            <Col>
+              <Table bordered hover>
+                <thead>
+                  <tr>
+                    <th colSpan="2">License Information</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
                     <td>Licence Type</td>
-                    <td>RN</td>
+                    <td>{credentials.license}</td>
+                  </tr>
+                  <tr>
+                    <td>Licence Number</td>
+                    <td>{credentials.licenseNumber}</td>
                   </tr>
                   <tr>
                     <td>Verified</td>
-                    <td>Yes</td>
+                    <td>{credentials.verified ? <p>Yes</p> : <p>No</p>}</td>
                   </tr>
                 </tbody>
               </Table>
-            ) : (
-              <Table bordered hover>
-                <thead>
-                  <tr>
-                    <th colSpan="2">Personal Information</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>First Name</td>
-                    <td>NAME</td>
-                  </tr>
-                  <tr>
-                    <td>Last Name</td>
-                    <td>Last NAME</td>
-                  </tr>
-                  <tr>
-                    <td>Community</td>
-                    <td>Durham</td>
-                  </tr>
-                </tbody>
-              </Table>
-            )}
-          </Col>
-          <Col>
-            <Table bordered hover>
-              <thead>
-                <tr>
-                  <th colSpan="2">Address</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Street</td>
-                  <td>114 Chestnut Ct</td>
-                </tr>
-                <tr>
-                  <td>City</td>
-                  <td>Durham</td>
-                </tr>
-                <tr>
-                  <td>State</td>
-                  <td>NC</td>
-                </tr>
-                <tr>
-                  <td>Zipcode</td>
-                  <td>27712</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Col>
+              <Button>Manage License</Button>
+            </Col>
+          ) : (
+            <Col>
+              <Button>Add License</Button>
+            </Col>
+          )}
         </Row>
-        <Button onClick={handleShow}>Manage Settings</Button>
       </Container>
 
       <SettingsForm

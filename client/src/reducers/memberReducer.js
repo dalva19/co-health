@@ -3,7 +3,7 @@ import { LOGOUT_MEMBER } from "../actions/memberActions";
 import { UPDATE_SETTINGS } from "../actions/memberActions";
 
 const DEFAULT_STATE = {
-  member: [],
+  member: [null],
   loaded: false,
 };
 
