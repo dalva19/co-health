@@ -48,7 +48,7 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
-router.put("/settings", async (req, res) => {
+router.put("/settings/info", async (req, res) => {
   if (!req.body.city || !req.body.state) {
     return res.status(400).send("City and state are required.");
   }
@@ -76,21 +76,38 @@ router.put("/settings", async (req, res) => {
   try {
     const savedUser = await User.findOneAndUpdate(query, update, {
       new: true,
-    }).populate("requests");
+    })
+      .populate("requests")
+      .select({ hash: 0, salt: 0 });
 
-    res.status(200).send({
-      _id: savedUser._id,
-      username: savedUser.username,
-      profileType: savedUser.profileType,
-      name: savedUser.name,
-      avatar: savedUser.avatar || null,
-      address: savedUser.address,
-      credentials: savedUser.credentials || null,
-      requests: savedUser.requests || null,
-      offers: savedUser.offers || null,
-      contacts: savedUser.contacts || null,
-      coordinates: savedUser.coordinates || null,
-    });
+    res.status(200).send(savedUser);
+  } catch (err) {
+    return err;
+  }
+});
+
+router.put("/settings/license", async (req, res) => {
+  if (!req.body.licenseType || !req.body.licenseNumber) {
+    return res.status(400).send("License type and number are required.");
+  }
+  console.log(req.body);
+  const update = {
+    credentials: {
+      license: req.body.licenseType || null,
+      licenseNumber: req.body.licenseNumber || null,
+    },
+  };
+
+  const query = { _id: req.user._id };
+
+  try {
+    const savedUser = await User.findOneAndUpdate(query, update, {
+      new: true,
+    })
+      .populate("requests")
+      .select({ hash: 0, salt: 0 });
+
+    res.status(200).send(savedUser);
   } catch (err) {
     return err;
   }

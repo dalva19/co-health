@@ -7,6 +7,7 @@ import ContactReducer from "./contactReducer";
 import RequestReducer from "./requestReducer";
 import OfferReducer from "./offerReducer";
 import CommunityRequestsReducer from "./communityRequestsReducer";
+import LicenseReducer from "./licenseReducer";
 
 const rootReducer = combineReducers({
   coordinates: CoordinatesReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   requests: RequestReducer,
   offers: OfferReducer,
   communityRequests: CommunityRequestsReducer,
+  license: LicenseReducer,
 });
 
 export default rootReducer;

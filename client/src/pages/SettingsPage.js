@@ -5,7 +5,6 @@ import { Spinner } from "react-bootstrap";
 
 const SettingsPage = () => {
   const member = useSelector((state) => state.member.member[0]);
-  console.log(member);
 
   return (
     <>

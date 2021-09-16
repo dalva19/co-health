@@ -3,17 +3,28 @@ import { useSelector } from "react-redux";
 //components
 import NavigationTabs from "./NavigationTabs";
 import SettingsForm from "./SettingsForm";
+import HealthcareLicenseForm from "./HealthcareLiscenceForm";
 //styling
 import { Button, Row, Col, Container, Table } from "react-bootstrap";
 
 const Settings = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [modal, setModal] = useState("");
 
   const { credentials, name, address } = useSelector(
     (state) => state.member.member[0]
   );
+
+  const handleShowSettingsModal = () => {
+    setModal("settings-modal");
+  };
+
+  const handleShowLicenseModal = () => {
+    setModal("license-modal");
+  };
+
+  const handleClose = () => {
+    setModal("close");
+  };
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile/settings" />
@@ -70,7 +81,7 @@ const Settings = () => {
                 </tbody>
               </Table>
             </>
-            <Button onClick={handleShow}>Manage Info</Button>
+            <Button onClick={handleShowSettingsModal}>Manage Info</Button>
           </Col>
           {credentials.license ? (
             <Col>
@@ -99,17 +110,20 @@ const Settings = () => {
             </Col>
           ) : (
             <Col>
-              <Button>Add License</Button>
+              <Button onClick={handleShowLicenseModal}>Add License</Button>
             </Col>
           )}
         </Row>
       </Container>
 
       <SettingsForm
-        show={show}
-        setShow={setShow}
+        show={modal === "settings-modal"}
         handleClose={handleClose}
-        handleShow={handleShow}
+      />
+
+      <HealthcareLicenseForm
+        show={modal === "license-modal"}
+        handleClose={handleClose}
       />
     </>
   );

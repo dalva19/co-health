@@ -27,8 +27,8 @@ const UserSchema = new Schema({
     lng: { type: Number },
   },
   credentials: {
-    liscence: { type: String, default: null },
-    liscenceNumber: { type: String, default: null },
+    license: { type: String, default: null },
+    licenseNumber: { type: String, default: null },
     verified: { type: Boolean, default: null },
   },
   date: {

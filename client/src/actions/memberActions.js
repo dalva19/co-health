@@ -3,6 +3,7 @@ import axios from "axios";
 export const FETCH_MEMBER = "fetch_member";
 export const LOGOUT_MEMBER = "logout_member";
 export const UPDATE_SETTINGS = "update_settings";
+export const ADD_LICENSE = "add_license";
 
 //action creators
 export const login = (body) => (dispatch) => {
@@ -52,8 +53,29 @@ export const logout = () => (dispatch) => {
 
 export const updateProfileSettings = (body) => (dispatch) => {
   axios
-    .put(`/co-health/api/profile/settings`, body, { withCredentials: true })
+    .put(`/co-health/api/profile/settings/info`, body, {
+      withCredentials: true,
+    })
     .then((response) => {
+      if (response.data) {
+        dispatch({
+          type: UPDATE_SETTINGS,
+          payload: response.data,
+        });
+      }
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const updateProfileLicense = (body) => (dispatch) => {
+  axios
+    .put(`/co-health/api/profile/settings/license`, body, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      console.log(response);
       if (response.data) {
         dispatch({
           type: UPDATE_SETTINGS,

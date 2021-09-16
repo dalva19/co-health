@@ -15,6 +15,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import SettingsPage from "./pages/SettingsPage";
 import ActivityPage from "./pages/ActivityPage";
 import MessagesPage from "./pages/MessagesPage";
+import HeathCareLiceseForm from "./components/profile/HealthcareLiscenceForm";
 //components
 import Nav from "./components/nav/Nav";
 
@@ -44,6 +45,9 @@ const App = () => {
         </Route>
         <Route exact path="/co-health/profile/messages">
           <MessagesPage />
+        </Route>
+        <Route exact path="/co-health/profile/verify-license">
+          <HeathCareLiceseForm />
         </Route>
 
         <Route exact path="/">
