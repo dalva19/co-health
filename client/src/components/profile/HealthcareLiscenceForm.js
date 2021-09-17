@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfileLicense } from "../../actions/memberActions";
+import {
+  updateProfileLicense,
+  getMemberProfile,
+} from "../../actions/memberActions";
 import { getLicense, verifyLicense } from "../../actions/licenseActions";
 
 const HealthcareLicenseForm = (props) => {
@@ -33,6 +36,7 @@ const HealthcareLicenseForm = (props) => {
   useEffect(() => {
     if (loaded) {
       dispatch(verifyLicense(license));
+      dispatch(getMemberProfile());
     }
   }, [dispatch, loaded]);
 

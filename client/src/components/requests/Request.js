@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { deleteRequest } from "../../actions/requestActions";
 import EditRequest from "./EditRequest";
 //styling
-import { Card, Accordion } from "react-bootstrap";
+import { Card, Alert } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual request items
 const Request = ({ request }) => {
-  const [selectRequest, setSelectRequest] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,6 +18,16 @@ const Request = ({ request }) => {
   const handleDelete = () => {
     dispatch(deleteRequest(request._id));
   };
+
+  const handleOffersButton = () => {
+    if (!showAlert) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  };
+
+  //useEffect to load offers??
   return (
     <>
       <StyledCard>
@@ -29,21 +39,23 @@ const Request = ({ request }) => {
               {request.username}
             </Card.Subtitle>
             <Card.Text>{request.text}</Card.Text>
-            {/* <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Offers</Accordion.Header>
-              <Accordion.Body>Testing</Accordion.Body>
-            </Accordion.Item>
-          </Accordion> */}
           </Card.Body>
           <Card.Footer>
             <StyledFooter>
               <p onClick={handleDelete}>Delete</p>
               <p onClick={handleShow}>Edit</p>
-              <p>Offers</p>
+              <p onClick={handleOffersButton}>Offers</p>
             </StyledFooter>
           </Card.Footer>
         </Card>
+        {showAlert ? (
+          <Alert variant="success" className="offer-alert">
+            <Alert.Heading>Hey, nice to see you</Alert.Heading>
+            <p>Offers</p>
+          </Alert>
+        ) : (
+          ""
+        )}
       </StyledCard>
 
       <EditRequest
@@ -59,6 +71,8 @@ const Request = ({ request }) => {
 
 const StyledCard = styled.div`
   padding-left: 1rem;
+  .offer-alert {
+  }
 `;
 
 const StyledFooter = styled.div`

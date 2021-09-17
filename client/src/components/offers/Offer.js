@@ -11,7 +11,7 @@ const Offer = ({ offer }) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
-  const offers = useSelector((state) => state.offers.offers);
+  // const offers = useSelector((state) => state.offers.offers);
 
   const dispatch = useDispatch();
 

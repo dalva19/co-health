@@ -106,7 +106,7 @@ const Settings = () => {
                   </tr>
                 </tbody>
               </Table>
-              <Button>Manage License</Button>
+              <Button onClick={handleShowLicenseModal}>Manage License</Button>
             </Col>
           ) : (
             <Col>

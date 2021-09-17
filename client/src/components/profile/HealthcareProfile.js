@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withScriptjs, withGoogleMap } from "react-google-maps";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ import { withScriptjs, withGoogleMap } from "react-google-maps";
 import NavigationTabs from "./NavigationTabs";
 import ProfileMap from "./ProfileMap";
 import Offers from "../offers/Offers";
+import HealthcareLicenseForm from "./HealthcareLiscenceForm";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers } from "../../actions/offerActions";
@@ -18,17 +19,37 @@ const HealthCareProfile = () => {
   //loads with profile info based on who is logged in
   const dispatch = useDispatch();
   const { credentials } = useSelector((state) => state.member.member[0]);
+  const memberLoaded = useSelector((state) => state.member);
   const { offers, loaded } = useSelector((state) => state.offers);
+  const [modal, setModal] = useState("");
   const WrappedMap = withScriptjs(withGoogleMap(ProfileMap));
 
+  const handleShowLicenseModal = () => {
+    setModal("license-modal");
+  };
+
+  const handleClose = () => {
+    setModal("close");
+  };
+
   useEffect(() => {
-    dispatch(getOffers());
-    dispatch(getCommunityRequests());
+    if (credentials.verified) {
+      dispatch(getOffers());
+      dispatch(getCommunityRequests());
+    }
   }, [dispatch]);
 
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile" />
+      {!credentials.verified ? (
+        <>
+          <h2>You must submit your license information for verification</h2>
+          <button onClick={handleShowLicenseModal}>Verify License</button>
+        </>
+      ) : (
+        ""
+      )}
       {loaded ? (
         <>
           <div style={{ width: "100vw", height: "100vh" }}>
@@ -51,6 +72,11 @@ const HealthCareProfile = () => {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       )}
+
+      <HealthcareLicenseForm
+        show={modal === "license-modal"}
+        handleClose={handleClose}
+      />
     </>
   );
 };
