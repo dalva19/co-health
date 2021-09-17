@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteRequest } from "../../actions/requestActions";
 import EditRequest from "./EditRequest";
+import OfferAlert from "../offers/OfferAlert";
 //styling
-import { Card, Alert } from "react-bootstrap";
+import { Card, Badge } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual request items
@@ -27,7 +28,8 @@ const Request = ({ request }) => {
     }
   };
 
-  //useEffect to load offers??
+  //functionality to have new badge show up on offers button
+  //close button for requests to delete
   return (
     <>
       <StyledCard>
@@ -44,16 +46,19 @@ const Request = ({ request }) => {
             <StyledFooter>
               <p onClick={handleDelete}>Delete</p>
               <p onClick={handleShow}>Edit</p>
-              <p onClick={handleOffersButton}>Offers</p>
+              <p onClick={handleOffersButton}>
+                Offers <Badge bg="danger">New</Badge>
+              </p>
             </StyledFooter>
           </Card.Footer>
         </Card>
         {showAlert ? (
-          <Alert variant="success" className="offer-alert">
-            <Alert.Heading>Hey, nice to see you</Alert.Heading>
-            <p>Offers</p>
-          </Alert>
+          <OfferAlert request={request} />
         ) : (
+          // <Alert variant="success" className="offer-alert">
+          //   <Alert.Heading>Hey, nice to see you</Alert.Heading>
+          //   <p>Offers</p>
+          // </Alert>
           ""
         )}
       </StyledCard>
