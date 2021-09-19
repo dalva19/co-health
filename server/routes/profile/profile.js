@@ -6,21 +6,10 @@ router.get("/", async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
       .populate("requests")
-      .populate("offers");
+      .populate("offers")
+      .select({ hash: 0, salt: 0 });
 
-    res.status(200).send({
-      _id: user._id,
-      username: user.username,
-      profileType: user.profileType,
-      name: user.name,
-      avatar: user.avatar || null,
-      address: user.address,
-      credentials: user.credentials || null,
-      requests: user.requests || null,
-      offers: user.offers || null,
-      contacts: user.contacts || null,
-      coordinates: user.coordinates || null,
-    });
+    res.status(200).send(user);
   } catch (err) {
     res.status(400).send(err);
   }

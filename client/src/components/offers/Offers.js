@@ -1,6 +1,6 @@
 import Offer from "./Offer";
 //styling
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, Spinner } from "react-bootstrap";
 import styled from "styled-components";
 
 const Offers = ({ offers }) => {

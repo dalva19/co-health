@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Request = require("../models/Request");
+const User = require("../models/User");
 
 //finds the requests in user's community
 router.get("/", async (req, res) => {

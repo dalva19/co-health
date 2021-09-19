@@ -8,14 +8,22 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 //get all offer you've made
 router.get("/", async (req, res) => {
-  if (!req.user.credentials.verified) {
+  // console.log(req.user);
+  let user;
+  try {
+    user = await User.findById(req.user);
+  } catch (err) {
+    return err;
+  }
+
+  if (!user.credentials.verified) {
     return res.status(401).send("You must have a verified liscence.");
   }
 
   //finds the offers based on user from Offer collection and populates corresponding requests
   try {
     const offers = await Offer.find({
-      user: req.user._id,
+      user: user,
     }).populate("request");
 
     res.status(200).send(offers);

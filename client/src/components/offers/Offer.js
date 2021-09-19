@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteOffer } from "../../actions/offerActions";
 //styling
-import { Card, Accordion } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual offer items
@@ -11,7 +11,6 @@ const Offer = ({ offer }) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
-  // const offers = useSelector((state) => state.offers.offers);
 
   const dispatch = useDispatch();
 
@@ -21,30 +20,31 @@ const Offer = ({ offer }) => {
 
   return (
     <>
-      <StyledCard>
-        <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
-          <Card.Header>Status: {offer.status}</Card.Header>
-          <Card.Body>
-            <Card.Title>{offer.request.text}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              {offer.username}
-            </Card.Subtitle>
-            <Card.Text>{offer.text}</Card.Text>
-            {/* <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Offers</Accordion.Header>
-              <Accordion.Body>Testing</Accordion.Body>
-            </Accordion.Item>
-          </Accordion> */}
-          </Card.Body>
-          <Card.Footer>
-            <StyledFooter>
-              <p onClick={handleDelete}>Delete</p>
-              <p>Edit</p>
-            </StyledFooter>
-          </Card.Footer>
-        </Card>
-      </StyledCard>
+      {offer.request ? (
+        <StyledCard>
+          <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
+            <Card.Header>Status: {offer.status}</Card.Header>
+            <Card.Body>
+              <Card.Title>{offer.request.text}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {offer.username}
+              </Card.Subtitle>
+              <Card.Text>{offer.text}</Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <StyledFooter>
+                <p onClick={handleDelete}>Delete</p>
+                <p>Edit</p>
+              </StyledFooter>
+            </Card.Footer>
+          </Card>
+        </StyledCard>
+      ) : (
+        ""
+        // <Spinner animation="border" role="status">
+        //   <span className="visually-hidden">Loading...</span>
+        // </Spinner>
+      )}
 
       {/* <EditRequest
         request={request}

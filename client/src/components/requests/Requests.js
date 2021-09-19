@@ -26,4 +26,4 @@ const StyledCards = styled.div`
   flex-direction: row;
 `;
 
-export default Requests;   
+export default Requests;

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { withScriptjs, withGoogleMap } from "react-google-maps";
 import Home from "../components/home/Home";
 import ServicesSection from "../components/home/ServicesSection";

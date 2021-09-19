@@ -7,6 +7,7 @@ import { withScriptjs, withGoogleMap } from "react-google-maps";
 import NavigationTabs from "./NavigationTabs";
 import ProfileMap from "./ProfileMap";
 import Offers from "../offers/Offers";
+import OfferForm from "../offers/OfferForm";
 import HealthcareLicenseForm from "./HealthcareLiscenceForm";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
@@ -28,6 +29,10 @@ const HealthCareProfile = () => {
     setModal("license-modal");
   };
 
+  const handleShowOfferModal = () => {
+    setModal("offer-modal");
+  };
+
   const handleClose = () => {
     setModal("close");
   };
@@ -39,6 +44,8 @@ const HealthCareProfile = () => {
     }
   }, [dispatch]);
 
+  console.log(offers);
+
   return (
     <>
       <NavigationTabs defaultActiveKey="/co-health/profile" />
@@ -49,9 +56,14 @@ const HealthCareProfile = () => {
         </>
       ) : (
         ""
+        // <button onClick={handleShowOfferModal}>testing map</button>
       )}
       {loaded ? (
         <>
+          {/* <ProfileContainer>
+            <h2>Offer cards</h2>
+          </ProfileContainer> */}
+          {/* <ProfileMap /> */}
           <div style={{ width: "100vw", height: "100vh" }}>
             <WrappedMap
               googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
@@ -60,22 +72,26 @@ const HealthCareProfile = () => {
               mapElement={<div style={{ height: "100%" }} />}
             />
           </div>
-
-          <ProfileContainer>
-            <h2>Offer cards</h2>
-          </ProfileContainer>
-
           <Offers offers={offers} />
         </>
       ) : (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        ""
+        // <Spinner animation="border" role="status">
+        //   <span className="visually-hidden">Loading...</span>
+        // </Spinner>
       )}
 
       <HealthcareLicenseForm
         show={modal === "license-modal"}
         handleClose={handleClose}
+      />
+
+      <OfferForm
+        // requestId={requestId}
+        show={modal === "offer-modal"}
+        // setShow={setShow}
+        handleClose={handleClose}
+        // handleShow={handleShow}
       />
     </>
   );

@@ -13,6 +13,7 @@ export const getRequests = () => (dispatch) => {
   axios
     .get(`/co-health/api/profile/requests`, { withCredentials: true })
     .then((response) => {
+      console.log(response);
       dispatch({
         type: FETCH_REQUESTS,
         payload: response.data,
@@ -66,9 +67,9 @@ export const editRequest = (requestId, body) => (dispatch) => {
     });
 };
 
-export const editRequestOfferStatus = (offerId) => (dispatch) => {
+export const editRequestOfferStatus = (offerId, body) => (dispatch) => {
   axios
-    .put(`/co-health/api/profile/requests/edit/offer/status/${offerId}`)
+    .put(`/co-health/api/profile/requests/edit/offer/status/${offerId}`, body)
     .then((response) => {
       dispatch({
         type: EDIT_REQUEST_OFFER_STATUS,

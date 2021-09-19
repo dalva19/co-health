@@ -13,7 +13,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 router.get("/", async (req, res) => {
   try {
     const requests = await Request.find({
-      user: req.user._id,
+      user: req.user,
     }).populate("offers");
 
     res.status(200).send(requests);
@@ -111,8 +111,8 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
     }
 
     if (
-      req.body.status.trim().toLowerCase() ===
-      offerAccepted.trim().toLowerCase()
+      req.body.status.replace(/\s+/g, "").trim().toLowerCase() ===
+      offerAccepted.replace(/\s+/g, "").trim().toLowerCase()
     ) {
       offerUpdate = {
         $set: { status: req.body.status },
@@ -126,13 +126,14 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       //creates new Chat if users not already connected
       const existingCommunityContact = communityUser.contacts.find(
         (contact) =>
-          contact.username.trim().toLowerCase() ===
-          healthcareUser.username.trim().toLowerCase()
+          contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
+          healthcareUser.username.replace(/\s+/g, "").trim().toLowerCase()
       );
+
       const existingHealthcareContact = healthcareUser.contacts.find(
         (contact) =>
-          contact.username.trim().toLowerCase() ===
-          communityUser.username.trim().toLowerCase()
+          contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
+          communityUser.username.replace(/\s+/g, "").trim().toLowerCase()
       );
 
       if (!existingCommunityContact && !existingHealthcareContact) {

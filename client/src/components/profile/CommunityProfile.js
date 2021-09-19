@@ -22,10 +22,12 @@ const CommunityProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (memberLoaded) {
-      dispatch(getRequests());
-    }
-  }, [dispatch, memberLoaded]);
+    dispatch(getRequests());
+  }, [dispatch]);
+
+  const handleTestButton = () => {
+    dispatch(getRequests());
+  };
 
   //dispatch to get requests from store??
   return (
@@ -39,6 +41,7 @@ const CommunityProfile = () => {
             onClick={handleShow}
           />
         </div>
+        <button onClick={handleTestButton}>test request fetch</button>
         {requestsLoaded ? <Requests requests={requests} /> : ""}
       </ProfileContainer>
 
