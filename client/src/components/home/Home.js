@@ -1,22 +1,17 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getMemberProfile } from "../../actions/memberActions";
+import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+import NavigationTabs from "../profile/NavigationTabs";
 //styling
 import styled from "styled-components";
 import { Page, Description, Image } from "../../styles/styles";
 import together from "../../img/undraw_Together.svg";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const { loaded } = useSelector((state) => state.member);
-
-  // useEffect(() => {
-  //   dispatch(getMemberProfile());
-  // }, [dispatch]);
 
   return (
     <>
+      {loaded ? <NavigationTabs defaultActiveKey="/co-health/" /> : ""}
       <Page>
         <Description>
           <TitleContainer>
@@ -31,9 +26,9 @@ const Home = () => {
           <img src={together} alt="people" />
         </Image>
       </Page>
-      <Route exact path="/co-health/">
+      {/* <Route exact path="/co-health/">
         {loaded ? <Redirect to="/co-health/profile" /> : ""}
-      </Route>
+      </Route> */}
     </>
   );
 };

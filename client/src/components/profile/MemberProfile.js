@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 //components
 import HealthCareProfile from "./HealthcareProfile";
 import CommunityProfile from "./CommunityProfile";

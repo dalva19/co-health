@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
   //finds the offers based on user from Offer collection and populates corresponding requests
   try {
     const offers = await Offer.find({
-      user: user,
+      user: req.user._id,
     }).populate("request");
 
     res.status(200).send(offers);

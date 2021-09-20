@@ -182,7 +182,7 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       request._id,
       requestUpdate,
       { new: true }
-    ).populate("acceptedOffer");
+    ).populate("offers");
 
     res.status(200).send({ request: requestStatusEdit, chat: chat });
   } catch (err) {
