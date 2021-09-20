@@ -57,8 +57,8 @@ router.post("/:requestId", async (req, res) => {
   let user;
 
   if (
-    req.user.profileType.trim().toLowerCase() ===
-    healthCareMember.trim().toLowerCase()
+    req.user.profileType.replace(/\s+/g, "").trim().toLowerCase() ===
+    healthCareMember.replace(/\s+/g, "").trim().toLowerCase()
   ) {
     if (!req.user.credentials.verified) {
       return res
@@ -82,7 +82,8 @@ router.post("/:requestId", async (req, res) => {
     });
 
     try {
-      const savedOffer = await offer.save();
+      const newOffer = await offer.save();
+      const savedOffer = await Offer.findById(newOffer._id).populate("request");
       user.offers.push(savedOffer);
       request.offers.push(savedOffer);
       const savedUser = await user.save();
@@ -90,7 +91,11 @@ router.post("/:requestId", async (req, res) => {
 
       res
         .status(200)
-        .send({ user: user._id, request: savedRequest, offer: savedOffer });
+        .send({
+          user: savedUser._id,
+          request: savedRequest,
+          offer: savedOffer,
+        });
     } catch (err) {
       res.status(400).send(err);
     }
