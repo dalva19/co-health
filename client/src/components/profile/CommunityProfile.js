@@ -7,27 +7,25 @@ import { getRequests } from "../../actions/requestActions";
 import NavigationTabs from "./NavigationTabs";
 import Requests from "../requests/Requests";
 import RequestForm from "../requests/RequestForm";
+import Pagination from "../nav/Pagination";
 //styling
 import styled from "styled-components";
 
 const CommunityProfile = () => {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  const [page, setPage] = useState(1);
   const { requests } = useSelector((state) => state.requests);
   const requestsLoaded = useSelector((state) => state.requests.loaded);
-  const memberLoaded = useSelector((state) => state.member.loaded);
+  const itemCount = useSelector((state) => state.requests.count);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getRequests());
-  }, [dispatch]);
-
-  const handleTestButton = () => {
-    dispatch(getRequests());
-  };
+    dispatch(getRequests(page));
+  }, [dispatch, page]);
 
   //dispatch to get requests from store??
   return (
@@ -41,9 +39,10 @@ const CommunityProfile = () => {
             onClick={handleShow}
           />
         </div>
-        <button onClick={handleTestButton}>test request fetch</button>
         {requestsLoaded ? <Requests requests={requests} /> : ""}
       </ProfileContainer>
+
+      <Pagination page={page} setPage={setPage} itemCount={itemCount} />
 
       <RequestForm
         show={show}

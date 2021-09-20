@@ -11,12 +11,33 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 //finds the requests based on user from Request collection and populates corresponding offers
 router.get("/", async (req, res) => {
-  try {
-    const requests = await Request.find({
-      user: req.user,
-    }).populate("offers");
+  const perPage = 4;
+  const page = req.query.page || 1;
+  const query = {};
+  let data = {};
 
-    res.status(200).send(requests);
+  try {
+    await Request.find({ query })
+      .sort({ date: -1 })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .populate("offers")
+      .exec((err, requests) => {
+        Request.countDocuments(query, (err, count) => {
+          if (err) return err;
+
+          data = {
+            requests: requests,
+            count: count,
+          };
+
+          if (data.count === 0) {
+            return res.status(404).send("No requests in database");
+          } else {
+            res.status(200).send(data);
+          }
+        });
+      });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -198,6 +219,7 @@ router.delete("/:request", async (req, res) => {
 
     await Request.deleteOne({ _id: request._id });
     await User.findByIdAndUpdate(user._id, update);
+    await Offer.deleteMany({ request: request._id });
 
     res.status(200).send({ deletedRequestId: req.params.request });
   } catch (err) {

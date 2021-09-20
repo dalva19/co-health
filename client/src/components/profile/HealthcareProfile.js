@@ -9,6 +9,7 @@ import ProfileMap from "./ProfileMap";
 import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
 import HealthcareLicenseForm from "./HealthcareLiscenceForm";
+import Pagination from "../nav/Pagination";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers } from "../../actions/offerActions";
@@ -19,19 +20,22 @@ import { Spinner } from "react-bootstrap";
 const HealthCareProfile = () => {
   //loads with profile info based on who is logged in
   const dispatch = useDispatch();
-  const { credentials } = useSelector((state) => state.member.member[0]);
-  const memberLoaded = useSelector((state) => state.member);
-  const { offers, loaded } = useSelector((state) => state.offers);
+
   const [modal, setModal] = useState("");
+  const { credentials } = useSelector((state) => state.member.member[0]);
+  const { offers, loaded } = useSelector((state) => state.offers);
+  const itemCount = useSelector((state) => state.offers.count);
+  const [page, setPage] = useState(1);
+
   const WrappedMap = withScriptjs(withGoogleMap(ProfileMap));
 
   const handleShowLicenseModal = () => {
     setModal("license-modal");
   };
 
-  const handleShowOfferModal = () => {
-    setModal("offer-modal");
-  };
+  // const handleShowOfferModal = () => {
+  //   setModal("offer-modal");
+  // };
 
   const handleClose = () => {
     setModal("close");
@@ -39,12 +43,10 @@ const HealthCareProfile = () => {
 
   useEffect(() => {
     if (credentials.verified) {
-      dispatch(getOffers());
+      dispatch(getOffers(page));
       dispatch(getCommunityRequests());
     }
-  }, [dispatch]);
-
-  console.log(offers);
+  }, [dispatch, page, credentials.verified]);
 
   return (
     <>
@@ -81,18 +83,14 @@ const HealthCareProfile = () => {
         // </Spinner>
       )}
 
+      <Pagination page={page} setPage={setPage} itemCount={itemCount} />
+
       <HealthcareLicenseForm
         show={modal === "license-modal"}
         handleClose={handleClose}
       />
 
-      <OfferForm
-        // requestId={requestId}
-        show={modal === "offer-modal"}
-        // setShow={setShow}
-        handleClose={handleClose}
-        // handleShow={handleShow}
-      />
+      <OfferForm show={modal === "offer-modal"} handleClose={handleClose} />
     </>
   );
 };

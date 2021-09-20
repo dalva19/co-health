@@ -9,14 +9,15 @@ export const DELETE_REQUEST = "delete_request";
 export const LOADED_FALSE = "loaded_false";
 
 //action creators
-export const getRequests = () => (dispatch) => {
+export const getRequests = (page) => (dispatch) => {
   axios
-    .get(`/co-health/api/profile/requests`, { withCredentials: true })
+    .get(`/co-health/api/profile/requests?page=${page}`, {
+      withCredentials: true,
+    })
     .then((response) => {
-      console.log(response);
       dispatch({
         type: FETCH_REQUESTS,
-        payload: response.data,
+        payload: response,
       });
     })
     .catch((error) => {

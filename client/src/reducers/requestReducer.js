@@ -10,6 +10,7 @@ import {
 
 const DEFAULT_STATE = {
   requests: [null],
+  count: null,
   loaded: false,
 };
 
@@ -18,7 +19,8 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
     case FETCH_REQUESTS:
       return {
         ...state,
-        requests: action.payload,
+        requests: action.payload.data.requests,
+        count: action.payload.data.count,
         loaded: true,
       };
     case LOADED_FALSE:

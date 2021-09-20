@@ -7,13 +7,15 @@ export const EDIT_OFFER = "edit_offer";
 export const DELETE_OFFER = "delete_offer";
 
 //action creators
-export const getOffers = () => (dispatch) => {
+export const getOffers = (page) => (dispatch) => {
   axios
-    .get(`/co-health/api/profile/offers`, { withCredentials: true })
+    .get(`/co-health/api/profile/offers?page=${page}`, {
+      withCredentials: true,
+    })
     .then((response) => {
       dispatch({
         type: FETCH_OFFERS,
-        payload: response.data,
+        payload: response,
       });
     })
     .catch((error) => {

@@ -8,6 +8,7 @@ import {
 
 const DEFAULT_STATE = {
   offers: [null],
+  count: [null],
   loaded: false,
 };
 
@@ -16,7 +17,8 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
     case FETCH_OFFERS:
       return {
         ...state,
-        offers: action.payload,
+        offers: action.payload.data.offers,
+        count: action.payload.data.count,
         loaded: true,
       };
     case FETCH_OFFER:

@@ -8,8 +8,12 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 //get all offer you've made
 router.get("/", async (req, res) => {
-  // console.log(req.user);
+  const perPage = 4;
+  const page = req.query.page || 1;
+  const query = {};
+  let data = {};
   let user;
+
   try {
     user = await User.findById(req.user);
   } catch (err) {
@@ -22,11 +26,35 @@ router.get("/", async (req, res) => {
 
   //finds the offers based on user from Offer collection and populates corresponding requests
   try {
-    const offers = await Offer.find({
-      user: req.user._id,
-    }).populate("request");
+    // const offers = await Offer.find({
+    //   user: req.user._id,
+    // })
+    //   .sort({ date: -1 })
+    //   .populate("request");
 
-    res.status(200).send(offers);
+    // res.status(200).send(offers);
+
+    await Offer.find({ query })
+      .sort({ date: -1 })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .populate("request")
+      .exec((err, offers) => {
+        Offer.countDocuments(query, (err, count) => {
+          if (err) return err;
+
+          data = {
+            offers: offers,
+            count: count,
+          };
+
+          if (data.count === 0) {
+            return res.status(404).send("No offers in database");
+          } else {
+            res.status(200).send(data);
+          }
+        });
+      });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -89,13 +117,11 @@ router.post("/:requestId", async (req, res) => {
       const savedUser = await user.save();
       const savedRequest = await request.save();
 
-      res
-        .status(200)
-        .send({
-          user: savedUser._id,
-          request: savedRequest,
-          offer: savedOffer,
-        });
+      res.status(200).send({
+        user: savedUser._id,
+        request: savedRequest,
+        offer: savedOffer,
+      });
     } catch (err) {
       res.status(400).send(err);
     }
