@@ -9,7 +9,7 @@ import { Card, Badge, CloseButton } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual request items
-const Request = ({ request }) => {
+const Request = ({ request, page }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -27,7 +27,7 @@ const Request = ({ request }) => {
     if (!showAlert) {
       setShowAlert(true);
       dispatch(getMemberProfile());
-      dispatch(getRequests());
+      dispatch(getRequests(page));
     } else {
       setShowAlert(false);
     }

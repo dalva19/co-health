@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
       text: req.body.text,
       username: user.username,
       user: user._id,
-      status: "awaiting offer",
+      status: "pending offer",
       community: user.address.city,
       coordinates: req.user.coordinates,
     });
@@ -119,15 +119,25 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById(req.params.offerID);
     const request = await Request.findById(offer.request);
-    const communityUser = await User.findById(request.user);
-    const healthcareUser = await User.findById(offer.user);
+    const communityUser = await User.findById(request.user).select({
+      hash: 0,
+      salt: 0,
+    });
+    const healthcareUser = await User.findById(offer.user).select({
+      hash: 0,
+      salt: 0,
+    });
     const offerAccepted = "offer accepted";
+    const offerDeclined = "offer declined";
     let offerUpdate;
     let requestUpdate;
-    let chat;
+    // let chat;
 
     //return error if already accepted
-    if (req.body.status === request.status) {
+    if (
+      req.body.status.replace(/\s+/g, "").trim().toLowerCase() ===
+      request.status.replace(/\s+/g, "").trim().toLowerCase()
+    ) {
       return res.status(400).send("Bad request");
     }
 
@@ -145,49 +155,48 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
 
       //adds contact to users contact list if not already connected
       //creates new Chat if users not already connected
-      const existingCommunityContact = communityUser.contacts.find(
-        (contact) =>
-          contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
-          healthcareUser.username.replace(/\s+/g, "").trim().toLowerCase()
-      );
+      // const existingCommunityContact = communityUser.contacts.find(
+      //   (contact) =>
+      //     contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
+      //     healthcareUser.username.replace(/\s+/g, "").trim().toLowerCase()
+      // );
 
-      const existingHealthcareContact = healthcareUser.contacts.find(
-        (contact) =>
-          contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
-          communityUser.username.replace(/\s+/g, "").trim().toLowerCase()
-      );
+      // const existingHealthcareContact = healthcareUser.contacts.find(
+      //   (contact) =>
+      //     contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
+      //     communityUser.username.replace(/\s+/g, "").trim().toLowerCase()
+      // );
 
-      if (!existingCommunityContact && !existingHealthcareContact) {
-        const newCommunityContact = {
-          username: communityUser.username,
-          user: communityUser._id,
-        };
+      // if (!existingCommunityContact && !existingHealthcareContact) {
+      //   const newCommunityContact = {
+      //     username: communityUser.username,
+      //     user: communityUser._id,
+      //   };
 
-        const newHealthcareContact = {
-          username: healthcareUser.username,
-          user: healthcareUser._id,
-        };
+      //   const newHealthcareContact = {
+      //     username: healthcareUser.username,
+      //     user: healthcareUser._id,
+      //   };
 
-        chat = new Chat({
-          communityMember: communityUser._id,
-          healthcareMember: healthcareUser._id,
-        });
+      //   const newChat = new Chat({
+      //     communityMember: communityUser._id,
+      //     healthcareMember: healthcareUser._id,
+      //   });
 
-        communityUser.contacts.push(newHealthcareContact);
-        healthcareUser.contacts.push(newCommunityContact);
+      //   communityUser.contacts.push(newHealthcareContact);
+      //   healthcareUser.contacts.push(newCommunityContact);
 
-        await communityUser.save();
-        await healthcareUser.save();
+      //   await communityUser.save();
+      //   await healthcareUser.save();
 
-        chat = newChat.save();
-      }
-    } else if (req.body.status === "offer declined") {
+      //   chat = newChat.save();
+      // }
+    } else if (
+      req.body.status.replace(/\s+/g, "").trim().toLowerCase() ===
+      offerDeclined.replace(/\s+/g, "").trim().toLowerCase()
+    ) {
       offerUpdate = {
         $set: { status: req.body.status },
-      };
-
-      requestUpdate = {
-        $set: { status: "offers under review" },
       };
     } else {
       return res.status(400).send("Bad request");
@@ -205,7 +214,9 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       { new: true }
     ).populate("offers");
 
-    res.status(200).send({ request: requestStatusEdit, chat: chat });
+    res
+      .status(200)
+      .send({ request: requestStatusEdit, offer: offerStatusEdit });
   } catch (err) {
     res.status(400).send(err);
   }

@@ -10,6 +10,7 @@ export const LOADED_FALSE = "loaded_false";
 
 //action creators
 export const getRequests = (page) => (dispatch) => {
+  console.log(page);
   axios
     .get(`/co-health/api/profile/requests?page=${page}`, {
       withCredentials: true,

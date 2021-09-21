@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteOffer } from "../../actions/offerActions";
 //styling
-import { Card, Spinner } from "react-bootstrap";
+import { Card, CloseButton } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual offer items
@@ -23,7 +23,11 @@ const Offer = ({ offer }) => {
       {offer.request ? (
         <StyledCard>
           <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
-            <Card.Header>Status: {offer.status}</Card.Header>
+            <Card.Header className="card-header">
+              Status: {offer.status}
+              <CloseButton onClick={handleDelete} />
+            </Card.Header>
+
             <Card.Body>
               <Card.Title>{offer.request.text}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
@@ -59,6 +63,11 @@ const Offer = ({ offer }) => {
 
 const StyledCard = styled.div`
   padding-left: 1rem;
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const StyledFooter = styled.div`

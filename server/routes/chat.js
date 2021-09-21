@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const Chat = require("../models/Chat");
+const Offer = require("../models/Offer");
 const User = require("../models/User");
-const ObjectId = require("mongoose").Types.ObjectId;
+const Request = require("../models/Request");
 
 router.get("/", async (req, res) => {
   try {
@@ -31,6 +32,64 @@ router.get("/:chatId", async (req, res) => {
     res.status(200).send(chat);
   } catch (err) {
     res.status(400).send(err);
+  }
+});
+
+router.post("/contacts", async (req, res) => {
+  //adds contact to users contact list if not already connected
+  //creates new Chat if users not already connected
+
+  try {
+    const offer = await Offer.findById(req.body.offerId);
+    const request = await Request.findById(offer.request);
+    const communityUser = await User.findById(request.user).select({
+      hash: 0,
+      salt: 0,
+    });
+    const healthcareUser = await User.findById(offer.user).select({
+      hash: 0,
+      salt: 0,
+    });
+
+    const existingCommunityContact = communityUser.contacts.find(
+      (contact) =>
+        contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
+        healthcareUser.username.replace(/\s+/g, "").trim().toLowerCase()
+    );
+
+    const existingHealthcareContact = healthcareUser.contacts.find(
+      (contact) =>
+        contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
+        communityUser.username.replace(/\s+/g, "").trim().toLowerCase()
+    );
+
+    if (!existingCommunityContact && !existingHealthcareContact) {
+      const newCommunityContact = {
+        username: communityUser.username,
+        user: communityUser._id,
+      };
+
+      const newHealthcareContact = {
+        username: healthcareUser.username,
+        user: healthcareUser._id,
+      };
+
+      const newChat = new Chat({
+        communityMember: communityUser._id,
+        healthcareMember: healthcareUser._id,
+      });
+
+      communityUser.contacts.push(newHealthcareContact);
+      healthcareUser.contacts.push(newCommunityContact);
+
+      await communityUser.save();
+      await healthcareUser.save();
+
+      const savedChat = newChat.save();
+      res.status(200).send(savedChat);
+    }
+  } catch (err) {
+    return err;
   }
 });
 

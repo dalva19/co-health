@@ -39,7 +39,7 @@ const CommunityProfile = () => {
             onClick={handleShow}
           />
         </div>
-        {requestsLoaded ? <Requests requests={requests} /> : ""}
+        {requestsLoaded ? <Requests requests={requests} page={page} /> : ""}
       </ProfileContainer>
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />

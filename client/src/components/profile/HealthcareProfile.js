@@ -22,6 +22,7 @@ const HealthCareProfile = () => {
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState("");
+  const { member } = useSelector((state) => state.member);
   const { credentials } = useSelector((state) => state.member.member[0]);
   const { offers, loaded } = useSelector((state) => state.offers);
   const itemCount = useSelector((state) => state.offers.count);
@@ -43,10 +44,15 @@ const HealthCareProfile = () => {
 
   useEffect(() => {
     if (credentials.verified) {
-      dispatch(getOffers(page));
       dispatch(getCommunityRequests());
     }
   }, [dispatch, page, credentials.verified]);
+
+  useEffect(() => {
+    if (member[0].offers.length > 0) {
+      dispatch(getOffers());
+    }
+  }, [dispatch, member]);
 
   return (
     <>
@@ -60,28 +66,22 @@ const HealthCareProfile = () => {
         ""
         // <button onClick={handleShowOfferModal}>testing map</button>
       )}
-      {loaded ? (
-        <>
-          {/* <ProfileContainer>
+
+      <>
+        {/* <ProfileContainer>
             <h2>Offer cards</h2>
           </ProfileContainer> */}
-          {/* <ProfileMap /> */}
-          <div style={{ width: "100vw", height: "100vh" }}>
-            <WrappedMap
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
-              loadingElement={<div style={{ height: "100%" }} />}
-              containerElement={<div style={{ height: "100%" }} />}
-              mapElement={<div style={{ height: "100%" }} />}
-            />
-          </div>
-          <Offers offers={offers} />
-        </>
-      ) : (
-        ""
-        // <Spinner animation="border" role="status">
-        //   <span className="visually-hidden">Loading...</span>
-        // </Spinner>
-      )}
+        {/* <ProfileMap /> */}
+        <div style={{ width: "100vw", height: "100vh" }}>
+          <WrappedMap
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: "100%" }} />}
+            mapElement={<div style={{ height: "100%" }} />}
+          />
+        </div>
+        {loaded ? <Offers offers={offers} /> : <h2>Make an offer</h2>}
+      </>
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />
 
