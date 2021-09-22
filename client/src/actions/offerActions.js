@@ -25,9 +25,9 @@ export const getOffers = (page) => (dispatch) => {
 };
 
 //backend route needs to be written
-export const getOffer = (offerId) => (dispatch) => {
+export const getOffer = (id) => (dispatch) => {
   axios
-    .get(`/co-health/api/profile/offers/${offerId}`)
+    .get(`/co-health/api/profile/offers/${id}`)
     .then((response) => {
       dispatch({
         type: FETCH_OFFER,

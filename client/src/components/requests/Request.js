@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteRequest, getRequests } from "../../actions/requestActions";
+import {
+  deleteRequest,
+  getRequests,
+  editRequest,
+} from "../../actions/requestActions";
 import { getMemberProfile } from "../../actions/memberActions";
 import EditRequest from "./EditRequest";
+import EditCardForm from "../cards/EditCardForm";
 import OfferAlert from "../offers/OfferAlert";
 //styling
 import { Card, Badge, CloseButton } from "react-bootstrap";

@@ -142,16 +142,9 @@ router.put("/edit/:offerID", async (req, res) => {
       return res.status(400).send("Bad request.");
     }
 
-    const savedOfferEdit = await Offer.findByIdAndUpdate(
-      offer._id,
-      update,
-      { new: true },
-      (err, offer) => {
-        if (err) {
-          return err;
-        }
-      }
-    ).populate("request");
+    const savedOfferEdit = await Offer.findByIdAndUpdate(offer._id, update, {
+      new: true,
+    }).populate("request");
 
     res.status(200).send(savedOfferEdit);
   } catch (err) {

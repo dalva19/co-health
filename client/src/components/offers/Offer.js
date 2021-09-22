@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteOffer } from "../../actions/offerActions";
+import EditOffer from "./EditOffer";
 //styling
 import { Card, CloseButton } from "react-bootstrap";
 import styled from "styled-components";
@@ -8,9 +9,9 @@ import styled from "styled-components";
 //individual offer items
 const Offer = ({ offer }) => {
   // const [selectRequest, setSelectRequest] = useState("");
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const dispatch = useDispatch();
 
@@ -38,25 +39,26 @@ const Offer = ({ offer }) => {
             <Card.Footer>
               <StyledFooter>
                 <p onClick={handleDelete}>Delete</p>
-                <p>Edit</p>
+                <p onClick={handleShow}>Edit</p>
               </StyledFooter>
             </Card.Footer>
           </Card>
         </StyledCard>
       ) : (
         ""
+        //add placeholder card?
         // <Spinner animation="border" role="status">
         //   <span className="visually-hidden">Loading...</span>
         // </Spinner>
       )}
 
-      {/* <EditRequest
-        request={request}
+      <EditOffer
+        offer={offer}
         show={show}
         setShow={setShow}
         handleClose={handleClose}
         handleShow={handleShow}
-      /> */}
+      />
     </>
   );
 };
