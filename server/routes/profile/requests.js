@@ -227,10 +227,15 @@ router.delete("/:request", async (req, res) => {
     const request = await Request.findById({ _id: req.params.request });
     const user = await User.findById({ _id: req.user._id });
     const update = { $pull: { requests: request._id } };
+    const offerUpdate = {
+      $set: { status: "Request deleted. Offer not needed." },
+    };
+    const query = { request: request._id };
 
     await Request.deleteOne({ _id: request._id });
     await User.findByIdAndUpdate(user._id, update);
-    await Offer.deleteMany({ request: request._id });
+    await Offer.findOneAndUpdate(query, offerUpdate, { new: true });
+    // await Offer.deleteMany({ request: request._id });
 
     res.status(200).send({ deletedRequestId: req.params.request });
   } catch (err) {

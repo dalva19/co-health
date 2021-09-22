@@ -160,8 +160,8 @@ router.put("/edit/:offerID", async (req, res) => {
 });
 
 router.delete("/:offerID", async (req, res) => {
-  const offer = await Offer.findById({ _id: req.params.offerID });
-  const user = await User.findById({ _id: req.user._id });
+  const offer = await Offer.findById(req.params.offerID);
+  const user = await User.findById(req.user._id);
   const requestID = offer.request;
 
   if (!offer) {

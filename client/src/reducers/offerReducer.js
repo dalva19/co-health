@@ -4,33 +4,41 @@ import {
   FETCH_OFFER,
   FETCH_OFFERS,
   POST_OFFER,
+  OFFERS_LOADING,
 } from "../actions/offerActions";
 
 const DEFAULT_STATE = {
-  offers: [null],
-  count: [null],
-  loaded: false,
+  offers: [],
+  count: [],
+  isLoading: true,
 };
 
 const offerReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
+    case OFFERS_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
     case FETCH_OFFERS:
       return {
         ...state,
         offers: action.payload.data.offers,
         count: action.payload.data.count,
-        loaded: true,
+        isLoading: false,
       };
     case FETCH_OFFER:
       return {
         ...state,
         offer: action.payload,
+        isLoading: false,
       };
     case POST_OFFER:
       const newOffer = action.payload.offer;
       return {
         ...state,
         offers: [newOffer, ...state.offers],
+        isLoading: false,
       };
     case EDIT_OFFER:
       const updatedOffer = action.payload;
@@ -44,6 +52,7 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         offers: newOffers,
+        isLoading: false,
       };
     case DELETE_OFFER:
       const deletedOffer = action.payload.deletedOfferId;
@@ -53,6 +62,7 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         offers: newOffersState,
+        count: [state.count - 1],
       };
     default:
       return state;

@@ -1,13 +1,17 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { postOffer } from "../../actions/offerActions";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postOffer,
+  getOffers,
+  offersLoading,
+} from "../../actions/offerActions";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 
 const OfferForm = (props) => {
   //state
   const [text, setText] = useState("");
-
+  const { isLoading } = useSelector((state) => state.offers);
   const dispatch = useDispatch();
 
   //helper functions
@@ -15,7 +19,13 @@ const OfferForm = (props) => {
     e.preventDefault();
 
     const body = { text: text };
+
+    dispatch(offersLoading());
     dispatch(postOffer(props.requestId, body));
+
+    if (!isLoading) {
+      dispatch(getOffers(props.page));
+    }
   };
 
   return (

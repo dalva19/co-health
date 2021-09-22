@@ -5,6 +5,7 @@ export const FETCH_OFFER = "fetch_offer";
 export const POST_OFFER = "post_offer";
 export const EDIT_OFFER = "edit_offer";
 export const DELETE_OFFER = "delete_offer";
+export const OFFERS_LOADING = "offers_loading";
 
 //action creators
 export const getOffers = (page) => (dispatch) => {
@@ -78,4 +79,10 @@ export const deleteOffer = (offerId) => (dispatch) => {
     .catch((error) => {
       return error;
     });
+};
+
+export const offersLoading = () => (dispatch) => {
+  dispatch({
+    type: OFFERS_LOADING,
+  });
 };

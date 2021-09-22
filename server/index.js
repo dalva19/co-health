@@ -80,7 +80,7 @@ io.on("connect", (socket) => {
   let chatRoom;
   let id;
 
-  socket.on("join", async ({ username, room, chatId }, callback) => {
+  socket.on("join", async ({ room, chatId }, callback) => {
     if (room === "chat") {
       id = chatId;
       chatRoom = `${id}chat`;
@@ -88,7 +88,7 @@ io.on("connect", (socket) => {
     }
 
     console.log("connected to sockect io");
-    console.log(chatRoom);
+    // console.log(chatRoom);
 
     callback();
   });

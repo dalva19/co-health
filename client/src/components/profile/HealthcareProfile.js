@@ -12,7 +12,7 @@ import HealthcareLicenseForm from "./HealthcareLiscenceForm";
 import Pagination from "../nav/Pagination";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
-import { getOffers } from "../../actions/offerActions";
+import { getOffers, offersLoading } from "../../actions/offerActions";
 //styling
 import styled from "styled-components";
 import { Spinner } from "react-bootstrap";
@@ -24,7 +24,7 @@ const HealthCareProfile = () => {
   const [modal, setModal] = useState("");
   const { member } = useSelector((state) => state.member);
   const { credentials } = useSelector((state) => state.member.member[0]);
-  const { offers, loaded } = useSelector((state) => state.offers);
+  const { offers, isLoading } = useSelector((state) => state.offers);
   const itemCount = useSelector((state) => state.offers.count);
   const [page, setPage] = useState(1);
 
@@ -46,13 +46,14 @@ const HealthCareProfile = () => {
     if (credentials.verified) {
       dispatch(getCommunityRequests());
     }
-  }, [dispatch, page, credentials.verified]);
+  }, [dispatch, credentials.verified]);
 
   useEffect(() => {
     if (member[0].offers.length > 0) {
-      dispatch(getOffers());
+      dispatch(offersLoading());  
+      dispatch(getOffers(page));
     }
-  }, [dispatch, member]);
+  }, [dispatch, page, member]);
 
   return (
     <>
@@ -80,7 +81,7 @@ const HealthCareProfile = () => {
             mapElement={<div style={{ height: "100%" }} />}
           />
         </div>
-        {loaded ? <Offers offers={offers} /> : <h2>Make an offer</h2>}
+        {!isLoading ? <Offers offers={offers} /> : <h2>Make an offer</h2>}
       </>
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />
@@ -90,7 +91,11 @@ const HealthCareProfile = () => {
         handleClose={handleClose}
       />
 
-      <OfferForm show={modal === "offer-modal"} handleClose={handleClose} />
+      <OfferForm
+        show={modal === "offer-modal"}
+        handleClose={handleClose}
+        page={page}
+      />
     </>
   );
 };
