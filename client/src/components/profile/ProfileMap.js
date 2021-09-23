@@ -25,7 +25,6 @@ const ProfileMap = () => {
     //make link in router on App.js
     //link here on click
     //server route already in place /user/:id
-    console.log(e.target.id);
     setRequestId(e.target.id);
     handleShow();
   };
@@ -35,11 +34,6 @@ const ProfileMap = () => {
       {requests ? (
         <>
           <div>
-            {/* {requests.map((request, index) => (
-              <li key={index} id={request._id} onClick={handleUsername}>
-                {request.username}
-              </li>
-            ))} */}
             <GoogleMap
               defaultZoom={10}
               defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}

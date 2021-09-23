@@ -48,7 +48,7 @@ const OfferForm = (props) => {
               </Form.Group>
 
               <Button
-                variant="primary"
+                className="button"
                 type="submit"
                 onClick={handleSubmitButton}
               >
@@ -65,6 +65,10 @@ const OfferForm = (props) => {
 
 const OfferFormContainer = styled.div`
   padding-top: 5vh;
+  .button {
+    background-color: #ab417f;
+    border: none;
+  }
 `;
 
 export default OfferForm;

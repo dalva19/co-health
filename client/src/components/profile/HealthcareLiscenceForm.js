@@ -11,7 +11,7 @@ import { getLicense, verifyLicense } from "../../actions/licenseActions";
 const HealthcareLicenseForm = (props) => {
   const dispatch = useDispatch();
   const { name } = useSelector((state) => state.member.member[0]);
-  const { loaded } = useSelector((state) => state.license);
+  const { isLoading } = useSelector((state) => state.license);
   const license = useSelector((state) => state.license.license[0]);
 
   //state
@@ -34,11 +34,11 @@ const HealthcareLicenseForm = (props) => {
   };
 
   useEffect(() => {
-    if (loaded) {
+    if (!isLoading) {
       dispatch(verifyLicense(license));
       dispatch(getMemberProfile());
     }
-  }, [dispatch, loaded]);
+  }, [dispatch, isLoading, license]);
 
   return (
     <>

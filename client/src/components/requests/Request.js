@@ -90,10 +90,28 @@ const Request = ({ request, page }) => {
 
 const StyledCard = styled.div`
   padding-left: 1rem;
+  .card {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  }
   .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  #accept {
+    background-color: #89b173;
+  }
+  .card-header {
+    background-color: #ab417f;
+    color: white;
+  }
+  .card-footer {
+    background-color: #ab417f;
+    color: white;
+    /* display: flex;
+    align-items: center;
+    justify-content: space-around; */
+    cursor: pointer;
   }
 `;
 

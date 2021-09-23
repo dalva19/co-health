@@ -75,7 +75,6 @@ export const updateProfileLicense = (body) => (dispatch) => {
       withCredentials: true,
     })
     .then((response) => {
-      console.log(response);
       if (response.data) {
         dispatch({
           type: UPDATE_SETTINGS,

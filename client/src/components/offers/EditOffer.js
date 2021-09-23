@@ -20,15 +20,15 @@ const EditOffer = (props) => {
 
   return (
     <>
-      <RequestFormContainer>
+      <OfferFormContainer>
         <Modal onHide={props.handleClose} animation={false} show={props.show}>
           <Modal.Header closeButton={props.handleClose}>
-            <Modal.Title>Offer</Modal.Title>
+            <Modal.Title>Edit Offer</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Form.Group className="mb-3" controlId="formBasicStateAddress">
-                <Form.Label>Text</Form.Label>
+                {/* <Form.Label>Text</Form.Label> */}
                 <Form.Control
                   type="text"
                   placeholder="Text"
@@ -36,25 +36,38 @@ const EditOffer = (props) => {
                   onChange={(e) => setEditText(e.target.value)}
                 />
               </Form.Group>
-
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={handleSubmitButton}
-              >
-                Submit
-              </Button>
+              <StyledButton>
+                <Button
+                  className="button"
+                  // variant="outline-dark"
+                  type="submit"
+                  onClick={handleSubmitButton}
+                >
+                  Save changes
+                </Button>
+              </StyledButton>
             </Form>
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
         </Modal>
-      </RequestFormContainer>
+      </OfferFormContainer>
     </>
   );
 };
 
-const RequestFormContainer = styled.div`
+const OfferFormContainer = styled.div`
   padding-top: 5vh;
+  #button {
+    background-color: #ab417f;
+    border: none;
+  }
+`;
+
+const StyledButton = styled.div`
+  .button {
+    background-color: #ab417f;
+    border: none;
+  }
 `;
 
 export default EditOffer;

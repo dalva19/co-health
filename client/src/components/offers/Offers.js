@@ -1,6 +1,6 @@
 import Offer from "./Offer";
 //styling
-import { Container, Col, Row, Spinner } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 const Offers = ({ offers }) => {
@@ -23,6 +23,7 @@ const StyledCards = styled.div`
   min-height: 50vh;
   display: flex;
   flex-direction: row;
+  padding-left: 5rem;
 `;
 
 export default Offers;

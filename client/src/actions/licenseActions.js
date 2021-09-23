@@ -2,6 +2,7 @@ import axios from "axios";
 //variables
 export const FETCH_LICENSE = "fetch_license";
 export const VERIFY_LICENSE = "verify_license";
+export const LOGOUT_LICENSE = "logout_license";
 
 //action creators
 export const getLicense = (body) => (dispatch) => {
@@ -34,4 +35,10 @@ export const verifyLicense = (body) => (dispatch) => {
     .catch((error) => {
       return error;
     });
+};
+
+export const logoutLicense = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT_LICENSE,
+  });
 };

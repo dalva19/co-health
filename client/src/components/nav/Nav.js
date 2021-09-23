@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Route, Redirect } from "react-router-dom";
 import { logout } from "../../actions/memberActions";
+import { logoutLicense } from "../../actions/licenseActions";
 import styled from "styled-components";
 
 const Nav = () => {
@@ -10,6 +11,10 @@ const Nav = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(logoutLicense());
+    // <Route exact path="/co-health/">
+    //   <Redirect to="/co-health/" />
+    // </Route>;
   };
 
   return (

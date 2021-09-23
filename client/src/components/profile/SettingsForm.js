@@ -8,15 +8,28 @@ import { updateProfileSettings } from "../../actions/memberActions";
 const SettingsForm = (props) => {
   const dispatch = useDispatch();
   const coordinates = useSelector((state) => state.coordinates.coordinates);
+  const member = useSelector((state) => state.member.member[0]);
 
   //state
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
+  const [firstName, setFirstName] = useState(
+    member.name.firstName ? member.name.firstName : ""
+  );
+  const [lastName, setLastName] = useState(
+    member.name.lastName ? member.name.lastName : ""
+  );
+  const [avatar, setAvatar] = useState(member.avatar ? member.avatar : "");
+  const [street, setStreet] = useState(
+    member.address.street ? member.address.street : ""
+  );
+  const [city, setCity] = useState(
+    member.address.city ? member.address.city : ""
+  );
+  const [state, setState] = useState(
+    member.address.state ? member.address.state : ""
+  );
+  const [zip, setZip] = useState(
+    member.address.zipcode ? member.address.zipcode : ""
+  );
   const [address, setAddress] = useState("");
 
   //helper functions

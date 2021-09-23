@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteOffer } from "../../actions/offerActions";
 import EditOffer from "./EditOffer";
 //styling
-import { Card, CloseButton } from "react-bootstrap";
+import { Card, CloseButton, Badge } from "react-bootstrap";
 import styled from "styled-components";
+import PlaceHolderCard from "../PlaceHolderCard";
 
 //individual offer items
 const Offer = ({ offer }) => {
-  // const [selectRequest, setSelectRequest] = useState("");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { isLoading } = useSelector((state) => state.offers);
 
   const dispatch = useDispatch();
 
@@ -21,10 +22,18 @@ const Offer = ({ offer }) => {
 
   return (
     <>
-      {offer.request ? (
+      {!isLoading ? (
         <StyledCard>
-          <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
-            <Card.Header className="card-header">
+          <Card
+            className={
+              offer.status === "offer accepted" ? "card-border" : "card"
+            }
+            style={{ width: "18rem", height: "18rem" }}
+          >
+            <Card.Header
+              className="card-header"
+              id={offer.status === "offer accepted" ? "accept" : ""}
+            >
               Status: {offer.status}
               <CloseButton onClick={handleDelete} />
             </Card.Header>
@@ -36,20 +45,17 @@ const Offer = ({ offer }) => {
               </Card.Subtitle>
               <Card.Text>{offer.text}</Card.Text>
             </Card.Body>
-            <Card.Footer>
-              <StyledFooter>
-                <p onClick={handleDelete}>Delete</p>
-                <p onClick={handleShow}>Edit</p>
-              </StyledFooter>
+            <Card.Footer
+              className="card-footer"
+              id={offer.status === "offer accepted" ? "accept" : ""}
+            >
+              {/* <p onClick={handleDelete}>Delete</p> */}
+              <p onClick={handleShow}>Edit</p>
             </Card.Footer>
           </Card>
         </StyledCard>
       ) : (
-        ""
-        //add placeholder card?
-        // <Spinner animation="border" role="status">
-        //   <span className="visually-hidden">Loading...</span>
-        // </Spinner>
+        <PlaceHolderCard />
       )}
 
       <EditOffer
@@ -64,19 +70,31 @@ const Offer = ({ offer }) => {
 };
 
 const StyledCard = styled.div`
+  margin-top: 2rem;
   padding-left: 1rem;
+  .card {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  }
   .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-`;
-
-const StyledFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  cursor: pointer;
+  #accept {
+    background-color: #89b173;
+  }
+  .card-header {
+    background-color: #ab417f;
+    color: white;
+  }
+  .card-footer {
+    background-color: #ab417f;
+    color: white;
+    /* display: flex;
+    align-items: center;
+    justify-content: space-around; */
+    cursor: pointer;
+  }
 `;
 
 export default Offer;

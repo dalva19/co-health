@@ -6,11 +6,12 @@ import SettingsForm from "./SettingsForm";
 import HealthcareLicenseForm from "./HealthcareLiscenceForm";
 //styling
 import { Button, Row, Col, Container, Table } from "react-bootstrap";
+import styled from "styled-components";
 
 const Settings = () => {
   const [modal, setModal] = useState("");
 
-  const { credentials, name, address } = useSelector(
+  const { credentials, name, address, profileType } = useSelector(
     (state) => state.member.member[0]
   );
 
@@ -25,8 +26,10 @@ const Settings = () => {
   const handleClose = () => {
     setModal("close");
   };
+
+  const healthcareMember = "healthcare member";
   return (
-    <>
+    <StyledSettings>
       <NavigationTabs defaultActiveKey="/co-health/profile/settings" />
 
       <Container>
@@ -81,9 +84,11 @@ const Settings = () => {
                 </tbody>
               </Table>
             </>
-            <Button onClick={handleShowSettingsModal}>Manage Info</Button>
+            <Button onClick={handleShowSettingsModal} className="button">
+              Manage Info
+            </Button>
           </Col>
-          {credentials.license ? (
+          {credentials.license && profileType === "healthcare member" ? (
             <Col>
               <Table bordered hover>
                 <thead>
@@ -106,11 +111,19 @@ const Settings = () => {
                   </tr>
                 </tbody>
               </Table>
-              <Button onClick={handleShowLicenseModal}>Manage License</Button>
+              <Button onClick={handleShowLicenseModal} className="button">
+                Manage License
+              </Button>
             </Col>
           ) : (
             <Col>
-              <Button onClick={handleShowLicenseModal}>Add License</Button>
+              {!credentials.license && profileType === "healthcare member" ? (
+                <Button onClick={handleShowLicenseModal} className="button">
+                  Add License
+                </Button>
+              ) : (
+                ""
+              )}
             </Col>
           )}
         </Row>
@@ -125,8 +138,18 @@ const Settings = () => {
         show={modal === "license-modal"}
         handleClose={handleClose}
       />
-    </>
+    </StyledSettings>
   );
 };
+
+const StyledSettings = styled.div`
+  table {
+    background-color: #ffffff;
+  }
+  .button {
+    background-color: #ab417f;
+    border: none;
+  }
+`;
 
 export default Settings;

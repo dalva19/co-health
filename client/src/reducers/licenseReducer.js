@@ -1,8 +1,8 @@
-import { FETCH_LICENSE } from "../actions/licenseActions";
+import { FETCH_LICENSE, LOGOUT_LICENSE } from "../actions/licenseActions";
 
 const DEFAULT_STATE = {
   license: [null],
-  loaded: false,
+  isLoading: true,
 };
 
 const licenseReducer = (state = DEFAULT_STATE, action) => {
@@ -11,7 +11,13 @@ const licenseReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         license: action.payload,
-        loaded: true,
+        isLoading: false,
+      };
+    case LOGOUT_LICENSE:
+      return {
+        ...state,
+        license: [null],
+        isLoading: true,
       };
     default:
       return state;
