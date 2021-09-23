@@ -14,12 +14,6 @@ router.get("/", async (req, res) => {
   let data = {};
   let user;
 
-  // try {
-  //   user = await User.findById(req.user);
-  // } catch (err) {
-  //   return err;
-  // }
-
   if (!req.user.credentials.verified) {
     return res.status(401).send("You must have a verified liscence.");
   }
