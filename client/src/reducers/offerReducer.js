@@ -59,10 +59,11 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       const newOffersState = state.offers.filter(
         (offer) => offer._id !== deletedOffer
       );
+      const count = state.count;
       return {
         ...state,
         offers: newOffersState,
-        count: [state.count - 1],
+        count: [count - 1],
       };
     default:
       return state;

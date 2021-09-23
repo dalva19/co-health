@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
   let user;
 
   try {
-    user = await User.findById(req.user);
+    user = await User.findById(req.user._id);
   } catch (err) {
     return err;
   }

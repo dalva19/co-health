@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editRequest } from "../../actions/requestActions";
+import { editRequest, requestLoading } from "../../actions/requestActions";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 
@@ -15,6 +15,7 @@ const EditRequest = (props) => {
     e.preventDefault();
     const requestId = props.request._id;
     const body = { text: editText };
+    dispatch(requestLoading());
     dispatch(editRequest(requestId, body));
   };
 

@@ -57,10 +57,10 @@ router.post("/", async (req, res) => {
   }
 
   if (
-    req.user.profileType.trim().toLowerCase() ===
-    communityMember.trim().toLowerCase()
+    req.user.profileType.replace(/\s+/g, "").trim().toLowerCase() ===
+    communityMember.replace(/\s+/g, "").trim().toLowerCase()
   ) {
-    const user = await User.findById({ _id: req.user._id })
+    const user = await User.findById(req.user._id)
       .populate("requests")
       .select({ hash: 0 });
 
@@ -70,6 +70,10 @@ router.post("/", async (req, res) => {
       user: user._id,
       status: "pending offer",
       community: user.address.city,
+      normalizedCommunity: user.address.city
+        .replace(/\s+/g, "")
+        .trim()
+        .toLowerCase(),
       coordinates: req.user.coordinates,
     });
 

@@ -5,13 +5,13 @@ import {
   FETCH_REQUEST,
   FETCH_REQUESTS,
   POST_REQUEST,
-  LOADED_FALSE,
+  REQUEST_LOADING,
 } from "../actions/requestActions";
 
 const DEFAULT_STATE = {
   requests: [null],
   count: null,
-  loaded: false,
+  isLoading: true,
 };
 
 const requestReducer = (state = DEFAULT_STATE, action) => {
@@ -21,23 +21,25 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
         ...state,
         requests: action.payload.data.requests,
         count: action.payload.data.count,
-        loaded: true,
+        isLoading: false,
       };
-    case LOADED_FALSE:
+    case REQUEST_LOADING:
       return {
         ...state,
-        loaded: false,
+        isLoading: true,
       };
     case FETCH_REQUEST:
       return {
         ...state,
         request: action.payload,
+        isLoading: false,
       };
     case POST_REQUEST:
       const newRequest = action.payload.newRequest;
       return {
         ...state,
         requests: [newRequest, ...state.requests],
+        isLoading: false,
       };
     case EDIT_REQUEST:
       const updatedRequest = action.payload.request;
@@ -51,6 +53,7 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         requests: newRequests,
+        isLoading: false,
       };
     case EDIT_REQUEST_OFFER_STATUS:
       const requestEdit = action.payload.request;
@@ -64,6 +67,7 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         requests: newRequestsList,
+        isLoading: false,
       };
     case DELETE_REQUEST:
       const deletedRequest = action.payload.deletedRequestId;
@@ -73,6 +77,7 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         requests: newRequestsState,
+        isLoading: false,
       };
     default:
       return state;

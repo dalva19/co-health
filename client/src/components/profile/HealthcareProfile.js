@@ -1,11 +1,8 @@
 import React, { useEffect, useState, shouldComponentUpdate } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withScriptjs, withGoogleMap } from "react-google-maps";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faPlus } from "@fortawesome/free-solid-svg-icons";
 //components
-import NavigationTabs from "./NavigationTabs";
-import ProfileMap from "./ProfileMap";
 import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
 import HealthcareLicenseForm from "./HealthcareLiscenceForm";
@@ -15,7 +12,7 @@ import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers, offersLoading } from "../../actions/offerActions";
 //styling
 import styled from "styled-components";
-import { Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const HealthCareProfile = () => {
   //loads with profile info based on who is logged in
@@ -25,10 +22,10 @@ const HealthCareProfile = () => {
   const { member } = useSelector((state) => state.member);
   const { credentials } = useSelector((state) => state.member.member[0]);
   const { offers, isLoading } = useSelector((state) => state.offers);
+  const { name } = useSelector((state) => state.member.member[0]);
+  const license = useSelector((state) => state.license.license[0]);
   const itemCount = useSelector((state) => state.offers.count);
   const [page, setPage] = useState(1);
-
-  const WrappedMap = withScriptjs(withGoogleMap(ProfileMap));
 
   const handleShowLicenseModal = () => {
     setModal("license-modal");
@@ -57,11 +54,10 @@ const HealthCareProfile = () => {
 
   return (
     <>
-      <NavigationTabs defaultActiveKey="/co-health/profile" />
       {!credentials.verified ? (
         <>
           <h2>You must submit your license information for verification</h2>
-          <button onClick={handleShowLicenseModal}>Verify License</button>
+          <Button onClick={handleShowLicenseModal}>Verify License</Button>
         </>
       ) : (
         ""
@@ -69,23 +65,14 @@ const HealthCareProfile = () => {
       )}
 
       <>
+        {member[0].offers.length === 0 ? <h3>Make an offer</h3> : ""}
+
         {!isLoading ? (
           <>
-            <div style={{ width: "100vw", height: "100vh" }}>
-              <WrappedMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
-                loadingElement={<div style={{ height: "100%" }} />}
-                containerElement={<div style={{ height: "100%" }} />}
-                mapElement={<div style={{ height: "100%" }} />}
-              />
-            </div>
-
             <Offers offers={offers} />
           </>
         ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          ""
         )}
       </>
 

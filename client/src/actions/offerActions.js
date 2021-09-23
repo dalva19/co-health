@@ -9,6 +9,7 @@ export const OFFERS_LOADING = "offers_loading";
 
 //action creators
 export const getOffers = (page) => (dispatch) => {
+  console.log(page);
   axios
     .get(`/co-health/api/profile/offers?page=${page}`, {
       withCredentials: true,

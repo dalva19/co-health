@@ -6,7 +6,10 @@ const User = require("../models/User");
 router.get("/", async (req, res) => {
   try {
     const requests = await Request.find({
-      community: req.user.address.city.trim().toLowerCase(),
+      normalizedCommunity: req.user.address.city
+        .replace(/\s+/g, "")
+        .trim()
+        .toLowerCase(),
     });
 
     res.status(200).send(requests);
@@ -19,7 +22,10 @@ router.get("/", async (req, res) => {
 router.get("/:communityName", async (req, res) => {
   try {
     const requests = await Request.find({
-      community: req.params.communityName.trim().toLowerCase(),
+      community: req.params.communityName
+        .replace(/\s+/g, "")
+        .trim()
+        .toLowerCase(),
     });
 
     res.status(200).send(requests);

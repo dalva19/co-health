@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { getRequests } from "../../actions/requestActions";
+import { getRequests, requestLoading } from "../../actions/requestActions";
 //components
 import NavigationTabs from "./NavigationTabs";
 import Requests from "../requests/Requests";
@@ -14,8 +14,7 @@ import styled from "styled-components";
 const CommunityProfile = () => {
   const [show, setShow] = useState(false);
   const [page, setPage] = useState(1);
-  const { requests } = useSelector((state) => state.requests);
-  const requestsLoaded = useSelector((state) => state.requests.loaded);
+  const { requests, isLoading } = useSelector((state) => state.requests);
   const itemCount = useSelector((state) => state.requests.count);
 
   const handleClose = () => setShow(false);
@@ -24,13 +23,14 @@ const CommunityProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(requestLoading());
     dispatch(getRequests(page));
   }, [dispatch, page]);
 
   //dispatch to get requests from store??
   return (
     <>
-      <NavigationTabs defaultActiveKey="/co-health/profile" />
+      {/* <NavigationTabs defaultActiveKey="/co-health/profile" /> */}
       <ProfileContainer>
         <div className="add-request">
           <FontAwesomeIcon
@@ -39,7 +39,7 @@ const CommunityProfile = () => {
             onClick={handleShow}
           />
         </div>
-        {requestsLoaded ? <Requests requests={requests} page={page} /> : ""}
+        {!isLoading ? <Requests requests={requests} page={page} /> : ""}
       </ProfileContainer>
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />

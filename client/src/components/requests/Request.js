@@ -48,7 +48,7 @@ const Request = ({ request, page }) => {
   return (
     <>
       <StyledCard>
-        <Card border="secondary" style={{ width: "18rem", height: "18rem" }}>
+        <Card style={{ width: "18rem", height: "18rem" }}>
           <Card.Header className="card-header">
             Status: {request.status}
             <CloseButton onClick={handleDelete} />

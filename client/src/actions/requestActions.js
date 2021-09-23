@@ -6,9 +6,14 @@ export const POST_REQUEST = "post_request";
 export const EDIT_REQUEST = "edit_request";
 export const EDIT_REQUEST_OFFER_STATUS = "edit_request_offer_status";
 export const DELETE_REQUEST = "delete_request";
-export const LOADED_FALSE = "loaded_false";
+export const REQUEST_LOADING = "request_loading";
 
 //action creators
+export const requestLoading = () => (dispatch) => {
+  dispatch({
+    type: REQUEST_LOADING,
+  });
+};
 export const getRequests = (page) => (dispatch) => {
   console.log(page);
   axios

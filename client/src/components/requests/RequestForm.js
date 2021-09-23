@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postRequest } from "../../actions/requestActions";
+import { postRequest, requestLoading } from "../../actions/requestActions";
+// import { getMemberProfile } from "../../actions/memberActions";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 
@@ -15,6 +16,7 @@ const RequestForm = (props) => {
     e.preventDefault();
 
     const body = { text: text };
+    dispatch(requestLoading());
     dispatch(postRequest(body));
   };
 
