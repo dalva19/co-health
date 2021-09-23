@@ -12,10 +12,10 @@ const SettingsForm = (props) => {
 
   //state
   const [firstName, setFirstName] = useState(
-    member.name.firstName ? member.name.firstName : ""
+    member.name ? member.name.firstName : ""
   );
   const [lastName, setLastName] = useState(
-    member.name.lastName ? member.name.lastName : ""
+    member.name ? member.name.lastName : ""
   );
   const [avatar, setAvatar] = useState(member.avatar ? member.avatar : "");
   const [street, setStreet] = useState(

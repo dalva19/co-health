@@ -5,6 +5,7 @@ import {
   FETCH_OFFERS,
   POST_OFFER,
   OFFERS_LOADING,
+  LOGOUT_OFFERS
 } from "../actions/offerActions";
 
 const DEFAULT_STATE = {
@@ -20,6 +21,13 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
         ...state,
         isLoading: true,
       };
+    case LOGOUT_OFFERS:
+      return {
+        ...state,
+        offers: [],
+        count:[],
+        isLoading: true
+      }
     case FETCH_OFFERS:
       return {
         ...state,

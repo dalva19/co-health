@@ -9,7 +9,6 @@ router.get("/", async (req, res) => {
       .populate("offers")
       .select({ hash: 0, salt: 0 });
 
-    console.log(user);
     res.status(200).send(user);
   } catch (err) {
     res.status(400).send(err);

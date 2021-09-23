@@ -16,9 +16,9 @@ const UserRegistration = () => {
   // );
 
   //state
-  const [email, setEmail] = useState("ssssss@email.com");
-  const [username, setUsername] = useState("username");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [profileType, setProfileType] = useState("");
   // const [firstName, setFirstName] = useState("danna");
   // const [lastName, setLastName] = useState("alvarado");

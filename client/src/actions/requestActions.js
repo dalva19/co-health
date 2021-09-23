@@ -7,6 +7,7 @@ export const EDIT_REQUEST = "edit_request";
 export const EDIT_REQUEST_OFFER_STATUS = "edit_request_offer_status";
 export const DELETE_REQUEST = "delete_request";
 export const REQUEST_LOADING = "request_loading";
+export const LOGOUT_REQUESTS = "logout_requests";
 
 //action creators
 export const requestLoading = () => (dispatch) => {
@@ -14,8 +15,14 @@ export const requestLoading = () => (dispatch) => {
     type: REQUEST_LOADING,
   });
 };
+
+export const logoutRequests = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT_REQUESTS,
+  });
+};
+
 export const getRequests = (page) => (dispatch) => {
-  console.log(page);
   axios
     .get(`/co-health/api/profile/requests?page=${page}`, {
       withCredentials: true,

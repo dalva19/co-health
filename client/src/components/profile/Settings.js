@@ -27,7 +27,6 @@ const Settings = () => {
     setModal("close");
   };
 
-  const healthcareMember = "healthcare member";
   return (
     <StyledSettings>
       <NavigationTabs defaultActiveKey="/co-health/profile/settings" />
@@ -46,11 +45,11 @@ const Settings = () => {
                 <tbody>
                   <tr>
                     <td>First Name</td>
-                    <td>{name.firstName}</td>
+                    <td>{name ? name.firstName : ""}</td>
                   </tr>
                   <tr>
                     <td>Last Name</td>
-                    <td>{name.lastName}</td>
+                    <td>{name ? name.lastName : ""}</td>
                   </tr>
                   <tr>
                     <td>Community</td>

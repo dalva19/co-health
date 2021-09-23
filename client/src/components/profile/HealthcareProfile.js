@@ -1,4 +1,4 @@
-import React, { useEffect, useState, shouldComponentUpdate } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +7,7 @@ import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
 import HealthcareLicenseForm from "./HealthcareLiscenceForm";
 import Pagination from "../nav/Pagination";
+import SettingsForm from "./SettingsForm";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers, offersLoading } from "../../actions/offerActions";
@@ -31,9 +32,13 @@ const HealthCareProfile = () => {
     setModal("license-modal");
   };
 
-  // const handleShowOfferModal = () => {
-  //   setModal("offer-modal");
-  // };
+  const handleShowOfferModal = () => {
+    setModal("offer-modal");
+  };
+
+  const handleShowSettingsModal = () => {
+    setModal("settings-modal");
+  };
 
   const handleClose = () => {
     setModal("close");
@@ -56,7 +61,10 @@ const HealthCareProfile = () => {
     <>
       {!credentials.verified ? (
         <>
-          <h2>You must submit your license information for verification</h2>
+          <h2>
+            You must submit your license information for verification before
+            getting started.
+          </h2>
           <Button onClick={handleShowLicenseModal}>Verify License</Button>
         </>
       ) : (
@@ -64,22 +72,41 @@ const HealthCareProfile = () => {
         // <button onClick={handleShowOfferModal}>testing map</button>
       )}
 
-      <>
-        {member[0].offers.length === 0 ? <h3>Make an offer</h3> : ""}
+      {!member[0].address.city ? (
+        <>
+          <h2>
+            Please submit your address information to set your default
+            community.
+          </h2>{" "}
+          <Button onClick={handleShowSettingsModal}>Settings</Button>
+        </>
+      ) : (
+        ""
+      )}
 
-        {!isLoading ? (
-          <>
-            <Offers offers={offers} />
-          </>
-        ) : (
-          ""
-        )}
-      </>
+      {member[0].offers.length === 0 && credentials.verified ? (
+        <h3>Make an offer</h3>
+      ) : (
+        ""
+      )}
+
+      {!isLoading ? (
+        <>
+          <Offers offers={offers} />
+        </>
+      ) : (
+        ""
+      )}
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />
 
       <HealthcareLicenseForm
         show={modal === "license-modal"}
+        handleClose={handleClose}
+      />
+
+      <SettingsForm
+        show={modal === "settings-modal"}
         handleClose={handleClose}
       />
 

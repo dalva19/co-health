@@ -6,17 +6,19 @@ import {
   FETCH_REQUESTS,
   POST_REQUEST,
   REQUEST_LOADING,
+  LOGOUT_REQUESTS,
 } from "../actions/requestActions";
 
 const DEFAULT_STATE = {
-  requests: [null],
-  count: null,
+  requests: [],
+  count: [],
   isLoading: true,
 };
 
 const requestReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case FETCH_REQUESTS:
+      console.log(action.payload.data);
       return {
         ...state,
         requests: action.payload.data.requests,
@@ -26,6 +28,13 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
     case REQUEST_LOADING:
       return {
         ...state,
+        isLoading: true,
+      };
+    case LOGOUT_REQUESTS:
+      return {
+        ...state,
+        requests: [],
+        count: [],
         isLoading: true,
       };
     case FETCH_REQUEST:
@@ -74,9 +83,11 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
       const newRequestsState = state.requests.filter(
         (request) => request._id !== deletedRequest
       );
+      const count = state.count;
       return {
         ...state,
         requests: newRequestsState,
+        count: [count - 1],
         isLoading: false,
       };
     default:

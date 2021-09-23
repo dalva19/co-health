@@ -10,17 +10,17 @@ const ObjectId = require("mongoose").Types.ObjectId;
 router.get("/", async (req, res) => {
   const perPage = 4;
   const page = req.query.page || 1;
-  const query = {};
+  const query = { user: req.user._id };
   let data = {};
   let user;
 
-  try {
-    user = await User.findById(req.user._id);
-  } catch (err) {
-    return err;
-  }
+  // try {
+  //   user = await User.findById(req.user);
+  // } catch (err) {
+  //   return err;
+  // }
 
-  if (!user.credentials.verified) {
+  if (!req.user.credentials.verified) {
     return res.status(401).send("You must have a verified liscence.");
   }
 
@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 
     // res.status(200).send(offers);
 
-    await Offer.find({ query })
+    await Offer.find(query)
       .sort({ date: -1 })
       .skip(perPage * page - perPage)
       .limit(perPage)

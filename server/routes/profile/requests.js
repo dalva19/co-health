@@ -13,18 +13,18 @@ const ObjectId = require("mongoose").Types.ObjectId;
 router.get("/", async (req, res) => {
   const perPage = 4;
   const page = req.query.page || 1;
-  const query = {};
+  const query = { user: req.user._id };
   let data = {};
 
   try {
-    await Request.find({ query })
+    await Request.find(query)
       .sort({ date: -1 })
       .skip(perPage * page - perPage)
       .limit(perPage)
       .populate("offers")
       .exec((err, requests) => {
         Request.countDocuments(query, (err, count) => {
-          if (err) return err;
+          if (err) return err; 
 
           data = {
             requests: requests,

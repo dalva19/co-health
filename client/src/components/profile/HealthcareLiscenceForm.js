@@ -10,13 +10,13 @@ import { getLicense, verifyLicense } from "../../actions/licenseActions";
 
 const HealthcareLicenseForm = (props) => {
   const dispatch = useDispatch();
-  // const { name } = useSelector((state) => state.member.member[0]);
+  const { name } = useSelector((state) => state.member.member[0]);
   const { isLoading } = useSelector((state) => state.license);
   const license = useSelector((state) => state.license.license[0]);
 
   //state
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState(name ? name.firstName : "");
+  const [lastName, setLastName] = useState(name ? name.lastName : "");
   const [licenseType, setLicenseType] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
 

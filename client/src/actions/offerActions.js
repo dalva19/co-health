@@ -6,6 +6,7 @@ export const POST_OFFER = "post_offer";
 export const EDIT_OFFER = "edit_offer";
 export const DELETE_OFFER = "delete_offer";
 export const OFFERS_LOADING = "offers_loading";
+export const LOGOUT_OFFERS = "logout_offers";
 
 //action creators
 export const getOffers = (page) => (dispatch) => {
@@ -85,5 +86,11 @@ export const deleteOffer = (offerId) => (dispatch) => {
 export const offersLoading = () => (dispatch) => {
   dispatch({
     type: OFFERS_LOADING,
+  });
+};
+
+export const logoutOffers = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT_OFFERS,
   });
 };
