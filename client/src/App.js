@@ -16,6 +16,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import SettingsPage from "./pages/SettingsPage";
 import ActivityPage from "./pages/ActivityPage";
 import MessagesPage from "./pages/MessagesPage";
+import PublicProfile from "./components/members/PublicProfile";
 import HeathCareLiceseForm from "./components/account-creation/HealthcareLiscenceForm";
 import { getMemberProfile } from "./actions/memberActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,6 +54,7 @@ const App = () => {
         <Route exact path="/co-health/profile">
           <MemberPage />
         </Route>
+
         <Route exact path="/co-health/profile/settings">
           <SettingsPage />
         </Route>
@@ -62,6 +64,12 @@ const App = () => {
         <Route exact path="/co-health/profile/messages">
           <MessagesPage />
         </Route>
+        <Route
+          path="/co-health/profile/:id"
+          render={(routerProps) => (
+            <PublicProfile selectedProfileId={routerProps.match.params.id} />
+          )}
+        />
         <Route exact path="/co-health/profile/verify-license">
           <HeathCareLiceseForm />
         </Route>

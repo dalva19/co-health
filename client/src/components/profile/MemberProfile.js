@@ -9,7 +9,7 @@ const MemberProfile = () => {
   const { member } = useSelector((state) => state.member);
   const healthcareMember = "healthcare member";
 
-  //loads with profile info based on who is logged in
+  //loads with profile container based on who is logged in
   return (
     <>
       <MemberProfileContainer>

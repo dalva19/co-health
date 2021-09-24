@@ -60,7 +60,7 @@ const Request = ({ request, page }) => {
             </StyledFooter>
           </Card.Footer>
         </Card>
-        {showAlert ? <OfferAlert request={request} /> : ""}
+        {showAlert ? <OfferAlert request={request} key={request._id} /> : ""}
       </StyledCard>
 
       <EditRequest

@@ -8,17 +8,19 @@ import RequestReducer from "./requestReducer";
 import OfferReducer from "./offerReducer";
 import CommunityRequestsReducer from "./communityRequestsReducer";
 import LicenseReducer from "./licenseReducer";
+import ProfilesReducer from "./ProfilesReducer";
 
 const rootReducer = combineReducers({
   coordinates: CoordinatesReducer,
   registration: RegisterReducer,
   member: MemberReducer,
   chat: ChatReducer,
-  selectedContact: ContactReducer,
+  // selectedContact: ContactReducer,
   requests: RequestReducer,
   offers: OfferReducer,
   communityRequests: CommunityRequestsReducer,
   license: LicenseReducer,
+  profile: ProfilesReducer,
 });
 
 export default rootReducer;

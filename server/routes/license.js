@@ -7,9 +7,13 @@ router.get("/", async (req, res) => {
     return res.status(400).send("Bad request");
   }
 
-  const normalizedName = req.query.name.replace(/\s+/g, "").toLowerCase();
+  const normalizedName = req.query.name
+    .replace(/\s+/g, "")
+    .trim()
+    .toLowerCase();
   const normalizedLicenseType = req.query.licenseType
     .replace(/\s+/g, "")
+    .trim()
     .toLowerCase();
 
   try {

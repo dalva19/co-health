@@ -29,9 +29,7 @@ const CommunityContainer = () => {
         ) : (
           <>
             <h3>Please fill out a few details to get started!</h3>
-            <Button onClick={handleShowSettingsModal}>
-              Community Information
-            </Button>
+            <Button onClick={handleShowSettingsModal}>Get Started</Button>
           </>
         )}
       </MemberProfileContainer>

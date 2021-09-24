@@ -36,7 +36,7 @@ const Nav = () => {
           <div className="logged-in-name">
             <div className="avatar-container">
               {member[0].avatar ? (
-                <img className="user-pic" src={member[0].avatar} alt="avatar" />
+                <img className="user-pic" src={member[0].avatar} alt="Pic" />
               ) : (
                 <FontAwesomeIcon
                   icon={faUserCircle}

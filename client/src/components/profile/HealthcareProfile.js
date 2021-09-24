@@ -84,11 +84,11 @@ const HealthCareProfile = () => {
         ""
       )}
 
-      {member[0].offers.length === 0 && credentials.verified ? (
+      {/* {member[0].offers.length === 0 && credentials.verified ? (
         <h3>Make an offer</h3>
       ) : (
         ""
-      )}
+      )} */}
 
       {!isLoading ? (
         <>

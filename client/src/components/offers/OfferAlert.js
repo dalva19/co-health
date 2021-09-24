@@ -1,11 +1,15 @@
+import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { editRequestOfferStatus } from "../../actions/requestActions";
 import { createChat } from "../../actions/chatActions";
+import { getProfile } from "../../actions/profilesActions";
 //styling
 import { Alert, Button } from "react-bootstrap";
+import styled from "styled-components";
 
 const OfferAlert = ({ request }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const offerAccepted = "offer accepted";
 
   const handleAcceptButton = (e) => {
@@ -27,6 +31,12 @@ const OfferAlert = ({ request }) => {
     dispatch(editRequestOfferStatus(offerId, body));
   };
 
+  const handleUsernameClick = (e) => {
+    const id = e.target.id;
+    dispatch(getProfile(id));
+    history.push(`/co-health/profile/${id}`);
+  };
+
   return (
     <>
       {request.offers.map((offer, index) => {
@@ -35,19 +45,33 @@ const OfferAlert = ({ request }) => {
           offerAccepted.replace(/\s+/g, "").trim().toLowerCase()
         ) {
           return (
-            <Alert variant="warning" className="offer-alert" key={index}>
-              <Alert.Heading>{offer.username}</Alert.Heading>
-              <p>{offer.text}</p>
-              <hr />
-              <div className="d-flex justify-content-end">
-                <p>{offer.username} is now a contact.</p>
-              </div>
-            </Alert>
+            <StyledAlert>
+              <Alert variant="warning" className="offer-alert" key={index}>
+                <Alert.Heading
+                  className="alert-header"
+                  id={offer.user}
+                  onClick={handleUsernameClick}
+                >
+                  {offer.username}
+                </Alert.Heading>
+                <p>{offer.text}</p>
+                <hr />
+                <div className="d-flex justify-content-end">
+                  <p>{offer.username} is now a contact.</p>
+                </div>
+              </Alert>
+            </StyledAlert>
           );
         } else if (offer.status === "pending") {
           return (
             <Alert variant="warning" className="offer-alert" key={index}>
-              <Alert.Heading>{offer.username}</Alert.Heading>
+              <Alert.Heading
+                className="alert-header-2"
+                id={offer.user}
+                onClick={handleUsernameClick}
+              >
+                {offer.username}
+              </Alert.Heading>
               <p>{offer.text}</p>
               <hr />
               <div className="d-flex justify-content-end">
@@ -74,5 +98,11 @@ const OfferAlert = ({ request }) => {
     </>
   );
 };
+
+const StyledAlert = styled.div`
+  .alert-header {
+    cursor: pointer;
+  }
+`;
 
 export default OfferAlert;

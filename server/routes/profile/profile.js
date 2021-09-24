@@ -19,19 +19,15 @@ router.get("/", async (req, res) => {
 router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
+      .select({ hash: 0, salt: 0 })
       .populate("requests")
       .populate("offers");
 
-    res.status(200).send({
-      _id: user._id,
-      username: user.username,
-      profileType: user.profileType,
-      name: user.name,
-      avatar: user.avatar || null,
-      credentials: user.credentials || null,
-      requests: user.requests || null,
-      offers: user.offers || null,
-    });
+    if (!user) {
+      res.status(404).send("No user found.");
+    }
+
+    res.status(200).send(user);
   } catch (err) {
     res.status(400).send(err);
   }
