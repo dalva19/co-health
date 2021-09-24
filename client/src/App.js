@@ -16,7 +16,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import SettingsPage from "./pages/SettingsPage";
 import ActivityPage from "./pages/ActivityPage";
 import MessagesPage from "./pages/MessagesPage";
-import HeathCareLiceseForm from "./components/profile/HealthcareLiscenceForm";
+import HeathCareLiceseForm from "./components/account-creation/HealthcareLiscenceForm";
 import { getMemberProfile } from "./actions/memberActions";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "./components/nav/Nav";

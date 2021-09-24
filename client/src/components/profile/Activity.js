@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { disconnectChat } from "../../utilities/chatFunction";
+import NavigationTabs from "../nav/NavigationTabs";
 //components
-import NavigationTabs from "./NavigationTabs";
 
 const Activity = () => {
   // const { socket } = useSelector((state) => state.socket.socket);
@@ -16,7 +16,7 @@ const Activity = () => {
 
   return (
     <>
-      <NavigationTabs defaultActiveKey="/co-health/profile/activity" />
+      <NavigationTabs />
       <h2>this is the activity page</h2>
     </>
   );

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 //components
-import NavigationTabs from "./NavigationTabs";
-import SettingsForm from "./SettingsForm";
-import HealthcareLicenseForm from "./HealthcareLiscenceForm";
+import SettingsForm from "../account-creation/SettingsForm";
+import HealthcareLicenseForm from "../account-creation/HealthcareLiscenceForm";
 //styling
 import { Button, Row, Col, Container, Table } from "react-bootstrap";
 import styled from "styled-components";
@@ -29,8 +28,6 @@ const Settings = () => {
 
   return (
     <StyledSettings>
-      <NavigationTabs defaultActiveKey="/co-health/profile/settings" />
-
       <Container>
         <Row>
           <h2>Settings</h2>

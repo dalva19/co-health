@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import NavigationTabs from "../profile/NavigationTabs";
+import NavigationTabs from "../nav/NavigationTabs";
 //styling
 import styled from "styled-components";
 import { Page, Description, Image } from "../../styles/styles";

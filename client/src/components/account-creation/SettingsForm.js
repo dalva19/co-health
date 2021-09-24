@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Avatar from "./Avatar";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,14 +89,17 @@ const SettingsForm = (props) => {
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Avatar</Form.Label>
+              <Avatar setAvatar={setAvatar} avatar={avatar} />
+              <br />
+              {/* <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Avatar</Form.Label>
                 <Form.Control
                   type="file"
                   value={avatar}
                   onChange={(e) => setAvatar(e.target.value)}
                 />
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group className="mb-3" controlId="formBasicFirstName">
                 <Form.Label>First Name</Form.Label>
@@ -162,7 +166,7 @@ const SettingsForm = (props) => {
               </Form.Group>
 
               <Button
-                variant="primary"
+                className="button"
                 type="submit"
                 onClick={handleSubmitButton}
               >

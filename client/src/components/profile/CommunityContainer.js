@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 //components
 import CommunityProfile from "./CommunityProfile";
-import SettingsForm from "./SettingsForm";
+import SettingsForm from "../account-creation/SettingsForm";
 //style
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";

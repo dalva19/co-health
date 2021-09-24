@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
+import Avatar from "./Avatar";
 import styled from "styled-components";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";

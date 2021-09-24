@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getRequests, requestLoading } from "../../actions/requestActions";
 //components
-import NavigationTabs from "./NavigationTabs";
 import Requests from "../requests/Requests";
 import RequestForm from "../requests/RequestForm";
 import Pagination from "../nav/Pagination";
 //styling
 import styled from "styled-components";
+import { Spinner } from "react-bootstrap";
 
 const CommunityProfile = () => {
   const [show, setShow] = useState(false);
@@ -30,7 +30,6 @@ const CommunityProfile = () => {
   //dispatch to get requests from store??
   return (
     <>
-      {/* <NavigationTabs defaultActiveKey="/co-health/profile" /> */}
       <ProfileContainer>
         <div className="add-request">
           <FontAwesomeIcon
@@ -39,13 +38,20 @@ const CommunityProfile = () => {
             onClick={handleShow}
           />
         </div>
-        {!isLoading ? <Requests requests={requests} page={page} /> : ""}
+        {!isLoading ? (
+          <Requests requests={requests} page={page} />
+        ) : (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
       </ProfileContainer>
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />
 
       <RequestForm
         show={show}
+        page={page}
         setShow={setShow}
         handleClose={handleClose}
         handleShow={handleShow}

@@ -1,16 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteRequest,
-  getRequests,
-  editRequest,
-} from "../../actions/requestActions";
+import { deleteRequest } from "../../actions/requestActions";
 import { getMemberProfile } from "../../actions/memberActions";
 import EditRequest from "./EditRequest";
-import EditCardForm from "../cards/EditCardForm";
 import OfferAlert from "../offers/OfferAlert";
 //styling
-import { Card, Badge, CloseButton } from "react-bootstrap";
+import { Card, Badge, CloseButton, Spinner } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual request items
@@ -19,7 +14,6 @@ const Request = ({ request, page }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { requests } = useSelector((state) => state.requests);
 
   const dispatch = useDispatch();
 
@@ -32,18 +26,11 @@ const Request = ({ request, page }) => {
     if (!showAlert) {
       setShowAlert(true);
       dispatch(getMemberProfile());
-      dispatch(getRequests(page));
+      // dispatch(getRequests(page));
     } else {
       setShowAlert(false);
     }
   };
-
-  //useEffect to load profile so new on offer badge will show??
-  //add loaded false to requests reducer to see if i can get this work with the useeffect
-  // useEffect(() => {
-  //   dispatch(getMemberProfile());
-  //   dispatch(getRequests());
-  // }, [dispatch]);
 
   return (
     <>
@@ -62,7 +49,6 @@ const Request = ({ request, page }) => {
           </Card.Body>
           <Card.Footer>
             <StyledFooter>
-              {/* <p onClick={handleDelete}>Delete</p> */}
               <p onClick={handleShow}>Edit</p>
               {request.offers.length > 0 ? (
                 <p onClick={handleOffersButton}>
@@ -79,6 +65,7 @@ const Request = ({ request, page }) => {
 
       <EditRequest
         request={request}
+        page={page}
         show={show}
         setShow={setShow}
         handleClose={handleClose}
@@ -98,15 +85,12 @@ const StyledCard = styled.div`
     align-items: center;
     justify-content: space-between;
   }
-  #accept {
-    background-color: #89b173;
-  }
   .card-header {
-    background-color: #ab417f;
+    background-color: #ee977c;
     color: white;
   }
   .card-footer {
-    background-color: #ab417f;
+    background-color: #ee977c;
     color: white;
     /* display: flex;
     align-items: center;

@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 //components
 import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
-import HealthcareLicenseForm from "./HealthcareLiscenceForm";
+import HealthcareLicenseForm from "../account-creation/HealthcareLiscenceForm";
 import Pagination from "../nav/Pagination";
-import SettingsForm from "./SettingsForm";
+import SettingsForm from "../account-creation/SettingsForm";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers, offersLoading } from "../../actions/offerActions";

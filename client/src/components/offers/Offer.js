@@ -5,7 +5,6 @@ import EditOffer from "./EditOffer";
 //styling
 import { Card, CloseButton, Badge } from "react-bootstrap";
 import styled from "styled-components";
-import PlaceHolderCard from "../PlaceHolderCard";
 
 //individual offer items
 const Offer = ({ offer }) => {
@@ -55,7 +54,8 @@ const Offer = ({ offer }) => {
           </Card>
         </StyledCard>
       ) : (
-        <PlaceHolderCard />
+        ""
+        // <PlaceHolderCard />
       )}
 
       <EditOffer

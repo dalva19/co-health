@@ -17,6 +17,7 @@ const EditRequest = (props) => {
     const body = { text: editText };
     dispatch(requestLoading());
     dispatch(editRequest(requestId, body));
+    setEditText("");
   };
 
   return (
