@@ -48,8 +48,8 @@ const corsOptions = {
   exposedHeaders: ["set-cookie"],
 };
 
-app.use(express.json());
-app.use(urlencoded({ extended: false }));
+app.use(express.json({ limit: "10mb" }));
+app.use(urlencoded({ extended: false, limit: "10mb" }));
 app.use(
   cookieSession({
     name: "session",

@@ -5,6 +5,8 @@ import { logoutLicense } from "../../actions/licenseActions";
 import { logoutOffers } from "../../actions/offerActions";
 import { logoutRequests } from "../../actions/requestActions";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const dispatch = useDispatch();
@@ -32,10 +34,19 @@ const Nav = () => {
           </div>
 
           <div className="logged-in-name">
-            {/* <div>
-              {avatar ? <img src={avatar} alt="avatar" /> : <h4>Pic</h4>}
-            </div> */}
-            <h4>Hi, {member[0].username}</h4>
+            <div className="avatar-container">
+              {member[0].avatar ? (
+                <img className="user-pic" src={member[0].avatar} alt="avatar" />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faUserCircle}
+                  className="icon fa-3x plus "
+                />
+              )}
+            </div>
+
+            <h4 className="username"> {member[0].username}</h4>
+
             <div>
               <ul className="logout">
                 <li className="logout">
@@ -106,11 +117,15 @@ const NavContainer = styled.div`
   }
   .logged-in-name {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     color: white;
     h4 {
       font-size: 18px;
       padding-right: 1rem;
+      padding-top: 1rem;
+    }
+    .username {
+      padding-left: 0.5rem;
     }
   }
   a {
@@ -147,6 +162,16 @@ const NavContainer = styled.div`
         color: #fad39e;
       }
     }
+  }
+  .avatar-container {
+    height: 7vh;
+    width: 7vh;
+  }
+  .user-pic {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
   }
 `;
 

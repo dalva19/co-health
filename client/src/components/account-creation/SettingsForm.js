@@ -57,7 +57,7 @@ const SettingsForm = (props) => {
       const body = {
         firstName: firstName,
         lastName: lastName,
-        avatar: avatar,
+        avatar: avatar[0] ? avatar[0].data_url : "",
         street: street,
         city: city,
         state: state,
