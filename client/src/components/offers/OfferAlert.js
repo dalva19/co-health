@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { editRequestOfferStatus } from "../../actions/requestActions";
 import { createChat } from "../../actions/chatActions";
 import { getProfile } from "../../actions/profilesActions";
+import { getRequest } from "../../actions/requestActions";
 //styling
 import { Alert, Button } from "react-bootstrap";
 import styled from "styled-components";
@@ -32,9 +33,10 @@ const OfferAlert = ({ request }) => {
   };
 
   const handleUsernameClick = (e) => {
-    const id = e.target.id;
-    dispatch(getProfile(id));
-    history.push(`/co-health/profile/${id}`);
+    const userId = e.target.id;
+    dispatch(getProfile(userId));
+    dispatch(getRequest(request._id));
+    history.push(`/co-health/profile/${userId}`);
   };
 
   return (

@@ -70,6 +70,19 @@ router.get("/", async (req, res) => {
   // }
 });
 
+router.get("/:offerId", async (req, res) => {
+  try {
+    const offer = await Offer.findById(req.params.offerId);
+    if (!offer) {
+      res.status(404).send("Not found");
+    }
+
+    res.status(200).send(offer);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 //can only make an offer to a specific request
 router.post("/:requestId", async (req, res) => {
   //need to add validation

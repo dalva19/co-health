@@ -65,9 +65,11 @@ const App = () => {
           <MessagesPage />
         </Route>
         <Route
-          path="/co-health/profile/:id"
+          path="/co-health/profile/:userId"
           render={(routerProps) => (
-            <PublicProfile selectedProfileId={routerProps.match.params.id} />
+            <PublicProfile
+              selectedProfileId={routerProps.match.params.userId}
+            />
           )}
         />
         <Route exact path="/co-health/profile/verify-license">

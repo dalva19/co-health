@@ -1,35 +1,79 @@
+import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 //styling
-import { Card, CloseButton, Badge } from "react-bootstrap";
+import { Card, Badge, Button, Accordion } from "react-bootstrap";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 //individual offer items
 const HealthCard = ({ profile }) => {
+  const history = useHistory();
+  const { selectedRequest } = useSelector((state) => state.requests);
+
+  const handleBackButton = () => {
+    history.push("/co-health/profile");
+  };
+
+  const offer = profile[0].offers.find(
+    (offer) => offer.request === selectedRequest._id
+  );
+
   return (
     <StyledCard>
-      <Card style={{ width: "40rem", height: "40rem" }}>
-        <Card.Header>
-          {profile[0].avatar ? (
-            profile[0].avatar
-          ) : (
-            <FontAwesomeIcon icon={faUserCircle} className="icon fa-3x plus " />
-          )}
+      <Card style={{ width: "35rem", height: "35rem" }}>
+        <Card.Header className="card-header">
+          <div className="avatar-container">
+            {profile[0].avatar ? (
+              <img className="user-pic" src={profile[0].avatar} alt="Pic" />
+            ) : (
+              <>
+                <FontAwesomeIcon
+                  icon={faUserCircle}
+                  className="icon fa-3x plus "
+                />
+                <h2>{profile[0].username}</h2>
+              </>
+            )}
+          </div>
         </Card.Header>
 
-        <Card.Body>
-          <Card.Title>{profile[0].username}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">
+        <Card.Body className="body">
+          <Card.Title>
             {profile[0].name.firstName}
             {""}
             {profile[0].name.lastName}
-          </Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted">
+          </Card.Title>
+          <Card.Subtitle className="mb-2 text-muted subtitle">
             {profile[0].credentials.license}
+            <Badge pill bg="success" className="verification-badge">
+              verified
+            </Badge>
           </Card.Subtitle>
-          <Card.Text></Card.Text>
+          <Card.Text>
+            <strong>Community:</strong> {profile[0].address.city}
+          </Card.Text>
+          <Card.Text>
+            {/* <br></br> */}
+            <p>
+              <strong>Bio:</strong> This is a sample bio. I am a nurse at Duke
+              hospital specializing in oncology. I have lived in this community
+              for 10 years and am happy to help.
+            </p>
+            <hr></hr>
+            {/* <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Offer</Accordion.Header>
+                <Accordion.Body>{offer.text}</Accordion.Body>
+              </Accordion.Item>
+            </Accordion> */}
+          </Card.Text>
         </Card.Body>
-        <Card.Footer className="card-footer"></Card.Footer>
+        <Card.Footer className="card-footer">
+          <Button className="back-button" onClick={handleBackButton}>
+            Back
+          </Button>
+        </Card.Footer>
       </Card>
     </StyledCard>
   );
@@ -44,7 +88,6 @@ const StyledCard = styled.div`
   .card-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
   }
   #accept {
     background-color: #89b173;
@@ -60,6 +103,10 @@ const StyledCard = styled.div`
     align-items: center;
     justify-content: space-around; */
     cursor: pointer;
+    .back-button {
+      background-color: #ee977c;
+      border: none;
+    }
   }
 `;
 

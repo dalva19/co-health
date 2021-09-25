@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
       .populate("offers")
       .exec((err, requests) => {
         Request.countDocuments(query, (err, count) => {
-          if (err) return err; 
+          if (err) return err;
 
           data = {
             requests: requests,
@@ -38,6 +38,19 @@ router.get("/", async (req, res) => {
           }
         });
       });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+router.get("/:requestId", async (req, res) => {
+  try {
+    const request = await Request.findById(req.params.requestId);
+    if (!request) {
+      res.status(404).send("Not found");
+    }
+
+    res.status(200).send(request);
   } catch (err) {
     res.status(400).send(err);
   }

@@ -5,12 +5,13 @@ import {
   FETCH_OFFERS,
   POST_OFFER,
   OFFERS_LOADING,
-  LOGOUT_OFFERS
+  LOGOUT_OFFERS,
 } from "../actions/offerActions";
 
 const DEFAULT_STATE = {
   offers: [],
   count: [],
+  selectedOffer: [],
   isLoading: true,
 };
 
@@ -25,9 +26,9 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         offers: [],
-        count:[],
-        isLoading: true
-      }
+        count: [],
+        isLoading: true,
+      };
     case FETCH_OFFERS:
       return {
         ...state,

@@ -1,19 +1,26 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { useSelector } from "react-redux";
+import { getProfile } from "../../actions/profilesActions";
+//components
 import OfferForm from "../offers/OfferForm";
 //styling
 import styled from "styled-components";
 import { Spinner } from "react-bootstrap";
 
 const ProfileMap = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [selectedData, setSelectedData] = useState(null);
   const [requestId, setRequestId] = useState("");
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const { requests } = useSelector((state) => state.communityRequests);
   const { coordinates } = useSelector((state) => state.member.member[0]);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleMakeAnOffer = (e) => {
     setRequestId(e.target.id);
@@ -22,11 +29,9 @@ const ProfileMap = () => {
 
   const handleUsername = (e) => {
     //view public profile of community member
-    //make link in router on App.js
-    //link here on click
-    //server route already in place /user/:id
-    setRequestId(e.target.id);
-    handleShow();
+    const userId = e.target.id;
+    dispatch(getProfile(userId));
+    history.push(`/co-health/profile/${userId}`);
   };
 
   return (
@@ -57,7 +62,11 @@ const ProfileMap = () => {
                   onCloseClick={() => setSelectedData(null)}
                 >
                   <StyledInfo>
-                    <h2 id={selectedData._id} onClick={handleUsername}>
+                    <h2
+                      className="username"
+                      id={selectedData.user}
+                      onClick={handleUsername}
+                    >
                       {selectedData.username}
                     </h2>
                     <p>{selectedData.text}</p>
@@ -91,6 +100,9 @@ const ProfileMap = () => {
 };
 
 const StyledInfo = styled.div`
+  .username {
+    cursor: pointer;
+  }
   .offer-link {
     cursor: pointer;
   }
