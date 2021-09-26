@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router";
 //components
 import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
@@ -16,7 +15,6 @@ import styled from "styled-components";
 import { Button } from "react-bootstrap";
 
 const HealthCareProfile = () => {
-  //loads with profile info based on who is logged in
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState("");
@@ -44,11 +42,15 @@ const HealthCareProfile = () => {
     setModal("close");
   };
 
+  const history = useHistory();
+
   useEffect(() => {
     if (credentials.verified) {
       dispatch(getCommunityRequests());
+    } else {
+      history.push("/co-health/verify-license");
     }
-  }, [dispatch, credentials.verified]);
+  }, [dispatch, credentials.verified, history]);
 
   useEffect(() => {
     if (member[0].offers.length > 0) {
@@ -59,19 +61,6 @@ const HealthCareProfile = () => {
 
   return (
     <>
-      {!credentials.verified ? (
-        <>
-          <h2>
-            You must submit your license information for verification before
-            getting started.
-          </h2>
-          <Button onClick={handleShowLicenseModal}>Verify License</Button>
-        </>
-      ) : (
-        ""
-        // <button onClick={handleShowOfferModal}>testing map</button>
-      )}
-
       {!member[0].address.city ? (
         <>
           <h2>
@@ -84,18 +73,12 @@ const HealthCareProfile = () => {
         ""
       )}
 
-      {/* {member[0].offers.length === 0 && credentials.verified ? (
-        <h3>Make an offer</h3>
-      ) : (
-        ""
-      )} */}
-
       {!isLoading ? (
         <>
           <Offers offers={offers} />
         </>
       ) : (
-        ""
+        <h3>Make an offer</h3>
       )}
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />

@@ -95,6 +95,20 @@ const StyledCard = styled.div`
   .card-header {
     background-color: #ab417f;
     color: white;
+    .avatar-container {
+      height: 7vh;
+      width: 7vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .user-pic {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
   }
   .card-footer {
     background-color: #ab417f;

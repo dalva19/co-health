@@ -12,7 +12,6 @@ const Avatar = ({ setAvatar }) => {
 
   return (
     <ImageUploading
-      multiple={false}
       value={images}
       onChange={onChange}
       dataURLKey="data_url"

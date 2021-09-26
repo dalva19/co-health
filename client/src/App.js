@@ -1,10 +1,6 @@
-import {
-  // BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 //style
 import GlobalStyle from "./styles/GlobalStyle";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,11 +12,12 @@ import RegistrationPage from "./pages/RegistrationPage";
 import SettingsPage from "./pages/SettingsPage";
 import ActivityPage from "./pages/ActivityPage";
 import MessagesPage from "./pages/MessagesPage";
+import VerifyLicensePage from "./pages/VerifyLicensePage";
+//components
 import PublicProfile from "./components/members/PublicProfile";
-import HeathCareLiceseForm from "./components/account-creation/HealthcareLiscenceForm";
-import { getMemberProfile } from "./actions/memberActions";
-import { useDispatch, useSelector } from "react-redux";
 import Nav from "./components/nav/Nav";
+//actions
+import { getMemberProfile } from "./actions/memberActions";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -72,9 +69,11 @@ const App = () => {
             />
           )}
         />
-        <Route exact path="/co-health/profile/verify-license">
-          <HeathCareLiceseForm />
-        </Route>
+        <Route
+          exact
+          path="/co-health/verify-license"
+          render={() => <VerifyLicensePage />}
+        />
 
         <Route exact path="/">
           <Redirect to="/co-health" />
