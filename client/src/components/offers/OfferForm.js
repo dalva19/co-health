@@ -49,6 +49,9 @@ const OfferForm = (props) => {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
+              <Form.Text className={!text ? "required" : ""}>
+                This field is required!
+              </Form.Text>
             </Form.Group>
             <StyledButton>
               <Button

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 // import { motion } from "framer-motion";
 
-// styled components
 export const Page = styled.div`
   min-height: 80vh;
   display: flex;
@@ -9,6 +8,7 @@ export const Page = styled.div`
   justify-content: space-between;
   padding: 5rem 10rem;
   color: white;
+  /* background-color: #f1efe9; */
 `;
 
 export const Description = styled.div`

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getRequests, requestLoading } from "../../actions/requestActions";
 //components
+import MakeRequest from "../requests/MakeRequest";
 import Requests from "../requests/Requests";
 import RequestForm from "../requests/RequestForm";
 import Pagination from "../nav/Pagination";
@@ -27,17 +28,10 @@ const CommunityProfile = () => {
     dispatch(getRequests(page));
   }, [dispatch, page]);
 
-  //dispatch to get requests from store??
   return (
     <>
-      <ProfileContainer>
-        <div className="add-request">
-          <FontAwesomeIcon
-            icon={faPlus}
-            className="icon fa-2x plus "
-            onClick={handleShow}
-          />
-        </div>
+      <>
+        <MakeRequest handleShow={handleShow} />
         {!isLoading ? (
           <Requests requests={requests} page={page} />
         ) : (
@@ -45,9 +39,15 @@ const CommunityProfile = () => {
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         )}
-      </ProfileContainer>
-
-      <Pagination page={page} setPage={setPage} itemCount={itemCount} />
+      </>
+      <StyledPagination>
+        <Pagination
+          className="pages-container"
+          page={page}
+          setPage={setPage}
+          itemCount={itemCount}
+        />
+      </StyledPagination>
 
       <RequestForm
         show={show}
@@ -60,15 +60,8 @@ const CommunityProfile = () => {
   );
 };
 
-const ProfileContainer = styled.div`
-  /* padding-top: 5vh; */
-  padding-left: 2rem;
-  .add-request {
-    min-height: 20vh;
-  }
-  .plus {
-    cursor: pointer;
-  }
+const StyledPagination = styled.div`
+  margin-left: 45%;
 `;
 
 export default CommunityProfile;

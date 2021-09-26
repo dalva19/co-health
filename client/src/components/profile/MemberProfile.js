@@ -2,8 +2,6 @@ import { useSelector } from "react-redux";
 //components
 import HealthcareContainer from "./HealthcareContainer";
 import CommunityContainer from "./CommunityContainer";
-//style
-import styled from "styled-components";
 
 const MemberProfile = () => {
   const { member } = useSelector((state) => state.member);
@@ -12,20 +10,14 @@ const MemberProfile = () => {
   //loads with profile container based on who is logged in
   return (
     <>
-      <MemberProfileContainer>
-        {member[0].profileType.replace(/\s+/g, "").trim().toLowerCase() ===
-        healthcareMember.replace(/\s+/g, "").trim().toLowerCase() ? (
-          <HealthcareContainer />
-        ) : (
-          <CommunityContainer />
-        )}
-      </MemberProfileContainer>
+      {member[0].profileType.replace(/\s+/g, "").trim().toLowerCase() ===
+      healthcareMember.replace(/\s+/g, "").trim().toLowerCase() ? (
+        <HealthcareContainer />
+      ) : (
+        <CommunityContainer />
+      )}
     </>
   );
 };
-
-const MemberProfileContainer = styled.div`
-  /* padding-top: 1rem; */
-`;
 
 export default MemberProfile;

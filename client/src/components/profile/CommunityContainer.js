@@ -5,6 +5,7 @@ import CommunityProfile from "./CommunityProfile";
 import SettingsForm from "../account-creation/SettingsForm";
 //style
 import styled from "styled-components";
+import { Page } from "../../styles/styles";
 import { Button, Form, Modal } from "react-bootstrap";
 
 const CommunityContainer = () => {

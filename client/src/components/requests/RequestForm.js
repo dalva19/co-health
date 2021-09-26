@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postRequest } from "../../actions/requestActions";
+//style
+import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 
@@ -20,7 +22,7 @@ const RequestForm = (props) => {
 
   return (
     <>
-      <Modal onHide={props.handleClose} animation={false} show={props.show}>
+      <Modal onHide={props.handleClose} show={props.show}>
         <StyledHeader>
           <Modal.Header closeButton={props.handleClose}>
             <Modal.Title>Request</Modal.Title>
@@ -32,10 +34,13 @@ const RequestForm = (props) => {
               <Form.Label>Text</Form.Label>
               <Form.Control
                 as="textarea"
-                placeholder="Text"
+                placeholder="...I need help"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
+              <Form.Text className={!text ? "required" : ""}>
+                This field is required!
+              </Form.Text>
             </Form.Group>
             <StyledButton>
               <Button

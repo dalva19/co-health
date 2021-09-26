@@ -30,8 +30,6 @@ const VerifyLicensePage = () => {
     history.push("/co-health/profile");
   };
 
-  console.log(credentials.verified);
-
   return (
     <>
       <Page>
