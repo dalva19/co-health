@@ -12,7 +12,7 @@ import { getCommunityRequests } from "../../actions/communityRequestsActions";
 import { getOffers, offersLoading } from "../../actions/offerActions";
 //styling
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
 const HealthCareProfile = () => {
   const dispatch = useDispatch();
@@ -62,13 +62,22 @@ const HealthCareProfile = () => {
   return (
     <>
       {!member[0].address.city ? (
-        <>
-          <h2>
-            Please submit your address information to set your default
-            community.
-          </h2>{" "}
-          <Button onClick={handleShowSettingsModal}>Settings</Button>
-        </>
+        <StyledSetDefault>
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>
+              <h1>
+                Please submit your address information to set your default
+                community.
+              </h1>
+              <Button
+                className="settings-button"
+                onClick={handleShowSettingsModal}
+              >
+                Settings
+              </Button>
+            </Col>
+          </Row>
+        </StyledSetDefault>
       ) : (
         ""
       )}
@@ -78,7 +87,15 @@ const HealthCareProfile = () => {
           <Offers offers={offers} />
         </>
       ) : (
-        <h3>Make an offer</h3>
+        <StyledMakeAnOffer>
+          <Row>
+            <Col md={{ span: 6, offset: 3 }}>
+              <h2>
+                Click on a <span>marker</span> to make an offer!
+              </h2>
+            </Col>
+          </Row>
+        </StyledMakeAnOffer>
       )}
 
       <Pagination page={page} setPage={setPage} itemCount={itemCount} />
@@ -102,9 +119,34 @@ const HealthCareProfile = () => {
   );
 };
 
-const ProfileContainer = styled.div`
-  /* padding-top: 5vh; */
-  padding-left: 2rem;
+const StyledSetDefault = styled.div`
+  margin-top: 2rem;
+  height: 50vh;
+  padding: 5rem 10rem;
+  h1 {
+    font-weight: lighter;
+  }
+  .settings-button {
+    margin-left: 25rem;
+    margin-top: 4rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: #ab417f;
+    border: none;
+  }
+`;
+
+const StyledMakeAnOffer = styled.div`
+  margin-top: 5rem;
+  height: 50vh;
+  padding: 5rem 10rem;
+  h2 {
+    font-weight: lighter;
+  }
+  span {
+    color: #f18457;
+    font-weight: bold;
+    font-style: italic;
+  }
 `;
 
 export default HealthCareProfile;

@@ -13,13 +13,12 @@ const HealthcareContainer = () => {
   const WrappedProfileMap = withScriptjs(withGoogleMap(ProfileMap));
   const WrappedMap = withScriptjs(withGoogleMap(HomeMap));
 
-  //loads with profile info based on who is logged in
   return (
     <>
       <MemberProfileContainer>
         {coordinates ? (
           <>
-            <div style={{ width: "100vw", height: "100vh" }}>
+            <div style={{ width: "100vw", height: "80vh" }}>
               <WrappedProfileMap
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
                 loadingElement={<div style={{ height: "100%" }} />}
@@ -31,14 +30,14 @@ const HealthcareContainer = () => {
           </>
         ) : (
           <>
-            <HealthCareProfile />
-            <div style={{ width: "100vw", height: "100vh" }}>
+            <div style={{ width: "100vw", height: "80vh" }}>
               <WrappedMap
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
                 loadingElement={<div style={{ height: "100%" }} />}
                 containerElement={<div style={{ height: "100%" }} />}
                 mapElement={<div style={{ height: "100%" }} />}
               />
+              <HealthCareProfile />
             </div>
           </>
         )}

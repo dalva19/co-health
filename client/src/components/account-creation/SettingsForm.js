@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import Avatar from "./Avatar";
-import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
 import { updateProfileSettings } from "../../actions/memberActions";
+//style
+import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 
 const SettingsForm = (props) => {
   const dispatch = useDispatch();
@@ -82,89 +83,82 @@ const SettingsForm = (props) => {
 
   return (
     <>
-      <SettingsFormContainer>
-        <Modal onHide={props.handleClose} animation={false} show={props.show}>
+      <Modal onHide={props.handleClose} show={props.show}>
+        <StyledHeader>
           <Modal.Header closeButton={props.handleClose}>
             <Modal.Title>Manage Personal Information</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Label>Avatar</Form.Label>
-              <Avatar setAvatar={setAvatar} avatar={avatar} />
-              <br />
-              {/* <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label>Avatar</Form.Label>
-                <Form.Control
-                  type="file"
-                  value={avatar}
-                  onChange={(e) => setAvatar(e.target.value)}
-                />
-              </Form.Group> */}
+        </StyledHeader>
+        <Modal.Body>
+          <Form>
+            <Form.Label>Profile Pic</Form.Label>
+            <Avatar setAvatar={setAvatar} avatar={avatar} />
+            <br />
 
-              <Form.Group className="mb-3" controlId="formBasicFirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="First name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="First name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicLastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Last name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Last name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </Form.Group>
 
-              <Form.Text className="text-muted">
-                Please enter your address to set your default community.
-              </Form.Text>
+            <Form.Text className="text-muted">
+              Please enter your address to set your default community.
+            </Form.Text>
 
-              <Form.Group className="mb-3" controlId="formBasicStreetAddress">
-                <Form.Label>Street Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Street"
-                  value={street}
-                  onChange={(e) => setStreet(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicStreetAddress">
+              <Form.Label>Street Address</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Street"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+              />
+            </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicStateAddress">
-                <Form.Label>State</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="State"
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCityAddress">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicCityAddress">
-                <Form.Label>City</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="City"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicStateAddress">
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="State"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+            </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicZipAddress">
-                <Form.Label>Zip Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Zip Code"
-                  value={zip}
-                  onChange={(e) => setZip(e.target.value)}
-                />
-              </Form.Group>
-
+            <Form.Group className="mb-3" controlId="formBasicZipAddress">
+              <Form.Label>Zip Code</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Zip Code"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+              />
+            </Form.Group>
+            <StyledButton>
               <Button
                 className="button"
                 type="submit"
@@ -172,17 +166,36 @@ const SettingsForm = (props) => {
               >
                 Submit
               </Button>
-            </Form>
-          </Modal.Body>
+            </StyledButton>
+          </Form>
+        </Modal.Body>
+        <StyledFooter>
           <Modal.Footer></Modal.Footer>
-        </Modal>
-      </SettingsFormContainer>
+        </StyledFooter>
+      </Modal>
     </>
   );
 };
 
-const SettingsFormContainer = styled.div`
-  padding-top: 5vh;
-`;
+// const StyledHeader = styled.div`
+//   .modal-header {
+//     background-color: #ee977c;
+//     color: #3a2d49;
+//   }
+// `;
+
+// const StyledFooter = styled.div`
+//   .modal-footer {
+//     background-color: #ee977c;
+//     color: #3a2d49;
+//   }
+// `;
+
+// const StyledButton = styled.div`
+//   .button {
+//     background-color: #ab417f;
+//     border: none;
+//   }
+// `;
 
 export default SettingsForm;

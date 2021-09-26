@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateProfileLicense,
   getMemberProfile,
 } from "../../actions/memberActions";
 import { getLicense, verifyLicense } from "../../actions/licenseActions";
+//style
+import styled from "styled-components";
+import { Button, Form, Modal } from "react-bootstrap";
+import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 
 const HealthcareLicenseForm = (props) => {
   const dispatch = useDispatch();
@@ -42,11 +44,16 @@ const HealthcareLicenseForm = (props) => {
 
   return (
     <>
-      <SettingsFormContainer>
-        <Modal onHide={props.handleClose} animation={false} show={props.show}>
-          <Modal.Header closeButton={props.handleClose}>
-            <Modal.Title>Verify License</Modal.Title>
-          </Modal.Header>
+      <LicenseFormContainer>
+        <Modal className="modal" onHide={props.handleClose} show={props.show}>
+          <StyledHeader>
+            <Modal.Header
+              className="modal-header"
+              closeButton={props.handleClose}
+            >
+              <Modal.Title>Verify License</Modal.Title>
+            </Modal.Header>
+          </StyledHeader>
           <Modal.Body>
             <Form>
               <Form.Group className="mb-3" controlId="formBasicFirstName">
@@ -68,16 +75,6 @@ const HealthcareLicenseForm = (props) => {
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </Form.Group>
-
-              {/* <Form.Group className="mb-3" controlId="formBasicLicense">
-                <Form.Label>License Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Street"
-                  value={licenseType}
-                  onChange={(e) => setLicenseType(e.target.value)}
-                />
-              </Form.Group> */}
 
               <Form.Group className="mb-3" controlId="ormBasicLicense">
                 <Form.Label>License Type</Form.Label>
@@ -109,25 +106,58 @@ const HealthcareLicenseForm = (props) => {
                   onChange={(e) => setLicenseNumber(e.target.value)}
                 />
               </Form.Group>
-
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={handleSubmitButton}
-              >
-                Submit
-              </Button>
+              <StyledButton>
+                <Button
+                  className="button"
+                  variant="primary"
+                  type="submit"
+                  onClick={handleSubmitButton}
+                >
+                  Submit
+                </Button>
+              </StyledButton>
             </Form>
           </Modal.Body>
-          <Modal.Footer></Modal.Footer>
+          <StyledFooter>
+            <Modal.Footer className="modal-footer"></Modal.Footer>
+          </StyledFooter>
         </Modal>
-      </SettingsFormContainer>
+      </LicenseFormContainer>
     </>
   );
 };
 
-const SettingsFormContainer = styled.div`
-  padding-top: 5vh;
+const LicenseFormContainer = styled.div`
+  /* .modal {
+    color: red;
+    .modal-header {
+      background-color: #ab417f;
+    }
+  }
+  .button {
+    color: red;
+  } */
 `;
+
+// const StyledHeader = styled.div`
+//   .modal-header {
+//     background-color: #ee977c;
+//     color: #3a2d49;
+//   }
+// `;
+
+// const StyledFooter = styled.div`
+//   .modal-footer {
+//     background-color: #ee977c;
+//     color: #3a2d49;
+//   }
+// `;
+
+// const StyledButton = styled.div`
+//   .button {
+//     background-color: #ab417f;
+//     border: none;
+//   }
+// `;
 
 export default HealthcareLicenseForm;

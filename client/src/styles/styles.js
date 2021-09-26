@@ -33,3 +33,25 @@ export const Image = styled.div`
 export const Hide = styled.div`
   overflow: hidden;
 `;
+
+//modal styling on bootstrap elements for forms
+export const StyledHeader = styled.div`
+  .modal-header {
+    background-color: #fad39e;
+    color: #3a2d49;
+  }
+`;
+
+export const StyledFooter = styled.div`
+  .modal-footer {
+    background-color: #fad39e;
+    color: #3a2d49;
+  }
+`;
+
+export const StyledButton = styled.div`
+  .button {
+    background-color: #ab417f;
+    border: none;
+  }
+`;

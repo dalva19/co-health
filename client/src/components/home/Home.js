@@ -35,7 +35,7 @@ const Home = () => {
 
 const TitleContainer = styled.div`
   h1 {
-    color: #3a2d49;
+    color: #14202c;
     font-size: 4rem;
     font-family: "Inter", sans-serif;
     font-weight: lighter;

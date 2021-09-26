@@ -33,7 +33,7 @@ const Settings = () => {
           <h2>Settings</h2>
           <Col md={6}>
             <>
-              <Table bordered hover>
+              <Table bordered>
                 <thead>
                   <tr>
                     <th colSpan="2">Personal Information</th>
@@ -42,19 +42,19 @@ const Settings = () => {
                 <tbody>
                   <tr>
                     <td>First Name</td>
-                    <td>{name ? name.firstName : ""}</td>
+                    <td>{name ? name.firstName : "First Name"}</td>
                   </tr>
                   <tr>
                     <td>Last Name</td>
-                    <td>{name ? name.lastName : ""}</td>
+                    <td>{name ? name.lastName : "Last Name"}</td>
                   </tr>
                   <tr>
                     <td>Community</td>
-                    <td>{address.city}</td>
+                    <td>{address.city ? address.city : "None"}</td>
                   </tr>
                 </tbody>
               </Table>
-              <Table bordered hover>
+              <Table bordered>
                 <thead>
                   <tr>
                     <th colSpan="2">Address</th>
@@ -63,15 +63,15 @@ const Settings = () => {
                 <tbody>
                   <tr>
                     <td>Street</td>
-                    <td>{address.street}</td>
+                    <td>{address.street ? address.street : "Street"}</td>
                   </tr>
                   <tr>
                     <td>City</td>
-                    <td>{address.city}</td>
+                    <td>{address.city ? address.city : "City"}</td>
                   </tr>
                   <tr>
                     <td>State</td>
-                    <td>{address.state}</td>
+                    <td>{address.state ? address.state : "State"}</td>
                   </tr>
                   <tr>
                     <td>Zipcode</td>
@@ -86,7 +86,7 @@ const Settings = () => {
           </Col>
           {credentials.license && profileType === "healthcare member" ? (
             <Col>
-              <Table bordered hover>
+              <Table bordered>
                 <thead>
                   <tr>
                     <th colSpan="2">License Information</th>

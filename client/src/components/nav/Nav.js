@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, Route, Redirect } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { logout } from "../../actions/memberActions";
 import { logoutLicense } from "../../actions/licenseActions";
 import { logoutOffers } from "../../actions/offerActions";
@@ -13,14 +13,14 @@ const Nav = () => {
   const { loaded } = useSelector((state) => state.member);
   const member = useSelector((state) => state.member.member);
 
+  const history = useHistory();
+
   const handleLogout = () => {
     dispatch(logout());
     dispatch(logoutLicense());
     dispatch(logoutOffers());
     dispatch(logoutRequests());
-    // <Route exact path="/co-health/">
-    //   <Redirect to="/co-health/" />
-    // </Route>;
+    history.push("/co-health");
   };
 
   return (
@@ -103,6 +103,7 @@ const NavContainer = styled.div`
     font-family: "Lobster", cursive;
     font-style: ligther;
     font-size: 1.8rem;
+    color: white;
   }
   .bars-title {
     display: flex;

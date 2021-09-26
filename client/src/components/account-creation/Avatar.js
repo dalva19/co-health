@@ -35,7 +35,6 @@ const Avatar = ({ setAvatar }) => {
             onClick={onImageUpload}
             {...dragProps}
           >
-            <br />
             Click or Drop to Upload
           </button>
           &nbsp;
@@ -89,14 +88,15 @@ const StyledAvatarUpload = styled.div`
 
   .image-upload {
     height: 15vh;
-    min-width: 98%;
+    width: 50vh;
+    font-family: "Inter", sans-serif;
     background: #f1efe9;
-    border-radius: 10px;
-    border: 2px dashed #000000;
+    border-radius: 8px;
+    border: 1px dashed #000000;
   }
 
   .image-upload:hover {
-    background: #fef3db;
+    color: green;
     cursor: pointer;
   }
 `;

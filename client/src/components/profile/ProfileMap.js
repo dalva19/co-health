@@ -102,9 +102,17 @@ const ProfileMap = () => {
 const StyledInfo = styled.div`
   .username {
     cursor: pointer;
+    color: #ab417f;
+    &:hover {
+      color: #fad39e;
+    }
   }
   .offer-link {
     cursor: pointer;
+    text-decoration: underline;
+    &:hover {
+      color: #8ab073;
+    }
   }
 `;
 

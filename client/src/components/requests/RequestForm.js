@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postRequest } from "../../actions/requestActions";
-import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
+import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 
 const RequestForm = (props) => {
   //state
@@ -20,41 +20,40 @@ const RequestForm = (props) => {
 
   return (
     <>
-      <RequestFormContainer>
-        <Modal onHide={props.handleClose} animation={false} show={props.show}>
+      <Modal onHide={props.handleClose} animation={false} show={props.show}>
+        <StyledHeader>
           <Modal.Header closeButton={props.handleClose}>
             <Modal.Title>Request</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicStateAddress">
-                <Form.Label>Text</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Text"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                />
-              </Form.Group>
-
+        </StyledHeader>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicStateAddress">
+              <Form.Label>Text</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </Form.Group>
+            <StyledButton>
               <Button
-                variant="primary"
+                className="button"
                 type="submit"
                 onClick={handleSubmitButton}
               >
                 Submit
               </Button>
-            </Form>
-          </Modal.Body>
+            </StyledButton>
+          </Form>
+        </Modal.Body>
+        <StyledFooter>
           <Modal.Footer></Modal.Footer>
-        </Modal>
-      </RequestFormContainer>
+        </StyledFooter>
+      </Modal>
     </>
   );
 };
-
-const RequestFormContainer = styled.div`
-  padding-top: 5vh;
-`;
 
 export default RequestForm;
