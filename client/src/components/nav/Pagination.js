@@ -39,12 +39,6 @@ const StyledPages = styled.div`
     a {
       color: #ab417f !important;
     }
-    li {
-      a:active {
-        background-color: #ab417f !important;
-        color: white;
-      }
-    }
   }
 `;
 

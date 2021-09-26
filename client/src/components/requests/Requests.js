@@ -1,27 +1,33 @@
 import Request from "./Request";
 //styling
-import { Container, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 //map requests to make ind request
 const Requests = ({ requests }) => {
   return (
-    <Col md={8}>
+    <CardsContainer>
       <Row>
-        <StyledCards>
-          {requests.map((request, i) => (
-            <div key={i}>
-              <Request request={request} />
-            </div>
-          ))}
-        </StyledCards>
+        <Col md={{ span: 10, offset: 1 }}>
+          <StyledCards>
+            {requests.map((request, i) => (
+              <div key={i}>
+                <Request request={request} />
+              </div>
+            ))}
+          </StyledCards>
+        </Col>
       </Row>
-    </Col>
+    </CardsContainer>
   );
 };
 
+const CardsContainer = styled.div`
+  margin-right: 15rem;
+`;
 const StyledCards = styled.div`
-  min-height: 50vh;
+  height: 70vh;
+  width: 100%;
   display: flex;
   flex-direction: row;
 `;

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { editRequest, requestLoading } from "../../actions/requestActions";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
+import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 
 const EditRequest = (props) => {
   //state
@@ -24,9 +25,11 @@ const EditRequest = (props) => {
     <>
       <RequestFormContainer>
         <Modal onHide={props.handleClose} animation={false} show={props.show}>
-          <Modal.Header closeButton={props.handleClose}>
-            <Modal.Title>Request</Modal.Title>
-          </Modal.Header>
+          <StyledHeader>
+            <Modal.Header closeButton={props.handleClose}>
+              <Modal.Title>Request</Modal.Title>
+            </Modal.Header>
+          </StyledHeader>
           <Modal.Body>
             <Form>
               <Form.Group className="mb-3" controlId="formBasicStateAddress">
@@ -38,17 +41,20 @@ const EditRequest = (props) => {
                   onChange={(e) => setEditText(e.target.value)}
                 />
               </Form.Group>
-
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={handleSubmitButton}
-              >
-                Submit
-              </Button>
+              <StyledButton>
+                <Button
+                  className="button"
+                  type="submit"
+                  onClick={handleSubmitButton}
+                >
+                  Submit
+                </Button>
+              </StyledButton>
             </Form>
           </Modal.Body>
-          <Modal.Footer></Modal.Footer>
+          <StyledFooter>
+            <Modal.Footer></Modal.Footer>
+          </StyledFooter>
         </Modal>
       </RequestFormContainer>
     </>

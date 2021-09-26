@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
       /* background-color: #F1EFE9 */
-      background-color: white
+      background-color: #f9f9f7
     }
     
   h1, h2 {
@@ -18,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
   p {
     font-family: "Inter", sans-serif; 
   }
-  
   
 `;
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getRequests, requestLoading } from "../../actions/requestActions";
 //components
 import MakeRequest from "../requests/MakeRequest";
@@ -62,6 +62,15 @@ const CommunityProfile = () => {
 
 const StyledPagination = styled.div`
   margin-left: 45%;
+  .page-link {
+    color: #fad39e !important;
+  }
+  .page-item.active .page-link {
+    z-index: 3;
+    color: white !important;
+    background-color: #ab417f !important;
+    border-color: #ab417f !important;
+  }
 `;
 
 export default CommunityProfile;

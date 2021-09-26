@@ -38,7 +38,7 @@ const Request = ({ request, page }) => {
         <Card style={{ width: "18rem", height: "18rem" }}>
           <Card.Header className="card-header">
             Status: {request.status}
-            <CloseButton onClick={handleDelete} />
+            <CloseButton className="close" onClick={handleDelete} />
           </Card.Header>
           <Card.Body>
             <Card.Title>Request</Card.Title>
@@ -48,16 +48,14 @@ const Request = ({ request, page }) => {
             <Card.Text>{request.text}</Card.Text>
           </Card.Body>
           <Card.Footer>
-            <StyledFooter>
-              <p onClick={handleShow}>Edit</p>
-              {request.offers.length > 0 ? (
-                <p onClick={handleOffersButton}>
-                  Offers <Badge bg="danger">New</Badge>
-                </p>
-              ) : (
-                <p onClick={handleOffersButton}>Offers </p>
-              )}
-            </StyledFooter>
+            <p onClick={handleShow}>Edit</p>
+            {request.offers.length > 0 ? (
+              <p onClick={handleOffersButton}>
+                Offers <Badge bg="danger">New</Badge>
+              </p>
+            ) : (
+              <p onClick={handleOffersButton}>Offers </p>
+            )}
           </Card.Footer>
         </Card>
         {showAlert ? <OfferAlert request={request} key={request._id} /> : ""}
@@ -86,24 +84,20 @@ const StyledCard = styled.div`
     justify-content: space-between;
   }
   .card-header {
-    background-color: #ee977c;
-    color: white;
+    background-color: #ab417f;
+    color: #f9f9f7;
   }
   .card-footer {
-    background-color: #ee977c;
-    color: white;
-    /* display: flex;
+    background-color: #ab417f;
+    color: #f9f9f7;
+    display: flex;
     align-items: center;
-    justify-content: space-around; */
+    justify-content: space-around;
     cursor: pointer;
+    p {
+      text-decoration: underline;
+    }
   }
-`;
-
-const StyledFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  cursor: pointer;
 `;
 
 export default Request;

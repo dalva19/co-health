@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { StyledButton } from "../../styles/styles";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -55,14 +56,15 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
-
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={handleLoginSubmit}
-                >
-                  Submit
-                </Button>
+                <StyledButton>
+                  <Button
+                    className="button"
+                    type="submit"
+                    onClick={handleLoginSubmit}
+                  >
+                    Submit
+                  </Button>
+                </StyledButton>
               </Form>
             </Col>
           </Row>

@@ -37,14 +37,14 @@ export const Hide = styled.div`
 //modal styling on bootstrap elements for forms
 export const StyledHeader = styled.div`
   .modal-header {
-    background-color: #fad39e;
+    background-color: #f39c5c;
     color: #3a2d49;
   }
 `;
 
 export const StyledFooter = styled.div`
   .modal-footer {
-    background-color: #fad39e;
+    background-color: #f39c5c;
     color: #3a2d49;
   }
 `;
