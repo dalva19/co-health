@@ -25,7 +25,7 @@ const MakeRequest = ({ handleShow }) => {
 };
 
 const StyledMakeRequest = styled.div`
-  height: 80vh;
+  height: 70vh;
   padding-top: 5rem;
   .col {
     display: flex;

@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getRequests, requestLoading } from "../../actions/requestActions";
 //components
 import MakeRequest from "../requests/MakeRequest";
@@ -9,8 +7,9 @@ import Requests from "../requests/Requests";
 import RequestForm from "../requests/RequestForm";
 import Pagination from "../nav/Pagination";
 //styling
+import { Row, Col } from "react-bootstrap";
+import { StyledPagination } from "../../styles/styles";
 import styled from "styled-components";
-import { Spinner } from "react-bootstrap";
 
 const CommunityProfile = () => {
   const [show, setShow] = useState(false);
@@ -35,11 +34,18 @@ const CommunityProfile = () => {
         {!isLoading ? (
           <Requests requests={requests} page={page} />
         ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <StyledIntructions>
+            <Row>
+              <Col md={{ span: 6, offset: 3 }}>
+                <h2>
+                  Click on the <span>plus sign</span> to make a request!
+                </h2>
+              </Col>
+            </Row>
+          </StyledIntructions>
         )}
       </>
+
       <StyledPagination>
         <Pagination
           className="pages-container"
@@ -60,17 +66,16 @@ const CommunityProfile = () => {
   );
 };
 
-const StyledPagination = styled.div`
-  margin-left: 45%;
-  .page-link {
-    color: #fad39e !important;
+const StyledIntructions = styled.div`
+  height: 50vh;
+  padding: 5rem 10rem;
+  h2 {
+    font-weight: lighter;
   }
-  .page-item.active .page-link {
-    z-index: 3;
-    color: white !important;
-    background-color: #ab417f !important;
-    border-color: #ab417f !important;
+  span {
+    color: #f18457;
+    font-weight: bold;
+    font-style: italic;
   }
 `;
-
 export default CommunityProfile;

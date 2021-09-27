@@ -53,7 +53,7 @@ export const logout = () => (dispatch) => {
 
 export const updateProfileSettings = (body) => (dispatch) => {
   axios
-    .put(`/co-health/api/profile/settings/info`, body, {
+    .put(`/co-health/api/profile/settings/info`, body, {  
       withCredentials: true,
     })
     .then((response) => {

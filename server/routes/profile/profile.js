@@ -65,7 +65,7 @@ router.put("/settings/info", async (req, res) => {
       .populate("requests")
       .select({ hash: 0, salt: 0 });
 
-    res.status(200).send(savedUser);
+    res.status(200).send(savedUser);  
   } catch (err) {
     return err;
   }

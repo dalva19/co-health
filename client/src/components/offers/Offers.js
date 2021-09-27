@@ -5,25 +5,31 @@ import styled from "styled-components";
 
 const Offers = ({ offers }) => {
   return (
-    <Col md={8}>
+    <CardsContainer>
       <Row>
-        <StyledCards>
-          {offers.map((offer, i) => (
-            <div key={i}>
-              <Offer offer={offer} />
-            </div>
-          ))}
-        </StyledCards>
+        <Col md={{ span: 10, offset: 1 }}>
+          <StyledCards>
+            {offers.map((offer, i) => (
+              <div key={i}>
+                <Offer offer={offer} />
+              </div>
+            ))}
+          </StyledCards>
+        </Col>
       </Row>
-    </Col>
+    </CardsContainer>
   );
 };
 
+const CardsContainer = styled.div`
+  margin-right: 15rem;
+`;
+
 const StyledCards = styled.div`
-  min-height: 50vh;
+  margin-top: 5rem;
+  min-height: 70vh;
   display: flex;
   flex-direction: row;
-  padding-left: 5rem;
 `;
 
 export default Offers;

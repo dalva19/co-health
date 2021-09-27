@@ -16,7 +16,7 @@ const Avatar = ({ setAvatar }) => {
       onChange={onChange}
       dataURLKey="data_url"
       maxFileSize={5000000}
-      acceptType={["jpg", "jpeg", "gif", "png"]}
+      acceptType={["jpg", "jpeg", "gif", "png", "svg"]}
     >
       {({
         imageList,

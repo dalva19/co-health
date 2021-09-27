@@ -2,49 +2,63 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 //components
 import CommunityProfile from "./CommunityProfile";
-import SettingsForm from "../account-creation/SettingsForm";
+import MakeRequest from "../requests/MakeRequest";
+import RequestForm from "../requests/RequestForm";
 //style
 import styled from "styled-components";
-import { Page } from "../../styles/styles";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 const CommunityContainer = () => {
-  const { address } = useSelector((state) => state.member.member[0]);
-  const [modal, setModal] = useState("");
+  const { requests } = useSelector((state) => state.member.member[0]);
 
-  const handleShowSettingsModal = () => {
-    setModal("settings-modal");
-  };
-
-  const handleClose = () => {
-    setModal("close");
-  };
-
-  //if requests load component with requests
-  //else load plus image with span on how to make a request?
   return (
     <>
       <MemberProfileContainer>
-        {address.city ? (
+        {requests.length > 0 ? (
           <CommunityProfile />
         ) : (
           <>
-            <h3>Please fill out a few details to get started!</h3>
-            <Button onClick={handleShowSettingsModal}>Get Started</Button>
+            <MakeRequest />
+
+            <StyledIntructions>
+              <Row>
+                <Col md={{ span: 6, offset: 3 }}>
+                  <h2>
+                    Click on the <span>plus sign</span> to make a request!
+                  </h2>
+                </Col>
+              </Row>
+            </StyledIntructions>
           </>
         )}
       </MemberProfileContainer>
 
-      <SettingsForm
-        show={modal === "settings-modal"}
+      {/* <RequestForm
+        show={show}
+        page={page}
+        setShow={setShow}
         handleClose={handleClose}
-      />
+        handleShow={handleShow}
+      /> */}
     </>
   );
 };
 
 const MemberProfileContainer = styled.div`
   /* padding-top: 1rem; */
+`;
+
+const StyledIntructions = styled.div`
+  height: 50vh;
+  padding: 5rem 10rem;
+  h2 {
+    font-weight: lighter;
+  }
+  span {
+    color: #f18457;
+    font-weight: bold;
+    font-style: italic;
+  }
 `;
 
 export default CommunityContainer;

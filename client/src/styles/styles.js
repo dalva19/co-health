@@ -37,14 +37,14 @@ export const Hide = styled.div`
 //modal styling on bootstrap elements for forms
 export const StyledHeader = styled.div`
   .modal-header {
-    background-color: #f39c5c;
+    background-color: #f5af7f;
     color: #3a2d49;
   }
 `;
 
 export const StyledFooter = styled.div`
   .modal-footer {
-    background-color: #f39c5c;
+    background-color: #f5af7f;
     color: #3a2d49;
   }
 `;
@@ -53,5 +53,18 @@ export const StyledButton = styled.div`
   .button {
     background-color: #ab417f;
     border: none;
+  }
+`;
+
+export const StyledPagination = styled.div`
+  margin-left: 45%;
+  .page-link {
+    color: #fad39e !important;
+  }
+  .page-item.active .page-link {
+    z-index: 3;
+    color: white !important;
+    background-color: #ab417f !important;
+    border-color: #ab417f !important;
   }
 `;

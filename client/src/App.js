@@ -10,7 +10,6 @@ import LoginPage from "./pages/LoginPage";
 import MemberPage from "./pages/MemberPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import SettingsPage from "./pages/SettingsPage";
-import ActivityPage from "./pages/ActivityPage";
 import MessagesPage from "./pages/MessagesPage";
 import VerifyLicensePage from "./pages/VerifyLicensePage";
 //components
@@ -54,9 +53,6 @@ const App = () => {
 
         <Route exact path="/co-health/profile/settings">
           <SettingsPage />
-        </Route>
-        <Route exact path="/co-health/profile/activity">
-          <ActivityPage />
         </Route>
         <Route exact path="/co-health/profile/messages">
           <MessagesPage />

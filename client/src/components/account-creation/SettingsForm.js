@@ -6,6 +6,7 @@ import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
 import { updateProfileSettings } from "../../actions/memberActions";
 //style
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
+import styled from "styled-components";
 
 const SettingsForm = (props) => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ const SettingsForm = (props) => {
   const [lastName, setLastName] = useState(
     member.name ? member.name.lastName : ""
   );
+
+  const [bio, setBio] = useState("");
   const [avatar, setAvatar] = useState(member.avatar ? member.avatar : "");
   const [street, setStreet] = useState(
     member.address.street ? member.address.street : ""
@@ -32,6 +35,7 @@ const SettingsForm = (props) => {
   const [zip, setZip] = useState(
     member.address.zipcode ? member.address.zipcode : ""
   );
+
   const [address, setAddress] = useState("");
 
   //helper functions
@@ -42,44 +46,28 @@ const SettingsForm = (props) => {
     setAddress(addressJoin);
   };
 
+  useEffect(() => {
+    if (address) {
+      loadCoordinatesFromAddress(address);
+    }
+  }, [dispatch, address]);
+
   const handleSubmitButton = (e) => {
     e.preventDefault();
     splitStreetName();
+    const body = {
+      firstName: firstName,
+      lastName: lastName,
+      avatar: avatar[0] ? avatar[0].data_url : "",
+      street: street,
+      city: city,
+      state: state,
+      zipCode: parseInt(zip),
+      lat: coordinates.lat,
+      lng: coordinates.lng,
+    };
+    dispatch(updateProfileSettings(body));
   };
-
-  useEffect(() => {
-    if (address) {
-      dispatch(loadCoordinatesFromAddress(address));
-    }
-  }, [address, dispatch]);
-
-  useEffect(() => {
-    if (coordinates) {
-      const body = {
-        firstName: firstName,
-        lastName: lastName,
-        avatar: avatar[0] ? avatar[0].data_url : "",
-        street: street,
-        city: city,
-        state: state,
-        zipCode: parseInt(zip),
-        lat: coordinates.lat,
-        lng: coordinates.lng,
-      };
-      console.log(body);
-      dispatch(updateProfileSettings(body));
-    }
-  }, [
-    coordinates,
-    dispatch,
-    firstName,
-    lastName,
-    avatar,
-    street,
-    city,
-    state,
-    zip,
-  ]);
 
   return (
     <>
@@ -92,6 +80,11 @@ const SettingsForm = (props) => {
         <Modal.Body>
           <Form>
             <Form.Label>Profile Pic</Form.Label>
+            <StyledProfilePic>
+              <div className="avatar-container">
+                <img className="user-pic" src={member.avatar} alt="Pic" />
+              </div>
+            </StyledProfilePic>
             <Avatar setAvatar={setAvatar} avatar={avatar} />
             <br />
 
@@ -115,9 +108,15 @@ const SettingsForm = (props) => {
               />
             </Form.Group>
 
-            <Form.Text className="text-muted">
-              Please enter your address to set your default community.
-            </Form.Text>
+            <Form.Group className="mb-3" controlId="formBasicLastName">
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Bio"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
+            </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicStreetAddress">
               <Form.Label>Street Address</Form.Label>
@@ -177,25 +176,18 @@ const SettingsForm = (props) => {
   );
 };
 
-// const StyledHeader = styled.div`
-//   .modal-header {
-//     background-color: #ee977c;
-//     color: #3a2d49;
-//   }
-// `;
-
-// const StyledFooter = styled.div`
-//   .modal-footer {
-//     background-color: #ee977c;
-//     color: #3a2d49;
-//   }
-// `;
-
-// const StyledButton = styled.div`
-//   .button {
-//     background-color: #ab417f;
-//     border: none;
-//   }
-// `;
+const StyledProfilePic = styled.div`
+  .avatar-container {
+    height: 7vh;
+    width: 7vh;
+    margin-bottom: 0.5rem;
+  }
+  .user-pic {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+`;
 
 export default SettingsForm;

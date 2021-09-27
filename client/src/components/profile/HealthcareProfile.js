@@ -13,6 +13,7 @@ import { getOffers, offersLoading } from "../../actions/offerActions";
 //styling
 import styled from "styled-components";
 import { Button, Row, Col } from "react-bootstrap";
+import { StyledPagination } from "../../styles/styles";
 
 const HealthCareProfile = () => {
   const dispatch = useDispatch();
@@ -21,18 +22,18 @@ const HealthCareProfile = () => {
   const { member } = useSelector((state) => state.member);
   const { credentials } = useSelector((state) => state.member.member[0]);
   const { offers, isLoading } = useSelector((state) => state.offers);
-  const { name } = useSelector((state) => state.member.member[0]);
-  const license = useSelector((state) => state.license.license[0]);
+  // const { name } = useSelector((state) => state.member.member[0]);
+  // const license = useSelector((state) => state.license.license[0]);
   const itemCount = useSelector((state) => state.offers.count);
   const [page, setPage] = useState(1);
 
-  const handleShowLicenseModal = () => {
-    setModal("license-modal");
-  };
+  // const handleShowLicenseModal = () => {
+  //   setModal("license-modal");
+  // };
 
-  const handleShowOfferModal = () => {
-    setModal("offer-modal");
-  };
+  // const handleShowOfferModal = () => {
+  //   setModal("offer-modal");
+  // };
 
   const handleShowSettingsModal = () => {
     setModal("settings-modal");
@@ -98,7 +99,9 @@ const HealthCareProfile = () => {
         </StyledMakeAnOffer>
       )}
 
-      <Pagination page={page} setPage={setPage} itemCount={itemCount} />
+      <StyledPagination>
+        <Pagination page={page} setPage={setPage} itemCount={itemCount} />
+      </StyledPagination>
 
       <HealthcareLicenseForm
         show={modal === "license-modal"}

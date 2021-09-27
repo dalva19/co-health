@@ -33,7 +33,7 @@ const EditOffer = (props) => {
             <Form.Group className="mb-3" controlId="formBasicStateAddress">
               {/* <Form.Label>Text</Form.Label> */}
               <Form.Control
-                as="textera"
+                as="textarea"
                 placeholder="Text"
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}

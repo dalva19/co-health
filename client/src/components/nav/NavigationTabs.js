@@ -33,17 +33,6 @@ const NavigationTabs = (props) => {
             className="tab-link"
             activeClassName="tab-link-active"
             exact
-            to="/co-health/profile/activity"
-          >
-            <Nav.Item>
-              <Nav.Link href="/co-health/profile/activity">Activity</Nav.Link>
-            </Nav.Item>
-          </LinkContainer>
-
-          <LinkContainer
-            className="tab-link"
-            activeClassName="tab-link-active"
-            exact
             to="/co-health/profile/messages"
           >
             <Nav.Item>

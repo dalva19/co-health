@@ -15,7 +15,7 @@ const HealthcareContainer = () => {
 
   return (
     <>
-      <MemberProfileContainer>
+      <>
         {coordinates ? (
           <>
             <div style={{ width: "100vw", height: "80vh" }}>
@@ -26,7 +26,9 @@ const HealthcareContainer = () => {
                 mapElement={<div style={{ height: "100%" }} />}
               />
             </div>
-            <HealthCareProfile />
+            <HealthProfileContainer>
+              <HealthCareProfile />
+            </HealthProfileContainer>
           </>
         ) : (
           <>
@@ -37,17 +39,19 @@ const HealthcareContainer = () => {
                 containerElement={<div style={{ height: "100%" }} />}
                 mapElement={<div style={{ height: "100%" }} />}
               />
-              <HealthCareProfile />
+              <HealthProfileContainer>
+                <HealthCareProfile />
+              </HealthProfileContainer>
             </div>
           </>
         )}
-      </MemberProfileContainer>
+      </>
     </>
   );
 };
 
-const MemberProfileContainer = styled.div`
-  /* padding-top: 1rem; */
+const HealthProfileContainer = styled.div`
+  height: 70vh;
 `;
 
 export default HealthcareContainer;

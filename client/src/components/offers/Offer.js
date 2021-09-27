@@ -38,11 +38,16 @@ const Offer = ({ offer }) => {
             </Card.Header>
 
             <Card.Body>
-              <Card.Title>{offer.request.text}</Card.Title>
+              <Card.Title className="username">
+                {offer.request.username}
+              </Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
-                {offer.username}
+                {offer.request.text}
               </Card.Subtitle>
-              <Card.Text>{offer.text}</Card.Text>
+              <Card.Text>
+                {"->"}
+                {offer.text}
+              </Card.Text>
             </Card.Body>
             <Card.Footer
               className="card-footer"
@@ -79,6 +84,12 @@ const StyledCard = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .username {
+    cursor: pointer;
+    &:hover {
+      color: #f5aa6f;
+    }
   }
   #accept {
     background-color: #89b173;
