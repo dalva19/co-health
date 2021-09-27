@@ -2,7 +2,7 @@ import axios from "axios";
 
 //variables
 export const FETCH_COORDINATES = "fetch_coordinates";
-export const SET_COORDINATES = "set_coordinates";
+export const RESET_COORDINATES = "reset_coordinates";
 
 //action creators
 export const loadCoordinatesFromAddress = (address) => (dispatch) => {
@@ -27,7 +27,8 @@ export const loadCoordinatesFromAddress = (address) => (dispatch) => {
   });
 };
 
-// export const setHomeCoordinatesToDB = (lat, lng) => (dispatch) => {
-//   const ROOT_URL = `https://localhost:3000`;
-
-// };
+export const resetCoordinates = () => (dispatch) => {
+  dispatch({
+    type: RESET_COORDINATES,
+  });
+};

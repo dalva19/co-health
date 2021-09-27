@@ -1,11 +1,12 @@
-import React from "react";
-import Messages from "../components/profile/Messages";
+//components
+import Chat from "../components/chat/Chat";
 import NavigationTabs from "../components/nav/NavigationTabs";
-const MessagesPage = () => {
+
+const MessagesPage = ({ socketRef }) => {
   return (
     <>
       <NavigationTabs />
-      <Messages />
+      <Chat socketRef={socketRef} />
     </>
   );
 };

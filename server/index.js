@@ -76,27 +76,27 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-//io
+//io server for chat feature
 io.on("connect", (socket) => {
   let chatRoom;
   let id;
 
-  socket.on("join", async ({ room, chatId }, callback) => {
-    if (room === "chat") {
+  console.log("connected to socket io");
+
+  socket.on("join", async ({ chatId }, callback) => {
+    if (chatId) {
       id = chatId;
-      chatRoom = `${id}chat`;
+      chatRoom = `${chatId}chat`;
       socket.join(chatRoom);
     }
 
-    console.log("connected to sockect io");
-    // console.log(chatRoom);
+    console.log(`connected to sockect io in ${chatRoom}`);
 
     callback();
   });
 
   socket.on("sendMessage", async ({ log, chatId }, callback) => {
     const update = { $push: { chatLog: log } };
-    console.log(chatId);
 
     try {
       await Chat.findByIdAndUpdate(chatId, update, {
@@ -119,7 +119,7 @@ io.on("connect", (socket) => {
       socket.leave(chatRoom);
     }
 
-    console.log("left chatroom");
+    console.log(`left ${chatRoom}`);
   });
 
   socket.on("disconnect", () => {

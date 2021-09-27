@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //style
 import GlobalStyle from "./styles/GlobalStyle";
@@ -17,19 +17,32 @@ import PublicProfile from "./components/members/PublicProfile";
 import Nav from "./components/nav/Nav";
 //actions
 import { getMemberProfile } from "./actions/memberActions";
+import { connectSocket } from "./actions/chatActions";
+//io
+import socketIOClient from "socket.io-client";
 
 const App = () => {
   const dispatch = useDispatch();
+  const socketRef = useRef();
+
   const { loaded } = useSelector((state) => state.member);
+
+  const ENDPOINT = "http://localhost:8000"; //rewrite for process.env server varible?
 
   useEffect(() => {
     dispatch(getMemberProfile());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (loaded) {
+      connectSocket(socketRef, socketIOClient, ENDPOINT);
+    }
+  }, [socketRef, loaded]);
+
   return (
     <>
       <GlobalStyle />
-      <Nav />
+      <Nav socketRef={socketRef} />
       <Switch>
         {loaded ? (
           <Route exact path="/co-health/">
@@ -55,7 +68,7 @@ const App = () => {
           <SettingsPage />
         </Route>
         <Route exact path="/co-health/profile/messages">
-          <MessagesPage />
+          <MessagesPage socketRef={socketRef} />
         </Route>
         <Route
           path="/co-health/profile/:userId"

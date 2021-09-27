@@ -1,6 +1,7 @@
 import axios from "axios";
 //variables
 export const FETCH_COMMUNITY_REQUESTS = "fetch_community_requests";
+export const RESET_COMMUNITY_REQUESTS = "reset_community_requests";
 
 //action creators
 export const getCommunityRequests = () => (dispatch) => {
@@ -29,4 +30,10 @@ export const searchCommunityRequests = (communityName) => (dispatch) => {
     .catch((error) => {
       return error;
     });
+};
+
+export const resetCommunityRequests = () => (dispatch) => {
+  dispatch({
+    type: RESET_COMMUNITY_REQUESTS,
+  });
 };

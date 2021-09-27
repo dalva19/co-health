@@ -6,8 +6,6 @@ const Contacts = ({
   setSelectContact,
   chatOpen,
   setChatOpen,
-  disconnectSocket,
-  connectSocket,
   leaveChatRoom,
   resetChat,
 }) => (

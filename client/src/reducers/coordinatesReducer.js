@@ -1,8 +1,7 @@
 import { FETCH_COORDINATES } from "../actions/coordinatesAction";
+import { RESET_COORDINATES } from "../actions/coordinatesAction";
 
 const DEFAULT_STATE = {
-  //hard coding for testing
-  //google geolocation working
   coordinates: null,
   coordinatesLoaded: false,
 };
@@ -15,6 +14,8 @@ const coordinatesReducer = (state = DEFAULT_STATE, action) => {
         coordinates: action.payload,
         coordinatesLoaded: true,
       };
+    case RESET_COORDINATES:
+      return DEFAULT_STATE;
     default:
       return state;
   }

@@ -1,29 +1,117 @@
 import React from "react";
+//style
+import styled from "styled-components";
 
 const Message = ({ message, username }) => {
+  //user avatars instead of names since each room in based on contacts??
+  //actions for public profile to get other user's avatar
+  //useSelector to get current user and contact's avatars
+  //add terniary function
+  //if avatar use it
+  //else use default
+
   let isSentByCurrentUser = false;
 
-  const trimmedName = message.username.trim().toLowerCase();
+  const trimmedName = message.username.replace(/\s+/g, "").trim().toLowerCase();
 
   if (username === trimmedName) {
     isSentByCurrentUser = true;
   }
 
   return isSentByCurrentUser ? (
-    <div className="messageContainer justifyEnd">
-      <p className="sentText pr-10">{trimmedName}</p>
-      <div className="messageBox backgroundBlue">
-        <p className="messageText colorWhite">{message.message}</p>
+    <StyledMessage>
+      <div className="message-container justifyEnd">
+        {/* <p className="sentText pr-10">{trimmedName}</p> */}
+        <div className="message-box background-purple">
+          <p className="message-text light">{message.message}</p>
+        </div>
       </div>
-    </div>
+    </StyledMessage>
   ) : (
-    <div className="messageContainer justifyStart">
-      <div className="messageBox backgroundLight">
-        <p className="messageText colorDark">{message.message}</p>
+    <StyledMessage>
+      <div className="message-container justifyStart">
+        <div className="message-box background-light">
+          <p className="message-text dark">{message.message}</p>
+        </div>
+        <p className="sent-text">{message.username}</p>
       </div>
-      <p className="sentText">{message.username}</p>
-    </div>
+    </StyledMessage>
   );
 };
+
+const StyledMessage = styled.div`
+  .message-box {
+    background: #f3f3f3;
+    border-radius: 0.5rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
+    display: inline-block;
+    max-width: 80%;
+  }
+
+  .message-text {
+    width: 100%;
+    letter-spacing: 0;
+    float: left;
+    font-size: 1.1em;
+    word-wrap: break-word;
+    vertical-align: middle;
+    margin-bottom: 0;
+  }
+
+  .message-text img {
+    vertical-align: middle;
+  }
+
+  .message-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1rem;
+    margin-top: 0.2rem;
+  }
+
+  .sent-text {
+    display: flex;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    color: #828282;
+    /* letter-spacing: 0.3px; */
+  }
+
+  .pl {
+    padding-left: 2rem;
+  }
+
+  .pr {
+    padding-right: 2rem;
+  }
+
+  .justifyStart {
+    justify-content: flex-start;
+  }
+
+  .justifyEnd {
+    justify-content: flex-end;
+  }
+
+  .light {
+    color: white;
+  }
+
+  .dark {
+    color: #353535;
+  }
+
+  .background-purple {
+    background: #ab417f;
+  }
+
+  .background-light {
+    background: #f3f3f3;
+  }
+`;
 
 export default Message;

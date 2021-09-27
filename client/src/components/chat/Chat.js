@@ -1,37 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import socketIOClient from "socket.io-client";
+//components
 import Contacts from "./Contacts";
 import Messages from "./Messages";
 import InfoBar from "./InfoBar";
 import Input from "../chat/Input";
-import { getChat, resetChat } from "../../actions/chatActions";
+//actions
+import { getChat, resetChat, joinRoom } from "../../actions/chatActions";
+import { getContact } from "../../actions/contactActions";
+//style
+import styled from "styled-components";
+import { Row, Col } from "react-bootstrap";
 
-const ENDPOINT = "http://localhost:8000"; //rewrite for process.env varible?
-
-const Chat = () => {
-  const [room, setRoom] = useState("");
+const Chat = ({ socketRef }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [selectContact, setSelectContact] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-
   const { username, profileType, _id, contacts } = useSelector(
     (state) => state.member.member[0]
   );
   const { chatLog } = useSelector((state) => state.chat.chats);
   const chatId = useSelector((state) => state.chat.chats._id);
-  const socketRef = useRef();
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setRoom("chat");
-    socketRef.current = socketIOClient(ENDPOINT);
-    if (chatLog) {
-      setMessages([...chatLog]);
-    }
-  }, [chatLog]);
-
+  //loades prev chats based on which contact is selected from list
   useEffect(() => {
     if (selectContact) {
       let body;
@@ -49,29 +43,30 @@ const Chat = () => {
       }
 
       dispatch(getChat(body));
+      dispatch(getContact(selectContact));
     }
   }, [selectContact, _id, dispatch, profileType]);
 
+  //loads prev chats into local state to be emitted
+  useEffect(() => {
+    if (chatLog) {
+      setMessages([...chatLog]);
+    }
+  }, [chatLog]);
+
+  //joins room when unique chatId for 2 contacts is present
   useEffect(() => {
     if (chatId) {
-      socketRef.current.emit("join", { username, room, chatId }, (error) => {
-        if (error) {
-          return error;
-        }
-      });
+      joinRoom(socketRef, chatId);
     }
+  }, [chatId, socketRef]);
+
+  //emits new message on screen when message is changed
+  useEffect(() => {
     socketRef.current.on("message", (message) => {
       setMessages([...messages, message]);
     });
-  }, [messages, chatId, dispatch, room, username, chatOpen]);
-
-  const connectSocket = () => {
-    socketRef.current.emit("join", { username, room, chatId }, (error) => {
-      if (error) {
-        return error;
-      }
-    });
-  };
+  }, [messages, chatId, dispatch, socketRef]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -88,47 +83,100 @@ const Chat = () => {
     }
   };
 
-  const leaveChatRoom = () => {
+  const leaveChatRoom = (chatId) => {
     socketRef.current.emit("leaveRoom", { chatId });
   };
 
-  const disconnectSocket = () => {
-    socketRef.current.disconnect();
-  };
-
   return (
-    <div className="chats-container">
-      {contacts ? (
-        <>
-          <h2>Contacts</h2>
-          <Contacts
-            contacts={contacts}
-            selectContact={setSelectContact}
-            setSelectContact={setSelectContact}
-            chatOpen={chatOpen}
-            setChatOpen={setChatOpen}
-            connectSocket={connectSocket}
-            disconnectSocket={disconnectSocket}
-            leaveChatRoom={leaveChatRoom}
-            resetChat={resetChat}
-          />
-        </>
-      ) : (
-        <h2>Contacts</h2>
-      )}
+    <Row>
+      <Col md={{ span: 2, offset: 1 }}>
+        <div className="contacts-container">
+          {contacts ? (
+            <>
+              <h2>Contacts</h2>
+              <Contacts
+                socketRef={socketRef}
+                contacts={contacts}
+                selectContact={setSelectContact}
+                setSelectContact={setSelectContact}
+                chatOpen={chatOpen}
+                setChatOpen={setChatOpen}
+                leaveChatRoom={leaveChatRoom}
+                resetChat={resetChat}
+              />
+            </>
+          ) : (
+            <h2>No Contacts</h2>
+          )}
+        </div>
+      </Col>
 
-      <div className="chats-container">
-        <h1>this is where chats go</h1>
-        <InfoBar room={room} />
-        <Messages messages={messages} username={username} chatOpen={chatOpen} />
-        <Input
-          message={message}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
-        />
-      </div>
-    </div>
+      {chatOpen ? (
+        <Col>
+          <StyledChats>
+            <div className="outer-container">
+              <div className="chats-container">
+                <InfoBar
+                  leaveChatRoom={leaveChatRoom}
+                  setChatOpen={setChatOpen}
+                />
+                <Messages
+                  messages={messages}
+                  username={username}
+                  chatOpen={chatOpen}
+                />
+                <Input
+                  message={message}
+                  setMessage={setMessage}
+                  sendMessage={sendMessage}
+                />
+              </div>
+            </div>
+          </StyledChats>
+        </Col>
+      ) : (
+        ""
+      )}
+    </Row>
   );
 };
+
+const StyledChats = styled.div`
+  .outer-container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100vh;
+    /* background-color: #1a1a1d; */
+  }
+
+  .chats-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 8px;
+    height: 80%;
+    width: 50%;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    .outer-ontainer {
+      height: 100%;
+    }
+
+    .chats-container {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 1200px) {
+    .container {
+      width: 60%;
+    }
+  }
+`;
 
 export default Chat;

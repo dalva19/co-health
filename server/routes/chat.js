@@ -67,11 +67,13 @@ router.post("/contacts", async (req, res) => {
       const newCommunityContact = {
         username: communityUser.username,
         user: communityUser._id,
+        avatar: communityUser.avatar,
       };
 
       const newHealthcareContact = {
         username: healthcareUser.username,
         user: healthcareUser._id,
+        avatar: healthcareUser.avatar,
       };
 
       const newChat = new Chat({

@@ -1,21 +1,27 @@
-import { FETCH_CONTACT } from "../actions/contactAction";
+import { FETCH_CONTACT } from "../actions/contactActions";
+import { RESET_CONTACT } from "../actions/contactActions";
 
 const DEFAULT_STATE = {
   contact: [],
-  loaded: false,
+  isLoading: true,
 };
 
-const chatReducer = (state = DEFAULT_STATE, action) => {
+const contactReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case FETCH_CONTACT:
       return {
         ...state,
-        contact: action.payload,
-        loaded: true,
+        contact: [action.payload],
+        isLoading: false,
+      };
+    case RESET_CONTACT:
+      return {
+        contact: [],
+        isLoading: true,
       };
     default:
-      return state;
+      return DEFAULT_STATE;
   }
 };
 
-export default chatReducer;
+export default contactReducer;

@@ -6,7 +6,7 @@ const DEFAULT_STATE = {
   isLoading: true,
 };
 
-const memberReducer = (state = DEFAULT_STATE, action) => {
+const profileReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case FETCH_PROFILE:
       return {
@@ -24,4 +24,4 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
   }
 };
 
-export default memberReducer;
+export default profileReducer;

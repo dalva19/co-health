@@ -55,3 +55,24 @@ export const createChat = (offerId) => (dispatch) => {
       return error;
     });
 };
+
+//io actions
+export const connectSocket = (socketRef, socketIOClient, ENDPOINT) => {
+  return (socketRef.current = socketIOClient(ENDPOINT));
+};
+
+export const disconnectSocket = (socketRef) => {
+  return socketRef.current.disconnect();
+};
+
+export const joinRoom = (socketRef, chatId) => {
+  return socketRef.current.emit("join", { chatId }, (error) => {
+    if (error) {
+      return error;
+    }
+  });
+};
+
+export const leaveChatRoom = (socketRef, chatId) => {
+  return socketRef.current.emit("leaveRoom", { chatId });
+};

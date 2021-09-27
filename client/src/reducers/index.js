@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   registration: RegisterReducer,
   member: MemberReducer,
   chat: ChatReducer,
-  // selectedContact: ContactReducer,
+  selectedContact: ContactReducer,
   requests: RequestReducer,
   offers: OfferReducer,
   communityRequests: CommunityRequestsReducer,
