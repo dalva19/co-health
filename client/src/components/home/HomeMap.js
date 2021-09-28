@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
-import styled from "styled-components";
 
 const HomeMap = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -44,22 +43,15 @@ const HomeMap = () => {
             }}
             onCloseClick={() => setSelectedData(null)}
           >
-            <StyledInfo>
+            <>
               <h2>{selectedData.username}</h2>
               <p>{selectedData.request[0]}</p>
-              <p className="offer-link">Make an offer</p>
-            </StyledInfo>
+            </>
           </InfoWindow>
         )}
       </GoogleMap>
     </div>
   );
 };
-
-const StyledInfo = styled.div`
-  .offer-link {
-    cursor: pointer;
-  }
-`;
 
 export default HomeMap;

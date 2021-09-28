@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { resetChat } from "../../actions/chatActions";
@@ -13,11 +13,6 @@ const Contact = ({
   leaveChatRoom,
 }) => {
   const dispatch = useDispatch();
-
-  // const { isLoading } = useSelector((state) => state.selectedContact);
-  // const selectedContact = useSelector(
-  //   (state) => state.selectedContact.contact[0]
-  // );
 
   const handleContactClick = () => {
     if (!chatOpen) {

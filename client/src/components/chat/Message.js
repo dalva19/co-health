@@ -4,13 +4,6 @@ import styled from "styled-components";
 import { Placeholder } from "react-bootstrap";
 
 const Message = ({ message, username }) => {
-  //user avatars instead of names since each room in based on contacts??
-  //actions for public profile to get other user's avatar
-  //useSelector to get current user and contact's avatars
-  //add terniary function
-  //if avatar use it
-  //else use default
-
   let isSentByCurrentUser = false;
 
   const trimmedName = message.username.replace(/\s+/g, "").trim().toLowerCase();
@@ -22,7 +15,6 @@ const Message = ({ message, username }) => {
   return isSentByCurrentUser ? (
     <StyledMessage>
       <div className="message-container justifyEnd">
-        {/* <p className="sentText pr-10">{trimmedName}</p> */}
         <div className="message-box background-purple">
           <p className="message-text light">
             {message.message ? (
@@ -50,7 +42,6 @@ const Message = ({ message, username }) => {
             )}
           </p>
         </div>
-        {/* <p className="sent-text">{message.username}</p> */}
       </div>
     </StyledMessage>
   );
@@ -60,8 +51,8 @@ const StyledMessage = styled.div`
   .message-box {
     background: #f3f3f3;
     border-radius: 0.5rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
     padding-left: 1rem;
     padding-right: 1rem;
     color: white;

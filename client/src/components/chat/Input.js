@@ -1,18 +1,12 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getChatById } from "../../actions/chatActions";
 //style
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const Input = ({ setMessage, sendMessage, message }) => {
-  const chatId = useSelector((state) => state.chat.chats._id);
-  const dispatch = useDispatch();
-
   const handleSendButton = (e) => {
     sendMessage(e);
-    // dispatch(getChatById(chatId));
   };
 
   return (
@@ -28,9 +22,6 @@ const Input = ({ setMessage, sendMessage, message }) => {
             event.key === "Enter" ? sendMessage(event) : null
           }
         />
-        {/* <button className="sendButton" onClick={handleSendButton}>
-          Send
-        </button> */}
         <FontAwesomeIcon
           icon={faPaperPlane}
           className="icon fa-2x send"
@@ -64,19 +55,8 @@ const StyledInput = styled.div`
   .send {
     color: #ab417f;
     cursor: pointer;
-    padding-top: 0.2rem;
+    padding-top: 0.4rem;
     padding-right: 0.2rem;
-  }
-
-  .sendButton {
-    color: #fff !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: #ab417f;
-    padding: 5px;
-    display: inline-block;
-    border: none;
-    width: 10%;
   }
 `;
 

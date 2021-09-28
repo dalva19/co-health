@@ -44,15 +44,14 @@ const Avatar = ({ setAvatar }) => {
                 <img src={image.data_url} alt="" width="100" />
                 <div className="image-item__btn-wrapper">
                   <Button
-                    type="button"
-                    variant="outline-secondary"
+                    className="button"
                     onClick={() => onImageUpdate(index)}
                   >
                     Update
                   </Button>
+
                   <Button
-                    type="button"
-                    variant="outline-secondary"
+                    className="button"
                     onClick={() => onImageRemove(index)}
                   >
                     Remove
@@ -84,6 +83,11 @@ const StyledAvatarUpload = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+    .button {
+      margin-top: 1rem;
+      background-color: #ab417f;
+      border: none;
+    }
   }
 
   .image-upload {
@@ -92,7 +96,7 @@ const StyledAvatarUpload = styled.div`
     font-family: "Inter", sans-serif;
     background: #f1efe9;
     border-radius: 8px;
-    border: 1px dashed #000000;
+    border: 1px #000000;
   }
 
   .image-upload:hover {

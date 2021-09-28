@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postRequest } from "../../actions/requestActions";
 //style
-import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 

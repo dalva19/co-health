@@ -26,7 +26,7 @@ const CardsContainer = styled.div`
   margin-right: 15rem;
 `;
 const StyledCards = styled.div`
-  height: 70vh;
+  height: 80vh;
   width: 100%;
   display: flex;
   flex-direction: row;

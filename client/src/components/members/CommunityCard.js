@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
-import OfferForm from "../offers/OfferForm";
+// import { useSelector } from "react-redux";
 //styling
-import { Card, Button, Accordion } from "react-bootstrap";
+import { Card, Button} from "react-bootstrap";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";

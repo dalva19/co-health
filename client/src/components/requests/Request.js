@@ -5,7 +5,7 @@ import { getMemberProfile } from "../../actions/memberActions";
 import EditRequest from "./EditRequest";
 import OfferAlerts from "../offers/OfferAlerts";
 //styling
-import { Card, Badge, CloseButton, Spinner } from "react-bootstrap";
+import { Card, Badge, CloseButton } from "react-bootstrap";
 import styled from "styled-components";
 
 //individual request items
@@ -97,6 +97,11 @@ const StyledCard = styled.div`
       text-decoration: underline;
     }
   }
+`;
+
+const StyledOfferAlertsContainer = styled.div`
+  height: 15vh;
+  width: 30vh;
 `;
 
 export default Request;

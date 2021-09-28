@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 //components
 import CommunityProfile from "./CommunityProfile";
 import MakeRequest from "../requests/MakeRequest";
-import RequestForm from "../requests/RequestForm";
 //style
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
@@ -32,14 +30,6 @@ const CommunityContainer = () => {
           </>
         )}
       </MemberProfileContainer>
-
-      {/* <RequestForm
-        show={show}
-        page={page}
-        setShow={setShow}
-        handleClose={handleClose}
-        handleShow={handleShow}
-      /> */}
     </>
   );
 };

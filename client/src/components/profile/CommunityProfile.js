@@ -25,7 +25,7 @@ const CommunityProfile = () => {
 
   useEffect(() => {
     if (member[0].requests.length > 0) {
-      // dispatch(requestLoading());
+      dispatch(requestLoading());
       dispatch(getRequests(page));
     }
   }, [dispatch, page, member]);

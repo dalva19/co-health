@@ -27,9 +27,11 @@ const PageNav = ({ page, setPage, itemCount }) => {
   };
 
   return (
-    <Pagination className="pages" size="sm">
-      {items}
-    </Pagination>
+    <>
+      <Pagination className="pages" size="sm">
+        {items}
+      </Pagination>
+    </>
   );
 };
 

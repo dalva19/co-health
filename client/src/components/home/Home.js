@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
 import NavigationTabs from "../nav/NavigationTabs";
 //styling
 import styled from "styled-components";
@@ -26,9 +25,6 @@ const Home = () => {
           <img src={together} alt="people" />
         </Image>
       </Page>
-      {/* <Route exact path="/co-health/">
-        {loaded ? <Redirect to="/co-health/profile" /> : ""}
-      </Route> */}
     </>
   );
 };

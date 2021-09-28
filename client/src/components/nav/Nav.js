@@ -1,15 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 //actions
 import { logout } from "../../actions/memberActions";
-// import { logoutLicense } from "../../actions/licenseActions";
-// import { logoutOffers } from "../../actions/offerActions";
-// import { logoutRequests } from "../../actions/requestActions";
-// import { resetContact } from "../../actions/contactActions";
-// import { resetProfile } from "../../actions/profilesActions";
-// import { resetCommunityRequests } from "../../actions/communityRequestsActions";
-// import { resetCoordinates } from "../../actions/coordinatesAction";
-// import { resetChat, disconnectSocket } from "../../actions/chatActions";
 //style
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,22 +12,9 @@ const Nav = ({ socketRef }) => {
   const { loaded } = useSelector((state) => state.member);
   const member = useSelector((state) => state.member.member);
 
-  const history = useHistory();
-
   const handleLogout = () => {
     //passport logout that ends cookie session
     dispatch(logout());
-    //resets redux store reducers
-    // dispatch(resetProfile());
-    // dispatch(logoutLicense());
-    // dispatch(logoutOffers());
-    // dispatch(logoutRequests());
-    // dispatch(resetContact());
-    // dispatch(resetCommunityRequests());
-    // dispatch(resetCoordinates());
-    // dispatch(resetChat());
-    // disconnectSocket(socketRef);
-    // history.push("/co-health");
   };
 
   return (

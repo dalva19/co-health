@@ -1,5 +1,4 @@
-import { FETCH_CONTACT } from "../actions/contactActions";
-import { RESET_CONTACT } from "../actions/contactActions";
+import { FETCH_CONTACT, RESET_CONTACT } from "../actions/contactActions";
 
 const DEFAULT_STATE = {
   contact: [],
