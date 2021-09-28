@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteRequest } from "../../actions/requestActions";
 import { getMemberProfile } from "../../actions/memberActions";
 import EditRequest from "./EditRequest";
@@ -25,7 +25,6 @@ const Request = ({ request, page }) => {
   const handleOffersButton = () => {
     if (!showAlert) {
       setShowAlert(true);
-      dispatch(getMemberProfile());
     } else {
       setShowAlert(false);
     }
