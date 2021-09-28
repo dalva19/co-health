@@ -11,6 +11,7 @@ import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 
 const OfferForm = (props) => {
   //state
+  const [page, setPage] = useState(1);
   const [text, setText] = useState("");
   const { isLoading } = useSelector((state) => state.offers);
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const OfferForm = (props) => {
     dispatch(postOffer(props.requestId, body));
 
     if (!isLoading) {
-      dispatch(getOffers());
+      dispatch(getOffers(page));
     }
     setText("");
   };
