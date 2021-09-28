@@ -20,6 +20,7 @@ import { getMemberProfile } from "./actions/memberActions";
 import { connectSocket } from "./actions/chatActions";
 //io
 import socketIOClient from "socket.io-client";
+const keys = require("./config/keys");
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const App = () => {
 
   const { loaded } = useSelector((state) => state.member);
 
-  const ENDPOINT = process.env.PORT || "http://localhost:8000";
+  const ENDPOINT = keys.SOCKET_SERVER_URI;
 
   useEffect(() => {
     dispatch(getMemberProfile());
