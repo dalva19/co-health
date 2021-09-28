@@ -10,12 +10,12 @@ export const LOGOUT_OFFERS = "logout_offers";
 
 //action creators
 export const getOffers = (page) => (dispatch) => {
-  console.log(page);
   axios
     .get(`/co-health/api/profile/offers?page=${page}`, {
       withCredentials: true,
     })
     .then((response) => {
+      console.log(response);
       dispatch({
         type: FETCH_OFFERS,
         payload: response,

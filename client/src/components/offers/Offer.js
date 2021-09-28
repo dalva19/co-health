@@ -39,10 +39,14 @@ const Offer = ({ offer }) => {
 
             <Card.Body>
               <Card.Title className="username">
-                {offer.request.username}
+                {offer.request ? (
+                  offer.request.username
+                ) : (
+                  <p>Request deleted</p>
+                )}
               </Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
-                {offer.request.text}
+                {offer.request ? offer.request.text : <p>Request deleted</p>}
               </Card.Subtitle>
               <Card.Text>
                 {"->"}

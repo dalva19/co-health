@@ -29,6 +29,7 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
         isLoading: true,
       };
     case FETCH_OFFERS:
+      console.log(action.payload);
       return {
         ...state,
         offers: action.payload.data.offers,

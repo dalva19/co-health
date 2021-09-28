@@ -26,7 +26,7 @@ const OfferForm = (props) => {
     dispatch(postOffer(props.requestId, body));
 
     if (!isLoading) {
-      dispatch(getOffers(props.page));
+      dispatch(getOffers());
     }
     setText("");
   };
