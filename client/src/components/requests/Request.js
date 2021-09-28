@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteRequest } from "../../actions/requestActions";
 import { getMemberProfile } from "../../actions/memberActions";
 import EditRequest from "./EditRequest";
-import OfferAlert from "../offers/OfferAlert";
+import OfferAlerts from "../offers/OfferAlerts";
 //styling
 import { Card, Badge, CloseButton, Spinner } from "react-bootstrap";
 import styled from "styled-components";
@@ -26,7 +26,6 @@ const Request = ({ request, page }) => {
     if (!showAlert) {
       setShowAlert(true);
       dispatch(getMemberProfile());
-      // dispatch(getRequests(page));
     } else {
       setShowAlert(false);
     }
@@ -58,7 +57,7 @@ const Request = ({ request, page }) => {
             )}
           </Card.Footer>
         </Card>
-        {showAlert ? <OfferAlert request={request} key={request._id} /> : ""}
+        {showAlert ? <OfferAlerts request={request} /> : ""}
       </StyledCard>
 
       <EditRequest

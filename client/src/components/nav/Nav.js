@@ -2,14 +2,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 //actions
 import { logout } from "../../actions/memberActions";
-import { logoutLicense } from "../../actions/licenseActions";
-import { logoutOffers } from "../../actions/offerActions";
-import { logoutRequests } from "../../actions/requestActions";
-import { resetContact } from "../../actions/contactActions";
-import { resetProfile } from "../../actions/profilesActions";
-import { resetCommunityRequests } from "../../actions/communityRequestsActions";
-import { resetCoordinates } from "../../actions/coordinatesAction";
-import { resetChat, disconnectSocket } from "../../actions/chatActions";
+// import { logoutLicense } from "../../actions/licenseActions";
+// import { logoutOffers } from "../../actions/offerActions";
+// import { logoutRequests } from "../../actions/requestActions";
+// import { resetContact } from "../../actions/contactActions";
+// import { resetProfile } from "../../actions/profilesActions";
+// import { resetCommunityRequests } from "../../actions/communityRequestsActions";
+// import { resetCoordinates } from "../../actions/coordinatesAction";
+// import { resetChat, disconnectSocket } from "../../actions/chatActions";
 //style
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,16 +26,16 @@ const Nav = ({ socketRef }) => {
     //passport logout that ends cookie session
     dispatch(logout());
     //resets redux store reducers
-    dispatch(logoutLicense());
-    dispatch(logoutOffers());
-    dispatch(logoutRequests());
-    dispatch(resetContact());
-    dispatch(resetProfile());
-    dispatch(resetCommunityRequests());
-    dispatch(resetCoordinates());
-    dispatch(resetChat());
-    disconnectSocket(socketRef);
-    history.push("/co-health");
+    // dispatch(resetProfile());
+    // dispatch(logoutLicense());
+    // dispatch(logoutOffers());
+    // dispatch(logoutRequests());
+    // dispatch(resetContact());
+    // dispatch(resetCommunityRequests());
+    // dispatch(resetCoordinates());
+    // dispatch(resetChat());
+    // disconnectSocket(socketRef);
+    // history.push("/co-health");
   };
 
   return (
@@ -65,7 +65,9 @@ const Nav = ({ socketRef }) => {
             <div>
               <ul className="logout">
                 <li className="logout">
-                  <h4 onClick={handleLogout}>logout</h4>
+                  <a onClick={handleLogout} href="/">
+                    <h4>logout</h4>
+                  </a>
                 </li>
               </ul>
             </div>

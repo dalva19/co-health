@@ -27,7 +27,7 @@ const App = () => {
 
   const { loaded } = useSelector((state) => state.member);
 
-  const ENDPOINT = "http://localhost:8000"; //rewrite for process.env server varible?
+  const ENDPOINT = process.env.PORT || "http://localhost:8000";
 
   useEffect(() => {
     dispatch(getMemberProfile());
@@ -37,7 +37,7 @@ const App = () => {
     if (loaded) {
       connectSocket(socketRef, socketIOClient, ENDPOINT);
     }
-  }, [socketRef, loaded]);
+  }, [socketRef, loaded, ENDPOINT]);
 
   return (
     <>

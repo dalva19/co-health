@@ -1,5 +1,7 @@
-import { FETCH_COORDINATES } from "../actions/coordinatesAction";
-import { RESET_COORDINATES } from "../actions/coordinatesAction";
+import {
+  FETCH_COORDINATES,
+  RESET_COORDINATES,
+} from "../actions/coordinatesAction";
 
 const DEFAULT_STATE = {
   coordinates: null,

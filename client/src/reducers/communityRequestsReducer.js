@@ -1,5 +1,7 @@
-import { FETCH_COMMUNITY_REQUESTS } from "../actions/communityRequestsActions";
-import { RESET_COMMUNITY_REQUESTS } from "../actions/communityRequestsActions";
+import {
+  FETCH_COMMUNITY_REQUESTS,
+  RESET_COMMUNITY_REQUESTS,
+} from "../actions/communityRequestsActions";
 
 const DEFAULT_STATE = {
   requests: [],

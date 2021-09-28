@@ -42,6 +42,7 @@ const UserSchema = new Schema({
     {
       username: { type: String },
       user: { type: Schema.Types.ObjectId, ref: "User" },
+      avatar: { type: String },
     },
   ],
 });

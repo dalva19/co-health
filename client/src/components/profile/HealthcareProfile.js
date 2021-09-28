@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
 import HealthcareLicenseForm from "../account-creation/HealthcareLiscenceForm";
-import Pagination from "../nav/Pagination";
+import PageNav from "../nav/PageNav";
 import SettingsForm from "../account-creation/SettingsForm";
 //actions
 import { getCommunityRequests } from "../../actions/communityRequestsActions";
@@ -100,7 +100,7 @@ const HealthCareProfile = () => {
       )}
 
       <StyledPagination>
-        <Pagination page={page} setPage={setPage} itemCount={itemCount} />
+        <PageNav page={page} setPage={setPage} itemCount={itemCount} />
       </StyledPagination>
 
       <HealthcareLicenseForm

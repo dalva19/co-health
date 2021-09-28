@@ -14,10 +14,10 @@ const Contact = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state) => state.selectedContact);
-  const selectedContact = useSelector(
-    (state) => state.selectedContact.contact[0]
-  );
+  // const { isLoading } = useSelector((state) => state.selectedContact);
+  // const selectedContact = useSelector(
+  //   (state) => state.selectedContact.contact[0]
+  // );
 
   const handleContactClick = () => {
     if (!chatOpen) {
@@ -35,8 +35,8 @@ const Contact = ({
     <div className="contact-container">
       <StyledContact>
         <div className="avatar-container">
-          {!isLoading && contact.username === selectedContact.username ? (
-            <img className="user-pic" src={selectedContact.avatar} alt="Pic" />
+          {contact.avatar ? (
+            <img className="user-pic" src={contact.avatar} alt="Pic" />
           ) : (
             <FontAwesomeIcon icon={faUserCircle} className="icon fa-3x " />
           )}

@@ -58,7 +58,7 @@ const UserRegistration = () => {
         street: street,
         city: city,
         state: state,
-        zipCode: parseInt(zip),
+        zipcode: zip,
         lat: coordinates.lat,
         lng: coordinates.lng,
       };

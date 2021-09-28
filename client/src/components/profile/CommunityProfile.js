@@ -5,7 +5,7 @@ import { getRequests, requestLoading } from "../../actions/requestActions";
 import MakeRequest from "../requests/MakeRequest";
 import Requests from "../requests/Requests";
 import RequestForm from "../requests/RequestForm";
-import Pagination from "../nav/Pagination";
+import PageNav from "../nav/PageNav";
 //styling
 import { Row, Col } from "react-bootstrap";
 import { StyledPagination } from "../../styles/styles";
@@ -14,6 +14,7 @@ import styled from "styled-components";
 const CommunityProfile = () => {
   const [show, setShow] = useState(false);
   const [page, setPage] = useState(1);
+  const { member } = useSelector((state) => state.member);
   const { requests, isLoading } = useSelector((state) => state.requests);
   const itemCount = useSelector((state) => state.requests.count);
 
@@ -23,9 +24,11 @@ const CommunityProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(requestLoading());
-    dispatch(getRequests(page));
-  }, [dispatch, page]);
+    if (member[0].requests.length > 0) {
+      // dispatch(requestLoading());
+      dispatch(getRequests(page));
+    }
+  }, [dispatch, page, member]);
 
   return (
     <>
@@ -47,7 +50,7 @@ const CommunityProfile = () => {
       </>
 
       <StyledPagination>
-        <Pagination
+        <PageNav
           className="pages-container"
           page={page}
           setPage={setPage}

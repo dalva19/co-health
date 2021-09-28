@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import InfoBarUser from "./InfoBarUser";
 //style
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const InfoBar = ({ leaveChatRoom, setChatOpen }) => {
   const { isLoading } = useSelector((state) => state.selectedContact);
@@ -19,8 +20,7 @@ const InfoBar = ({ leaveChatRoom, setChatOpen }) => {
   return (
     <StyledInfoBar>
       <div className="leftInnerContainer">
-        <FontAwesomeIcon icon={faCircle} className="icon online-icon " />
-        <h3>{!isLoading ? selectedContact.username : "Chat"}</h3>
+        {!isLoading ? <InfoBarUser selectedContact={selectedContact} /> : ""}
       </div>
       <div className="rightInnerContainer">
         <FontAwesomeIcon
@@ -39,7 +39,7 @@ const StyledInfoBar = styled.div`
   justify-content: space-between;
   background: #ab417f;
   border-radius: 4px 4px 0 0;
-  height: 40px;
+  height: 60px;
   width: 100%;
 
   .leftInnerContainer {

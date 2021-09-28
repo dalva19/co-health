@@ -19,7 +19,6 @@ const DEFAULT_STATE = {
 const requestReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case FETCH_REQUESTS:
-      console.log(action.payload.data);
       return {
         ...state,
         requests: action.payload.data.requests,
@@ -33,7 +32,6 @@ const requestReducer = (state = DEFAULT_STATE, action) => {
       };
     case LOGOUT_REQUESTS:
       return {
-        ...state,
         requests: [],
         count: [],
         isLoading: true,

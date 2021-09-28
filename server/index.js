@@ -19,13 +19,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-const {
-  addUser,
-  removeUser,
-  getUser,
-  getUsersInRoom,
-} = require("./utilities/users");
-
 //PORT
 const PORT = process.env.PORT || 8000;
 

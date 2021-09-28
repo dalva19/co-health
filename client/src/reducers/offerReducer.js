@@ -24,7 +24,6 @@ const offerReducer = (state = DEFAULT_STATE, action) => {
       };
     case LOGOUT_OFFERS:
       return {
-        ...state,
         offers: [],
         count: [],
         isLoading: true,

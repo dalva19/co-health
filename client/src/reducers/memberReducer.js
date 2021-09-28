@@ -1,9 +1,12 @@
-import { FETCH_MEMBER } from "../actions/memberActions";
-import { LOGOUT_MEMBER } from "../actions/memberActions";
-import { UPDATE_SETTINGS } from "../actions/memberActions";
+import {
+  FETCH_MEMBER,
+  LOGOUT_MEMBER,
+  UPDATE_SETTINGS,
+} from "../actions/memberActions";
 
 const DEFAULT_STATE = {
   member: [null],
+  newContact: false,
   loaded: false,
 };
 

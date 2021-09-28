@@ -1,5 +1,4 @@
-import { FETCH_PROFILE } from "../actions/profilesActions";
-import { RESET_PROFILE } from "../actions/profilesActions";
+import { FETCH_PROFILE, RESET_PROFILE } from "../actions/profilesActions";
 
 const DEFAULT_STATE = {
   profile: [],

@@ -20,8 +20,6 @@ export const login = (body) => (dispatch) => {
     });
 };
 
-//not working how i want it to
-//redux empties with refresh??
 export const getMemberProfile = () => (dispatch) => {
   axios
     .get(`/co-health/api/profile/`, { withCredentials: true })
@@ -53,7 +51,7 @@ export const logout = () => (dispatch) => {
 
 export const updateProfileSettings = (body) => (dispatch) => {
   axios
-    .put(`/co-health/api/profile/settings/info`, body, {  
+    .put(`/co-health/api/profile/settings/info`, body, {
       withCredentials: true,
     })
     .then((response) => {
