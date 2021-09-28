@@ -11,6 +11,7 @@ import { getContact } from "../../actions/contactActions";
 //style
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
+import chatsPic from "../../img/undraw_Online_chat_re_c4lx.svg";
 
 const Chat = ({ socketRef }) => {
   const [message, setMessage] = useState("");
@@ -102,7 +103,6 @@ const Chat = ({ socketRef }) => {
                 chatOpen={chatOpen}
                 setChatOpen={setChatOpen}
                 leaveChatRoom={leaveChatRoom}
-                resetChat={resetChat}
               />
             </>
           ) : (
@@ -118,7 +118,9 @@ const Chat = ({ socketRef }) => {
               <div className="chats-container">
                 <InfoBar
                   leaveChatRoom={leaveChatRoom}
+                  resetChat={resetChat}
                   setChatOpen={setChatOpen}
+                  setSelectContact={setSelectContact}
                 />
                 <Messages
                   messages={messages}
@@ -135,7 +137,9 @@ const Chat = ({ socketRef }) => {
           </StyledChats>
         </Col>
       ) : (
-        ""
+        <StyledImage>
+          <img className="image" src={chatsPic} alt="make-chats" />
+        </StyledImage>
       )}
     </Row>
   );
@@ -176,6 +180,15 @@ const StyledChats = styled.div`
     .container {
       width: 60%;
     }
+  }
+`;
+
+const StyledImage = styled.div`
+  img {
+    width: 100%;
+    height: 40vh;
+    flex: 1;
+    padding-left: 5rem;
   }
 `;
 

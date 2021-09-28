@@ -3,6 +3,7 @@ import Message from "./Message";
 import ScrollToBottom from "react-scroll-to-bottom";
 //style
 import styled from "styled-components";
+import { Placeholder } from "react-bootstrap";
 
 const Messages = ({ messages, username, chatOpen }) => {
   return (
@@ -18,7 +19,10 @@ const Messages = ({ messages, username, chatOpen }) => {
           </ScrollToBottom>
         </StyledMessages>
       ) : (
-        ""
+        <>
+          <Placeholder xs={3} animation="glow" bg="secondary" />
+          <Placeholder xs={6} animation="glow" bg="secondary" />
+        </>
       )}
     </>
   );

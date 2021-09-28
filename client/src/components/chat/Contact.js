@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { resetChat } from "../../actions/chatActions";
 
 const Contact = ({
   contact,
@@ -10,7 +11,6 @@ const Contact = ({
   chatOpen,
   setChatOpen,
   leaveChatRoom,
-  resetChat,
 }) => {
   const dispatch = useDispatch();
 
@@ -38,7 +38,10 @@ const Contact = ({
           {contact.avatar ? (
             <img className="user-pic" src={contact.avatar} alt="Pic" />
           ) : (
-            <FontAwesomeIcon icon={faUserCircle} className="icon fa-3x " />
+            <FontAwesomeIcon
+              icon={faUserCircle}
+              className="icon fa-3x default-pic "
+            />
           )}
         </div>
         <p className="contact" onClick={handleContactClick}>
@@ -53,6 +56,7 @@ const StyledContact = styled.div`
   display: flex;
   p {
     cursor: pointer;
+    font-family: "Inter", sans-serif;
   }
   img {
     cursor: pointer;
@@ -66,6 +70,9 @@ const StyledContact = styled.div`
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
+  }
+  .default-pic {
+    color: #ab417f;
   }
 `;
 

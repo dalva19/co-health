@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import Avatar from "./Avatar";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
+import {
+  loadCoordinatesFromAddress,
+  resetCoordinates,
+} from "../../actions/coordinatesAction";
 import { updateProfileSettings } from "../../actions/memberActions";
 //style
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
@@ -21,7 +24,7 @@ const SettingsForm = (props) => {
     member.name ? member.name.lastName : ""
   );
 
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(member.bio ? member.bio : "");
   const [avatar, setAvatar] = useState(member.avatar ? member.avatar : "");
   const [street, setStreet] = useState(
     member.address.street ? member.address.street : ""
@@ -48,25 +51,45 @@ const SettingsForm = (props) => {
 
   useEffect(() => {
     if (address) {
-      loadCoordinatesFromAddress(address);
+      dispatch(loadCoordinatesFromAddress(address));
     }
   }, [dispatch, address]);
+
+  console.log(address);
+
+  useEffect(() => {
+    if (coordinates) {
+      const body = {
+        firstName: firstName,
+        lastName: lastName,
+        avatar: avatar[0] ? avatar[0].data_url : "",
+        bio: bio,
+        street: street,
+        city: city,
+        state: state,
+        zipcode: zip,
+        lat: coordinates.lat,
+        lng: coordinates.lng,
+      };
+      dispatch(updateProfileSettings(body));
+      dispatch(resetCoordinates());
+    }
+  }, [
+    coordinates,
+    dispatch,
+    bio,
+    street,
+    city,
+    state,
+    zip,
+    firstName,
+    lastName,
+    avatar,
+  ]);
 
   const handleSubmitButton = (e) => {
     e.preventDefault();
     splitStreetName();
-    const body = {
-      firstName: firstName,
-      lastName: lastName,
-      avatar: avatar[0] ? avatar[0].data_url : "",
-      street: street,
-      city: city,
-      state: state,
-      zipCode: parseInt(zip),
-      lat: coordinates.lat,
-      lng: coordinates.lng,
-    };
-    dispatch(updateProfileSettings(body));
   };
 
   return (

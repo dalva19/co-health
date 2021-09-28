@@ -10,7 +10,7 @@ import styled from "styled-components";
 const Settings = () => {
   const [modal, setModal] = useState("");
 
-  const { credentials, name, address, profileType } = useSelector(
+  const { credentials, name, address, profileType, bio } = useSelector(
     (state) => state.member.member[0]
   );
 
@@ -42,11 +42,15 @@ const Settings = () => {
                 <tbody>
                   <tr>
                     <td>First Name</td>
-                    <td>{name ? name.firstName : "First Name"}</td>
+                    <td>{name ? name.firstName : ""}</td>
                   </tr>
                   <tr>
                     <td>Last Name</td>
-                    <td>{name ? name.lastName : "Last Name"}</td>
+                    <td>{name ? name.lastName : ""}</td>
+                  </tr>
+                  <tr>
+                    <td>Bio</td>
+                    <td>{bio ? bio : ""}</td>
                   </tr>
                   <tr>
                     <td>Community</td>

@@ -67,6 +67,7 @@ const OfferAlert = ({ offer, request }) => {
         <Alert variant="warning" className="offer-alert">
           <Alert.Heading
             className="alert-header-2"
+            value={offer._id}
             id={offer.user}
             onClick={handleUsernameClick}
           >

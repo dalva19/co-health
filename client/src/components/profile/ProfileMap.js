@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import { useSelector } from "react-redux";
 import { getProfile } from "../../actions/profilesActions";
+// import { getRequest } from "../../actions/requestActions";
 //components
 import OfferForm from "../offers/OfferForm";
 //styling
@@ -23,7 +24,7 @@ const ProfileMap = () => {
   const handleShow = () => setShow(true);
 
   const handleMakeAnOffer = (e) => {
-    setRequestId(e.target.id);
+    setRequestId(e.target.value);
     handleShow();
   };
 
@@ -50,7 +51,10 @@ const ProfileMap = () => {
                     lat: data.coordinates.lat,
                     lng: data.coordinates.lng,
                   }}
-                  onClick={() => setSelectedData(data)}
+                  onClick={() => {
+                    setSelectedData(data);
+                    // dispatch(getRequest(data._id));
+                  }}
                 />
               ))}
               {selectedData && (
@@ -70,13 +74,13 @@ const ProfileMap = () => {
                       {selectedData.username}
                     </h2>
                     <p>{selectedData.text}</p>
-                    <p
+                    <button
                       className="offer-link"
-                      id={selectedData._id}
+                      value={selectedData._id}
                       onClick={handleMakeAnOffer}
                     >
                       Make an offer
-                    </p>
+                    </button>
                   </StyledInfo>
                 </InfoWindow>
               )}
@@ -110,6 +114,8 @@ const StyledInfo = styled.div`
   .offer-link {
     cursor: pointer;
     text-decoration: underline;
+    border: none;
+    background-color: white;
     &:hover {
       color: #8ab073;
     }

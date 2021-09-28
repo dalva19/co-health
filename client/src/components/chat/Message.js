@@ -1,6 +1,7 @@
 import React from "react";
 //style
 import styled from "styled-components";
+import { Placeholder } from "react-bootstrap";
 
 const Message = ({ message, username }) => {
   //user avatars instead of names since each room in based on contacts??
@@ -23,7 +24,15 @@ const Message = ({ message, username }) => {
       <div className="message-container justifyEnd">
         {/* <p className="sentText pr-10">{trimmedName}</p> */}
         <div className="message-box background-purple">
-          <p className="message-text light">{message.message}</p>
+          <p className="message-text light">
+            {message.message ? (
+              message.message
+            ) : (
+              <>
+                <Placeholder xs={3} animation="glow" />
+              </>
+            )}
+          </p>
         </div>
       </div>
     </StyledMessage>
@@ -31,9 +40,17 @@ const Message = ({ message, username }) => {
     <StyledMessage>
       <div className="message-container justifyStart">
         <div className="message-box background-light">
-          <p className="message-text dark">{message.message}</p>
+          <p className="message-text dark">
+            {message.message ? (
+              message.message
+            ) : (
+              <>
+                <Placeholder xs={3} animation="glow" />
+              </>
+            )}
+          </p>
         </div>
-        <p className="sent-text">{message.username}</p>
+        {/* <p className="sent-text">{message.username}</p> */}
       </div>
     </StyledMessage>
   );

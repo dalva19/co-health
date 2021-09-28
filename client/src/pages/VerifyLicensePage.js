@@ -35,9 +35,12 @@ const VerifyLicensePage = () => {
       <Page>
         <StyledVerifyLicense>
           <div className={credentials.verified ? "hidden" : "show"}>
+            <h2>
+              Welcome <span>{username}</span>!
+            </h2>
             <h3>
-              Welcome <span>{username}</span>, in order to be a healthcare
-              member, you must first <span>add</span> a professional license.
+              In order to be a healthcare member, you must first{" "}
+              <span>add</span> a professional license.
             </h3>
             <p>Please click the button below to get started.</p>
 

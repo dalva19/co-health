@@ -1,26 +1,42 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import InfoBarUser from "./InfoBarUser";
 //style
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Placeholder } from "react-bootstrap";
 
-const InfoBar = ({ leaveChatRoom, setChatOpen }) => {
+const InfoBar = ({
+  leaveChatRoom,
+  setChatOpen,
+  resetChat,
+  setSelectContact,
+}) => {
   const { isLoading } = useSelector((state) => state.selectedContact);
   const selectedContact = useSelector(
     (state) => state.selectedContact.contact[0]
   );
 
+  const dispatch = useDispatch();
+
   const handleCloseChat = () => {
     leaveChatRoom();
+    dispatch(resetChat());
+    setSelectContact("");
     setChatOpen(false);
   };
 
   return (
     <StyledInfoBar>
       <div className="leftInnerContainer">
-        {!isLoading ? <InfoBarUser selectedContact={selectedContact} /> : ""}
+        {!isLoading ? (
+          <InfoBarUser selectedContact={selectedContact} />
+        ) : (
+          <>
+            <Placeholder xs={6} animation="glow" />
+          </>
+        )}
       </div>
       <div className="rightInnerContainer">
         <FontAwesomeIcon

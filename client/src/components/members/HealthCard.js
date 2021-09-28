@@ -1,18 +1,41 @@
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { editRequestOfferStatus } from "../../actions/requestActions";
+import { createChat } from "../../actions/chatActions";
 //styling
 import { Card, Badge, Button, Accordion } from "react-bootstrap";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserCircle,
+  faCheck,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
-//individual offer items
 const HealthCard = ({ profile }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { selectedRequest } = useSelector((state) => state.requests);
 
   const handleBackButton = () => {
-    history.push("/co-health/profile");
+    history.push("/co-health/profile");  
+  };
+
+  const handleCheckClick = (e) => {
+    e.preventDefault();
+    const body = {
+      status: "offer accepted",
+    };
+    dispatch(editRequestOfferStatus(offer._id, body));
+    dispatch(createChat(offer._id));
+  };
+
+  const handleCloseClick = (e) => {
+    e.preventDefault();
+    const body = {
+      status: "offer declined",
+    };
+    dispatch(editRequestOfferStatus(offer._id, body));
   };
 
   const offer = profile[0].offers.find(
@@ -40,9 +63,9 @@ const HealthCard = ({ profile }) => {
 
         <Card.Body className="body">
           <Card.Title>
-            {profile[0].name.firstName}
+            {profile[0].name.firstName ? profile[0].name.firstName : ""}
             {""}
-            {profile[0].name.lastName}
+            {profile[0].name.lastName ? profile[0].name.lastName : ""}
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted subtitle">
             {profile[0].credentials.license}
@@ -56,17 +79,36 @@ const HealthCard = ({ profile }) => {
           <Card.Text>
             {/* <br></br> */}
             <p>
-              <strong>Bio:</strong> This is a sample bio. I am a nurse at Duke
-              hospital specializing in oncology. I have lived in this community
-              for 10 years and am happy to help.
+              <strong>Bio:</strong> {profile[0].bio ? profile[0].bio : ""}
             </p>
             <hr></hr>
-            {/* <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
-                <Accordion.Header>Offer</Accordion.Header>
-                <Accordion.Body>{offer.text}</Accordion.Body>
+                <Accordion.Header>Current Offer</Accordion.Header>
+                <Accordion.Body>
+                  <StyledOffer>
+                    <p>{offer.text}</p>
+                    {offer.status === "offer accepted" ? (
+                      ""
+                    ) : (
+                      <>
+                        {" "}
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="icon-check"
+                          onClick={handleCheckClick}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTimes}
+                          className="icon-close"
+                          onClick={handleCloseClick}
+                        />
+                      </>
+                    )}
+                  </StyledOffer>
+                </Accordion.Body>
               </Accordion.Item>
-            </Accordion> */}
+            </Accordion>
           </Card.Text>
         </Card.Body>
         <Card.Footer className="card-footer">
@@ -121,6 +163,16 @@ const StyledCard = styled.div`
       background-color: #ee977c;
       border: none;
     }
+  }
+`;
+
+const StyledOffer = styled.div`
+  .icon-check {
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+  .icon-close {
+    cursor: pointer;
   }
 `;
 

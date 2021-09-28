@@ -44,11 +44,12 @@ router.put("/settings/info", async (req, res) => {
       lastName: req.body.lastName || null,
     },
     avatar: req.body.avatar || null,
+    bio: req.body.bio || null,
     address: {
       street: req.body.street || null,
       city: req.body.city,
       state: req.body.state,
-      zipcode: req.body.zipCode || null,
+      zipcode: req.body.zipcode || null,
     },
     coordinates: {
       lat: req.body.lat,
@@ -65,7 +66,7 @@ router.put("/settings/info", async (req, res) => {
       .populate("requests")
       .select({ hash: 0, salt: 0 });
 
-    res.status(200).send(savedUser);  
+    res.status(200).send(savedUser);
   } catch (err) {
     return err;
   }
