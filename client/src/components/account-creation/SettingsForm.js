@@ -55,8 +55,6 @@ const SettingsForm = (props) => {
     }
   }, [dispatch, address]);
 
-  console.log(address);
-
   useEffect(() => {
     if (coordinates) {
       const body = {

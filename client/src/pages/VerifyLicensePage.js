@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import HealthcareLicenseForm from "../components/account-creation/HealthcareLiscenceForm";
-import VerificationStatusAlert from "../components/account-creation/VerificationStatusAlert";
+import VerificationStatusAlert from "../components/license-verification/VerificationStatusAlert";
 //style
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
