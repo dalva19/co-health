@@ -5,6 +5,7 @@ import {
 
 const DEFAULT_STATE = {
   requests: [],
+  count: null,
   isLoading: true,
 };
 
@@ -13,7 +14,8 @@ const communityRequestsReducer = (state = DEFAULT_STATE, action) => {
     case FETCH_COMMUNITY_REQUESTS:
       return {
         ...state,
-        requests: action.payload,
+        requests: action.payload.requests,
+        count: action.payload.count,
         isLoading: false,
       };
     case RESET_COMMUNITY_REQUESTS:

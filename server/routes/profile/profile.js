@@ -17,14 +17,14 @@ router.get("/", async (req, res) => {
 
 //user can see other people's profiles
 router.get("/user/:id", async (req, res) => {
-  try {
+  try {  
     const user = await User.findById(req.params.id)
       .select({ hash: 0, salt: 0 })
       .populate("requests")
       .populate("offers");
 
     if (!user) {
-      res.status(404).send("No user found.");
+      return res.status(404).send("No user found.");
     }
 
     res.status(200).send(user);

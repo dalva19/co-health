@@ -18,7 +18,16 @@ export const getCommunityRequests = () => (dispatch) => {
     });
 };
 
-export const searchCommunityRequests = (communityName) => (dispatch) => {
+export const searchCommunityRequests = (search) => (dispatch) => {
+  axios.get(`/co-health/api/requests?search=${search}`).then((response) => {
+    dispatch({
+      type: FETCH_COMMUNITY_REQUESTS,
+      payload: response.data,
+    });
+  });
+};
+
+export const searchCommunity = (communityName) => (dispatch) => {
   axios
     .get(`/co-health/api/requests/${communityName}`)
     .then((response) => {

@@ -15,7 +15,6 @@ export const getOffers = (page) => (dispatch) => {
       withCredentials: true,
     })
     .then((response) => {
-      console.log(response);
       dispatch({
         type: FETCH_OFFERS,
         payload: response,

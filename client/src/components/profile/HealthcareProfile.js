@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 //components
 import Offers from "../offers/Offers";
 import OfferForm from "../offers/OfferForm";
+import SearchRequests from "./SearchRequests";
 import HealthcareLicenseForm from "../account-creation/HealthcareLiscenceForm";
 import PageNav from "../nav/PageNav";
 import SettingsForm from "../account-creation/SettingsForm";
@@ -35,9 +36,9 @@ const HealthCareProfile = () => {
   //   setModal("offer-modal");
   // };
 
-  const handleShowSettingsModal = () => {
-    setModal("settings-modal");
-  };
+  // const handleShowSettingsModal = () => {
+  //   setModal("settings-modal");
+  // };
 
   const handleClose = () => {
     setModal("close");
@@ -62,7 +63,7 @@ const HealthCareProfile = () => {
 
   return (
     <>
-      {!member[0].address.city ? (
+      {/* {!member[0].address.city ? (
         <StyledSetDefault>
           <Row>
             <Col md={{ span: 10, offset: 1 }}>
@@ -79,9 +80,10 @@ const HealthCareProfile = () => {
             </Col>
           </Row>
         </StyledSetDefault>
-      ) : (
+      ) : (  
         ""
-      )}
+      )} */}
+      <SearchRequests />
 
       {!isLoading ? (
         <>

@@ -3,16 +3,46 @@ const Request = require("../models/Request");
 const User = require("../models/User");
 
 //finds the requests in user's community
+//search request text for match
 router.get("/", async (req, res) => {
-  try {
-    const requests = await Request.find({
-      normalizedCommunity: req.user.address.city
-        .replace(/\s+/g, "")
-        .trim()
-        .toLowerCase(),
-    });
+  let query;
+  const search = req.query.search;
+  let normalizedSearch;
 
-    res.status(200).send(requests);
+  const normalizedUserCommunity = req.user.address.city
+    .replace(/\s+/g, "")
+    .trim()
+    .toLowerCase();
+
+  if (req.query.search) {
+    normalizedSearch = search.trim().toLowerCase();
+
+    if (normalizedSearch.replace(/\s+/g, "").split(/\W+/).length === 1) {
+      query = {
+        $text: { $search: `${normalizedSearch}` },
+        normalizedCommunity: normalizedUserCommunity,
+      };
+    } else {
+      query = {
+        $text: { $search: `\"${normalizedSearch}\"` },
+        normalizedCommunity: normalizedUserCommunity,
+      };
+    }
+  }
+
+  if (!req.query) {
+    query = { normalizedCommunity: normalizedUserCommunity };
+  }
+
+  try {
+    const requests = await Request.find(query);
+    const count = await Request.countDocuments(query);
+
+    if (!count) {
+      return res.status(404).send("Not found.");
+    }
+
+    res.status(200).send({ requests: requests, count: count });
   } catch (err) {
     res.status(400).send(err);
   }
