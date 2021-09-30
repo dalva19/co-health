@@ -222,7 +222,7 @@ const UserRegistration = () => {
       </RegisterContainer>
 
       <Route exact path="/co-health/register">
-        {registered ? <Redirect to="/co-health/login" /> : ""}
+        {registered ? <Redirect to="/login" /> : ""}
       </Route>
     </>
   );

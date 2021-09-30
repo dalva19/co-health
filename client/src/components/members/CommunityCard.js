@@ -39,7 +39,8 @@ const CommunityCard = ({ profile }) => {
 
           <Card.Body className="body">
             <Card.Title>
-              {profile[0].name.firstName ? profile[0].name.firstName : ""}{" "}
+              {profile[0].name.firstName ? profile[0].name.firstName : ""}
+              {"  "}
               {profile[0].name.lastName ? profile[0].name.lastName : ""}
             </Card.Title>
             <Card.Text>
@@ -65,7 +66,7 @@ const CommunityCard = ({ profile }) => {
 
 const StyledCard = styled.div`
   margin-top: 2rem;
-  padding-left: 25rem;
+  padding-left: 30rem;
   .card {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   }

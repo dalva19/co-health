@@ -50,7 +50,7 @@ const HealthCareProfile = () => {
     if (credentials.verified) {
       dispatch(getCommunityRequests());
     } else {
-      history.push("/co-health/verify-license");
+      history.push("/verify-license");
     }
   }, [dispatch, credentials.verified, history]);
 
