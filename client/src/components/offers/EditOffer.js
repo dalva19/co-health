@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editOffer } from "../../actions/offerActions";
+import { validFields } from "../../utilities/utilities";
 //style
 import { Button, Form, Modal } from "react-bootstrap";
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
@@ -8,16 +9,22 @@ import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 const EditOffer = (props) => {
   //state
   const [editText, setEditText] = useState(props.offer.text);
+  const [errors, setErrors] = useState("");
 
   const dispatch = useDispatch();
 
   //helper functions
-  //FORM VALIDATION FOR EMPTY FIELDS
-  const handleSubmitButton = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    const offerId = props.offer._id;
-    const body = { text: editText };
-    dispatch(editOffer(offerId, body));
+
+    if (validFields({ editText }, setErrors)) {
+      const offerId = props.offer._id;
+      const body = { text: editText };
+      dispatch(editOffer(offerId, body));
+      setEditText("");
+    } else {
+      console.log(errors);
+    }
   };
 
   return (
@@ -29,23 +36,18 @@ const EditOffer = (props) => {
           </Modal.Header>
         </StyledHeader>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formBasicStateAddress">
-              {/* <Form.Label>Text</Form.Label> */}
               <Form.Control
                 as="textarea"
                 placeholder="Text"
                 value={editText}
+                required
                 onChange={(e) => setEditText(e.target.value)}
               />
             </Form.Group>
             <StyledButton>
-              <Button
-                className="button"
-                // variant="outline-dark"
-                type="submit"
-                onClick={handleSubmitButton}
-              >
+              <Button className="button" type="submit">
                 Save changes
               </Button>
             </StyledButton>

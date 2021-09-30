@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editRequest, requestLoading } from "../../actions/requestActions";
+import { validFields } from "../../utilities/utilities";
 import styled from "styled-components";
 import { Button, Form, Modal } from "react-bootstrap";
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
@@ -8,17 +9,22 @@ import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 const EditRequest = (props) => {
   //state
   const [editText, setEditText] = useState(props.request.text);
+  const [errors, setErrors] = useState("");
 
   const dispatch = useDispatch();
 
   //helper functions
   const handleSubmitButton = (e) => {
     e.preventDefault();
-    const requestId = props.request._id;
-    const body = { text: editText };
-    dispatch(requestLoading());
-    dispatch(editRequest(requestId, body));
-    setEditText("");
+    if (validFields({ editText }, setErrors)) {
+      const requestId = props.request._id;
+      const body = { text: editText };
+      dispatch(requestLoading());
+      dispatch(editRequest(requestId, body));
+      setEditText("");
+    } else {
+      console.log(errors);
+    }
   };
 
   return (
@@ -38,6 +44,7 @@ const EditRequest = (props) => {
                   type="text"
                   placeholder="Text"
                   value={editText}
+                  required
                   onChange={(e) => setEditText(e.target.value)}
                 />
               </Form.Group>

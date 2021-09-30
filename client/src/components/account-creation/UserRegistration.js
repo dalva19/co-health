@@ -3,6 +3,7 @@ import { Redirect, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCoordinatesFromAddress } from "../../actions/coordinatesAction";
 import { registerUser } from "../../actions/registerActions";
+import { validFields } from "../../utilities/utilities";
 //style
 import styled from "styled-components";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
@@ -24,9 +25,11 @@ const UserRegistration = () => {
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [address, setAddress] = useState("");
+  const [errors, setErrors] = useState({});
 
   //helper functions
-  const splitStreetName = () => {
+
+  const transformStreetName = () => {
     const address = `${street} ${city} ${state} ${zip}`;
     const addressSplit = address.split(" ");
     const addressJoin = addressSplit.join("+,");
@@ -37,9 +40,26 @@ const UserRegistration = () => {
     setProfileType(e.target.value);
   };
 
-  const handleSubmitButton = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    splitStreetName();
+
+    if (
+      validFields(
+        {
+          profileType,
+          username,
+          password,
+          email,
+          street,
+          city,
+          state,
+          zip,
+        },
+        setErrors
+      )
+    ) {
+      transformStreetName();
+    }
   };
 
   useEffect(() => {
@@ -77,19 +97,6 @@ const UserRegistration = () => {
     password,
   ]);
 
-  // const handleSubmitButton = (e) => {
-  //   e.preventDefault();
-
-  //   const body = {
-  //     username: username,
-  //     password: password,
-  //     email: email,
-  //     profileType: profileType,
-  //   };
-
-  //   dispatch(registerUser(body));
-  // };
-
   return (
     <>
       <RegisterContainer>
@@ -98,7 +105,7 @@ const UserRegistration = () => {
             <Col md={{ span: 4, offset: 4 }}>
               <h2>Create Profile</h2>
               <hr></hr>
-              <Form>
+              <Form onSubmit={handleFormSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Profile Type </Form.Label>
                   <Form.Select
@@ -119,8 +126,10 @@ const UserRegistration = () => {
                     type="text"
                     placeholder="Username"
                     value={username}
+                    required
                     onChange={(e) => setUsername(e.target.value)}
                   />
+                  {errors.username ? <p>{errors.username?.message}</p> : ""}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -129,8 +138,10 @@ const UserRegistration = () => {
                     type="password"
                     placeholder="Password"
                     value={password}
+                    required
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  {errors.password ? <p>{errors.password.message}</p> : ""}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -139,8 +150,10 @@ const UserRegistration = () => {
                     type="email"
                     placeholder="Enter email"
                     value={email}
+                    required
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  {errors.email ? <p>{errors.email?.message}</p> : ""}
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                   </Form.Text>
@@ -156,8 +169,10 @@ const UserRegistration = () => {
                     type="text"
                     placeholder="Street"
                     value={street}
+                    required
                     onChange={(e) => setStreet(e.target.value)}
                   />
+                  {errors.street ? <p>{errors.street?.message}</p> : ""}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicCityAddress">
@@ -166,8 +181,10 @@ const UserRegistration = () => {
                     type="text"
                     placeholder="City"
                     value={city}
+                    required
                     onChange={(e) => setCity(e.target.value)}
                   />
+                  {errors.city ? <p>{errors.city?.message}</p> : ""}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicStateAddress">
@@ -176,8 +193,10 @@ const UserRegistration = () => {
                     type="text"
                     placeholder="State"
                     value={state}
+                    required
                     onChange={(e) => setState(e.target.value)}
                   />
+                  {errors.state ? <p>{errors.state?.message}</p> : ""}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicZipAddress">
@@ -188,14 +207,11 @@ const UserRegistration = () => {
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
                   />
+                  {errors.zip ? <p>{errors.zip?.message}</p> : ""}
                 </Form.Group>
 
                 <StyledButton>
-                  <Button
-                    className="button"
-                    type="submit"
-                    onClick={handleSubmitButton}
-                  >
+                  <Button className="button" type="submit">
                     Submit
                   </Button>
                 </StyledButton>
@@ -214,6 +230,11 @@ const UserRegistration = () => {
 
 const RegisterContainer = styled.div`
   padding-top: 5vh;
+  p {
+    color: red;
+    font-size: 15px;
+    font-style: italic;
+  }
 `;
 
 export default UserRegistration;

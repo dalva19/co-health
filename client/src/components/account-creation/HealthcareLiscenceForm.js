@@ -5,6 +5,7 @@ import {
   getMemberProfile,
 } from "../../actions/memberActions";
 import { getLicense, verifyLicense } from "../../actions/licenseActions";
+import { validFields } from "../../utilities/utilities";
 //style
 import { Button, Form, Modal } from "react-bootstrap";
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
@@ -14,24 +15,31 @@ const HealthcareLicenseForm = (props) => {
   const { name } = useSelector((state) => state.member.member[0]);
   const { isLoading } = useSelector((state) => state.license);
   const license = useSelector((state) => state.license.license[0]);
-
-  //state
   const [firstName, setFirstName] = useState(name ? name.firstName : "");
   const [lastName, setLastName] = useState(name ? name.lastName : "");
   const [licenseType, setLicenseType] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const handleSubmitButton = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const body = {
-      name: `${firstName}${lastName}`,
-      licenseType: licenseType,
-      licenseNumber: licenseNumber,
-    };
-
-    dispatch(getLicense(body));
-    dispatch(updateProfileLicense(body));
+    if (
+      validFields(
+        { firstName, lastName, licenseType, licenseNumber },
+        setErrors
+      )
+    ) {
+      const body = {
+        name: `${firstName}${lastName}`,
+        licenseType: licenseType,
+        licenseNumber: licenseNumber,
+      };
+      dispatch(getLicense(body));
+      dispatch(updateProfileLicense(body));
+    } else {
+      console.log(errors);
+    }
   };
 
   useEffect(() => {
@@ -53,13 +61,14 @@ const HealthcareLicenseForm = (props) => {
           </Modal.Header>
         </StyledHeader>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="First Name"
                 value={firstName}
+                required
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </Form.Group>
@@ -70,6 +79,7 @@ const HealthcareLicenseForm = (props) => {
                 type="text"
                 placeholder="Last Name"
                 value={lastName}
+                required
                 onChange={(e) => setLastName(e.target.value)}
               />
             </Form.Group>
@@ -99,16 +109,12 @@ const HealthcareLicenseForm = (props) => {
                 type="text"
                 placeholder="State"
                 value={licenseNumber}
+                required
                 onChange={(e) => setLicenseNumber(e.target.value)}
               />
             </Form.Group>
             <StyledButton>
-              <Button
-                className="button"
-                variant="primary"
-                type="submit"
-                onClick={handleSubmitButton}
-              >
+              <Button className="button" variant="primary" type="submit">
                 Submit
               </Button>
             </StyledButton>

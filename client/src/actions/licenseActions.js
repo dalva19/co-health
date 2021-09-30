@@ -22,7 +22,6 @@ export const getLicense = (body) => (dispatch) => {
 };
 
 export const verifyLicense = (body) => (dispatch) => {
-  console.log(body);
   axios
     .put(`/co-health/api/license/verify`, body)
     .then((response) => {

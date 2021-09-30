@@ -7,6 +7,7 @@ import {
   resetCoordinates,
 } from "../../actions/coordinatesAction";
 import { updateProfileSettings } from "../../actions/memberActions";
+import { validFields } from "../../utilities/utilities";
 //style
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
 import styled from "styled-components";
@@ -40,9 +41,10 @@ const SettingsForm = (props) => {
   );
 
   const [address, setAddress] = useState("");
+  const [errors, setErrors] = useState("");
 
   //helper functions
-  const splitStreetName = () => {
+  const transformStreetName = () => {
     const address = `${street} ${city} ${state} ${zip}`;
     const addressSplit = address.split(" ");
     const addressJoin = addressSplit.join("+,");
@@ -85,9 +87,11 @@ const SettingsForm = (props) => {
     avatar,
   ]);
 
-  const handleSubmitButton = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    splitStreetName();
+    if (validFields({ street, city, state, zip }, setErrors)) {
+      transformStreetName();
+    }
   };
 
   return (
@@ -99,7 +103,7 @@ const SettingsForm = (props) => {
           </Modal.Header>
         </StyledHeader>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Label>Profile Pic</Form.Label>
             <StyledProfilePic>
               <div className="avatar-container">
@@ -145,6 +149,7 @@ const SettingsForm = (props) => {
                 type="text"
                 placeholder="Street"
                 value={street}
+                required
                 onChange={(e) => setStreet(e.target.value)}
               />
             </Form.Group>
@@ -155,6 +160,7 @@ const SettingsForm = (props) => {
                 type="text"
                 placeholder="City"
                 value={city}
+                required
                 onChange={(e) => setCity(e.target.value)}
               />
             </Form.Group>
@@ -165,6 +171,7 @@ const SettingsForm = (props) => {
                 type="text"
                 placeholder="State"
                 value={state}
+                required
                 onChange={(e) => setState(e.target.value)}
               />
             </Form.Group>
@@ -175,15 +182,12 @@ const SettingsForm = (props) => {
                 type="text"
                 placeholder="Zip Code"
                 value={zip}
+                required
                 onChange={(e) => setZip(e.target.value)}
               />
             </Form.Group>
             <StyledButton>
-              <Button
-                className="button"
-                type="submit"
-                onClick={handleSubmitButton}
-              >
+              <Button className="button" type="submit">
                 Submit
               </Button>
             </StyledButton>
