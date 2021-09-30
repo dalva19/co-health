@@ -6,26 +6,32 @@ import { Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { StyledButton } from "../../styles/styles";
+import { validFields } from "../../utilities/utilities";
 
 const Login = () => {
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
 
   const { loaded } = useSelector((state) => state.member);
 
-  const handleLoginSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const body = {
-      username: username,
-      password: password,
-    };
+    if (validFields({ username, password }, setErrors)) {
+      const body = {
+        username: username,
+        password: password,
+      };
 
-    dispatch(login(body));
-    setUsername("");
-    setPassword("");
+      dispatch(login(body));
+      setUsername("");
+      setPassword("");
+    } else {
+      console.log(errors);
+    }
   };
 
   return (
@@ -36,13 +42,14 @@ const Login = () => {
             <Col md={{ span: 4, offset: 4 }}>
               <h2>Login</h2>
               <hr></hr>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicUsername">
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Username"
                     value={username}
+                    required
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 </Form.Group>
@@ -53,15 +60,12 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                     value={password}
+                    required
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
                 <StyledButton>
-                  <Button
-                    className="button"
-                    type="submit"
-                    onClick={handleLoginSubmit}
-                  >
+                  <Button className="button" type="submit">
                     Submit
                   </Button>
                 </StyledButton>

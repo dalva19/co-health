@@ -1,4 +1,5 @@
 import _ from "lodash";
+
 export const validFields = (input, setErrors) => {
   const errorMessages = _.reduce(
     input,

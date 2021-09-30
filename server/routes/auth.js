@@ -7,8 +7,6 @@ const localLogin = require("../services/passport");
 
 //creates new user
 router.post("/register", async (req, res) => {
-  //validation with Joi??
-
   if (!req.body.username || !req.body.password) {
     return res
       .status(422)

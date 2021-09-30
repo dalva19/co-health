@@ -41,7 +41,8 @@ const SearchRequests = () => {
 };
 
 const StyledSearch = styled.div`
-  margin-top: 5rem;
+  margin-top: 10rem;
+  height: 30vh;
   .search-title {
     padding-left: 10rem;
     color: #3a2d49;
