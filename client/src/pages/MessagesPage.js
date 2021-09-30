@@ -5,7 +5,7 @@ import NavigationTabs from "../components/nav/NavigationTabs";
 const MessagesPage = ({ socketRef }) => {
   return (
     <>
-      <NavigationTabs />
+      <NavigationTabs  defaultActiveKey="/profile/messages" />
       <Chat socketRef={socketRef} />
     </>
   );

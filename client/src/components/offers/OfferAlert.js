@@ -64,34 +64,36 @@ const OfferAlert = ({ offer, request }) => {
       )}
 
       {offer.status === "pending" ? (
-        <Alert variant="warning" className="offer-alert">
-          <Alert.Heading
-            className="alert-header-2"
-            value={offer._id}
-            id={offer.user}
-            onClick={handleUsernameClick}
-          >
-            {offer.username}
-          </Alert.Heading>
-          <p>{offer.text}</p>
-          <hr />
-          <div className="d-flex justify-content-end">
-            <Button
-              variant="outline-success"
-              onClick={handleAcceptButton}
+        <StyledAlert>
+          <Alert variant="warning" className="offer-alert">
+            <Alert.Heading
+              className="alert-header"
               value={offer._id}
+              id={offer.user}
+              onClick={handleUsernameClick}
             >
-              Accept
-            </Button>
-            <Button
-              variant="outline-danger"
-              onClick={handleDeclineButton}
-              value={offer._id}
-            >
-              Decline
-            </Button>
-          </div>
-        </Alert>
+              {offer.username}
+            </Alert.Heading>
+            <p>{offer.text}</p>
+            <hr />
+            <div className="d-flex justify-content-end">
+              <Button
+                variant="outline-success"
+                onClick={handleAcceptButton}
+                value={offer._id}
+              >
+                Accept
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={handleDeclineButton}
+                value={offer._id}
+              >
+                Decline
+              </Button>
+            </div>
+          </Alert>
+        </StyledAlert>
       ) : (
         ""
       )}
@@ -102,6 +104,9 @@ const OfferAlert = ({ offer, request }) => {
 const StyledAlert = styled.div`
   .alert-header {
     cursor: pointer;
+  }
+  p {
+    width: 15rem;
   }
 `;
 

@@ -11,7 +11,7 @@ const SettingsPage = () => {
     <>
       {member ? (
         <>
-          <NavigationTabs />
+          <NavigationTabs defaultActiveKey="/profile/settings" />
           <Settings />
         </>
       ) : (
