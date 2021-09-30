@@ -27,7 +27,7 @@ const VerifyLicensePage = () => {
   const history = useHistory();
 
   const handleProfilePageButton = () => {
-    history.push("/co-health/profile");
+    history.push("/profile");
   };
 
   return (

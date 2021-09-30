@@ -11,10 +11,10 @@ const NavigationTabs = (props) => {
             className="tab-link"
             activeClassName="tab-link-active"
             exact
-            to="/co-health/profile"
+            to="/profile"
           >
             <Nav.Item>
-              <Nav.Link href="/co-health/profile">Home</Nav.Link>
+              <Nav.Link href="/profile">Home</Nav.Link>
             </Nav.Item>
           </LinkContainer>
 
@@ -22,10 +22,10 @@ const NavigationTabs = (props) => {
             className="tab-link"
             activeClassName="tab-link-active"
             exact
-            to="/co-health/profile/settings"
+            to="/profile/settings"
           >
             <Nav.Item>
-              <Nav.Link href="/co-health/profile/settings">Settings</Nav.Link>
+              <Nav.Link href="/profile/settings">Settings</Nav.Link>
             </Nav.Item>
           </LinkContainer>
 
@@ -33,10 +33,10 @@ const NavigationTabs = (props) => {
             className="tab-link"
             activeClassName="tab-link-active"
             exact
-            to="/co-health/profile/messages"
+            to="/profile/messages"
           >
             <Nav.Item>
-              <Nav.Link href="/co-health/profile/messages">Messages</Nav.Link>
+              <Nav.Link href="/profile/messages">Messages</Nav.Link>
             </Nav.Item>
           </LinkContainer>
         </Nav>

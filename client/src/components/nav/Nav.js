@@ -63,12 +63,12 @@ const Nav = ({ socketRef }) => {
             <div>
               <ul className="links">
                 <li>
-                  <NavLink to="/co-health/register">
+                  <NavLink to="/register">
                     <h4>sign up</h4>
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/co-health/login">
+                  <NavLink to="/login">
                     <h4>login</h4>
                   </NavLink>
                 </li>

@@ -46,33 +46,33 @@ const App = () => {
       <Nav socketRef={socketRef} />
       <Switch>
         {loaded ? (
-          <Route exact path="/co-health/">
-            <Redirect to="/co-health/profile" />
+          <Route exact path="/">
+            <Redirect to="/profile" />
           </Route>
         ) : (
           ""
         )}
-        <Route exact path="/co-health">
+        <Route exact path="/">
           <HomePage />
         </Route>
-        <Route exact path="/co-health/login">
+        <Route exact path="/login">
           <LoginPage />
         </Route>
-        <Route exact path="/co-health/register">
+        <Route exact path="/register">
           <RegistrationPage />
         </Route>
-        <Route exact path="/co-health/profile">
+        <Route exact path="/profile">
           <MemberPage />
         </Route>
 
-        <Route exact path="/co-health/profile/settings">
+        <Route exact path="/profile/settings">
           <SettingsPage />
         </Route>
-        <Route exact path="/co-health/profile/messages">
+        <Route exact path="/profile/messages">
           <MessagesPage socketRef={socketRef} />
         </Route>
         <Route
-          path="/co-health/profile/:userId"
+          path="/profile/:userId"
           render={(routerProps) => (
             <PublicProfile
               selectedProfileId={routerProps.match.params.userId}
@@ -81,13 +81,13 @@ const App = () => {
         />
         <Route
           exact
-          path="/co-health/verify-license"
+          path="/verify-license"
           render={() => <VerifyLicensePage />}
         />
 
-        <Route exact path="/">
+        {/* <Route exact path="/">
           <Redirect to="/co-health" />
-        </Route>
+        </Route> */}
       </Switch>
     </>
   );

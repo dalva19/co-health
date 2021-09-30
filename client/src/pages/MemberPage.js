@@ -16,7 +16,7 @@ const MemberPage = () => {
         </>
       ) : (
         <>
-          <Route exact path="/co-health/profile">
+          <Route exact path="/profile">
             <Redirect to="/" />
           </Route>
         </>
