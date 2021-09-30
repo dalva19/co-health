@@ -75,8 +75,8 @@ const Login = () => {
         </Container>
       </LoginContainer>
 
-      <Route exact path="/co-health/login">
-        {loaded ? <Redirect to="/co-health/profile" /> : ""}
+      <Route exact path="/login">
+        {loaded ? <Redirect to="/profile" /> : ""}
       </Route>
     </>
   );

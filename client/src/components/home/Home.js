@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <>
-      {loaded ? <NavigationTabs defaultActiveKey="/co-health/" /> : ""}
+      {loaded ? <NavigationTabs defaultActiveKey="/" /> : ""}
       <Page>
         <Description>
           <TitleContainer>

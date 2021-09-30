@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import MemberProfile from "../components/profile/MemberProfile";
@@ -11,7 +10,7 @@ const MemberPage = () => {
     <>
       {loaded ? (
         <>
-          <NavigationTabs defaultActiveKey="/co-health/profile" />
+          <NavigationTabs defaultActiveKey="/profile" />
           <MemberProfile />
         </>
       ) : (
