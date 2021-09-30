@@ -6,28 +6,25 @@ const Request = require("../../models/Request");
 const ObjectId = require("mongoose").Types.ObjectId;
 // mongoose.set("useFindAndModify", false);
 
-//get all offer you've made
+//get all offer user made
 router.get("/", async (req, res) => {
   const perPage = 4;
   const page = req.query.page || 1;
-  const query = { user: req.user._id };
+  const query = { user: req.user };
   let data = {};
   let user;
 
-  if (!req.user.credentials.verified) {
+  try {
+    user = await User.findById(req.user);
+  } catch (err) {
+    return err;
+  }
+
+  if (!user.credentials.verified) {
     return res.status(401).send("You must have a verified liscence.");
   }
 
-  //finds the offers based on user from Offer collection and populates corresponding requests
   try {
-    // const offers = await Offer.find({
-    //   user: req.user._id,
-    // })
-    //   .sort({ date: -1 })
-    //   .populate("request");
-
-    // res.status(200).send(offers);
-
     await Offer.find(query)
       .sort({ date: -1 })
       .skip(perPage * page - perPage)
@@ -52,22 +49,6 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res.status(400).send(err);
   }
-
-  // try {
-  //   await User.findById({ _id: req.user._id })
-  //     .populate("offers")
-  //     .exec((err, user) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         res.send({
-  //           offers: user.offers || null,
-  //         });
-  //       }
-  //     });
-  // } catch (err) {
-  //   res.status(400).send(err);
-  // }
 });
 
 router.get("/:offerId", async (req, res) => {
@@ -85,32 +66,37 @@ router.get("/:offerId", async (req, res) => {
 
 //can only make an offer to a specific request
 router.post("/:requestId", async (req, res) => {
-  //need to add validation
-
   const healthCareMember = "healthcare member";
   let request;
   let user;
 
+  try {
+    user = await User.findById(req.user);
+    request = await Request.findById({ _id: req.params.requestId });
+  } catch (err) {
+    return err;
+  }
+
   if (
-    req.user.profileType.replace(/\s+/g, "").trim().toLowerCase() ===
+    user.profileType.replace(/\s+/g, "").trim().toLowerCase() ===
     healthCareMember.replace(/\s+/g, "").trim().toLowerCase()
   ) {
-    if (!req.user.credentials.verified) {
+    if (!user.credentials.verified) {
       return res
         .status(401)
         .send("You must have a verified liscence to make an offer.");
     }
 
-    try {
-      user = await User.findById({ _id: req.user._id });
-      request = await Request.findById({ _id: req.params.requestId });
-    } catch (err) {
-      return err;
-    }
+    // try {
+    //   user = await User.findById({ _id: req.user._id });
+    //   request = await Request.findById({ _id: req.params.requestId });
+    // } catch (err) {
+    //   return err;
+    // }
 
     const offer = new Offer({
       text: req.body.text,
-      username: req.user.username,
+      username: user.username,
       user: user._id,
       request: request._id,
       status: "pending",
@@ -161,11 +147,14 @@ router.put("/edit/:offerID", async (req, res) => {
 
 router.delete("/:offerID", async (req, res) => {
   const offer = await Offer.findById(req.params.offerID);
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user);
   const requestID = offer.request;
 
   if (!offer) {
     return res.status(404).send("Offer not found");
+  }
+  if (!user) {
+    return res.status(404).send("User not found");
   }
 
   try {

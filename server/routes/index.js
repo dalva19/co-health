@@ -9,7 +9,6 @@ const licenseRoutes = require("./license");
 
 const authenticateRequest = function (req, res, next) {
   if (!req.isAuthenticated()) {
-    // Redirect to login
     res.status(403).send({ msg: "Not authenticated." });
   } else {
     next();

@@ -8,8 +8,13 @@ router.get("/", async (req, res) => {
   let query;
   const search = req.query.search;
   let normalizedSearch;
+  const user = await User.findById(req.user);
 
-  const normalizedUserCommunity = req.user.address.city
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  const normalizedUserCommunity = user.address.city
     .replace(/\s+/g, "")
     .trim()
     .toLowerCase();

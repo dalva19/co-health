@@ -49,7 +49,7 @@ router.put("/verify", async (req, res) => {
   }
 
   try {
-    const user = await User.findByIdAndUpdate(req.user._id, update, {
+    const user = await User.findByIdAndUpdate(req.user, update, {
       new: true,
     }).select({ hash: 0, salt: 0 });
     res.status(200).send({ user: user, verifiedLicense: user.credentials });

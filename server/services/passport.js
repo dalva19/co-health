@@ -8,7 +8,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((userID, done) => {
   User.findById(userID, function (err, user) {
-    done(null, user);
+    done(null, user._id);
   });
 });
 
@@ -26,7 +26,7 @@ passport.use(
       if (user) {
         // we already have a record with the given profile ID
         if (user.validPassword(password)) {
-          return done(null, user);
+          return done(null, user._id);
         } else {
           return done(false);
         }

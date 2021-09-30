@@ -4,16 +4,12 @@ const Request = require("../../models/Request");
 const User = require("../../models/User");
 const Offer = require("../../models/Offer");
 const Chat = require("../../models/Chat");
-const ObjectId = require("mongoose").Types.ObjectId;
-// mongoose.set("useFindAndModify", false);
-
-//need to add validation
 
 //finds the requests based on user from Request collection and populates corresponding offers
 router.get("/", async (req, res) => {
   const perPage = 4;
   const page = req.query.page || 1;
-  const query = { user: req.user._id };
+  const query = { user: req.user };
   let data = {};
 
   try {
@@ -58,25 +54,29 @@ router.get("/:requestId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const communityMember = "community member";
+  let user;
+  user = await User.findById(req.user)
+    .populate("requests")
+    .select({ hash: 0, salt: 0 });
+
+  if (!user) {
+    return res.status(404).send("Not found.");
+  }
 
   if (!req.body.text) {
     return res.status(400).send("Bad request");
   }
 
-  if (!req.user.address.city) {
+  if (!user.address.city) {
     return res
       .status(400)
       .send("User must have a default community to make requests.");
   }
 
   if (
-    req.user.profileType.replace(/\s+/g, "").trim().toLowerCase() ===
+    user.profileType.replace(/\s+/g, "").trim().toLowerCase() ===
     communityMember.replace(/\s+/g, "").trim().toLowerCase()
   ) {
-    const user = await User.findById(req.user._id)
-      .populate("requests")
-      .select({ hash: 0 });
-
     const request = new Request({
       text: req.body.text,
       username: user.username,
@@ -87,7 +87,7 @@ router.post("/", async (req, res) => {
         .replace(/\s+/g, "")
         .trim()
         .toLowerCase(),
-      coordinates: req.user.coordinates,
+      coordinates: user.coordinates,
     });
 
     try {
@@ -128,27 +128,14 @@ router.put("/edit/:request", async (req, res) => {
 });
 
 //PUT to edit offer status in Offer and Request
-//made by the community member
-//creates contact
-//creates chat
-//think about separating there into different routes???
 router.put("/edit/offer/status/:offerID", async (req, res) => {
   try {
     const offer = await Offer.findById(req.params.offerID);
     const request = await Request.findById(offer.request);
-    const communityUser = await User.findById(request.user).select({
-      hash: 0,
-      salt: 0,
-    });
-    const healthcareUser = await User.findById(offer.user).select({
-      hash: 0,
-      salt: 0,
-    });
     const offerAccepted = "offer accepted";
     const offerDeclined = "offer declined";
     let offerUpdate;
     let requestUpdate;
-    // let chat;
 
     //return error if already accepted
     if (
@@ -169,45 +156,6 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
       requestUpdate = {
         $set: { status: req.body.status, acceptedOffer: offer.id },
       };
-
-      //adds contact to users contact list if not already connected
-      //creates new Chat if users not already connected
-      // const existingCommunityContact = communityUser.contacts.find(
-      //   (contact) =>
-      //     contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
-      //     healthcareUser.username.replace(/\s+/g, "").trim().toLowerCase()
-      // );
-
-      // const existingHealthcareContact = healthcareUser.contacts.find(
-      //   (contact) =>
-      //     contact.username.replace(/\s+/g, "").trim().toLowerCase() ===
-      //     communityUser.username.replace(/\s+/g, "").trim().toLowerCase()
-      // );
-
-      // if (!existingCommunityContact && !existingHealthcareContact) {
-      //   const newCommunityContact = {
-      //     username: communityUser.username,
-      //     user: communityUser._id,
-      //   };
-
-      //   const newHealthcareContact = {
-      //     username: healthcareUser.username,
-      //     user: healthcareUser._id,
-      //   };
-
-      //   const newChat = new Chat({
-      //     communityMember: communityUser._id,
-      //     healthcareMember: healthcareUser._id,
-      //   });
-
-      //   communityUser.contacts.push(newHealthcareContact);
-      //   healthcareUser.contacts.push(newCommunityContact);
-
-      //   await communityUser.save();
-      //   await healthcareUser.save();
-
-      //   chat = newChat.save();
-      // }
     } else if (
       req.body.status.replace(/\s+/g, "").trim().toLowerCase() ===
       offerDeclined.replace(/\s+/g, "").trim().toLowerCase()
@@ -242,7 +190,7 @@ router.put("/edit/offer/status/:offerID", async (req, res) => {
 router.delete("/:request", async (req, res) => {
   try {
     const request = await Request.findById({ _id: req.params.request });
-    const user = await User.findById({ _id: req.user._id });
+    const user = await User.findById(req.user);
     const update = { $pull: { requests: request._id } };
     const offerUpdate = {
       $set: { status: "Request deleted. Offer not needed." },

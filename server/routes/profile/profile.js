@@ -4,10 +4,14 @@ const User = require("../../models/User");
 //routes on co-health/profile
 router.get("/", async (req, res) => {
   try {
-    const user = await User.findById(req.user._id)
+    const user = await User.findById(req.user)
       .populate("requests")
       .populate("offers")
       .select({ hash: 0, salt: 0 });
+
+    if (!user) {
+      return res.status(400).send("Not found.");
+    }
 
     res.status(200).send(user);
   } catch (err) {
@@ -17,7 +21,7 @@ router.get("/", async (req, res) => {
 
 //user can see other people's profiles
 router.get("/user/:id", async (req, res) => {
-  try {  
+  try {
     const user = await User.findById(req.params.id)
       .select({ hash: 0, salt: 0 })
       .populate("requests")
@@ -33,6 +37,7 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
+//makes changes to user profile
 router.put("/settings/info", async (req, res) => {
   if (!req.body.city || !req.body.state) {
     return res.status(400).send("City and state are required.");
@@ -57,7 +62,7 @@ router.put("/settings/info", async (req, res) => {
     },
   };
 
-  const query = { _id: req.user._id };
+  const query = { _id: req.user };
 
   try {
     const savedUser = await User.findOneAndUpdate(query, update, {
@@ -65,6 +70,10 @@ router.put("/settings/info", async (req, res) => {
     })
       .populate("requests")
       .select({ hash: 0, salt: 0 });
+
+    if (!savedUser) {
+      return res.status(400).send("Not found.");
+    }
 
     res.status(200).send(savedUser);
   } catch (err) {
@@ -83,7 +92,7 @@ router.put("/settings/license", async (req, res) => {
     },
   };
 
-  const query = { _id: req.user._id };
+  const query = { _id: req.user };
 
   try {
     const savedUser = await User.findOneAndUpdate(query, update, {
