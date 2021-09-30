@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 // import { useSelector } from "react-redux";
 //styling
-import { Card, Button} from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -11,13 +11,13 @@ const CommunityCard = ({ profile }) => {
   const history = useHistory();
   // const request = useSelector((state) => state.requests.selectedRequest);
   const handleBackButton = () => {
-    history.push("/co-health/profile");
+    history.push("/profile");
   };
 
   return (
     <>
       <StyledCard>
-        <Card style={{ width: "35rem", height: "35rem" }}>
+        <Card style={{ width: "30rem", height: "30rem" }}>
           <Card.Header className="card-header">
             <div className="avatar-container">
               {profile[0].avatar ? (

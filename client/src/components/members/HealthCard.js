@@ -18,7 +18,7 @@ const HealthCard = ({ profile }) => {
   const { selectedRequest } = useSelector((state) => state.requests);
 
   const handleBackButton = () => {
-    history.push("/co-health/profile");  
+    history.push("/profile");
   };
 
   const handleCheckClick = (e) => {
@@ -44,7 +44,7 @@ const HealthCard = ({ profile }) => {
 
   return (
     <StyledCard>
-      <Card style={{ width: "35rem", height: "35rem" }}>
+      <Card style={{ width: "30rem", height: "30rem" }}>
         <Card.Header className="card-header">
           <div className="avatar-container">
             {profile[0].avatar ? (

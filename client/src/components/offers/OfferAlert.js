@@ -36,7 +36,7 @@ const OfferAlert = ({ offer, request }) => {
     const userId = e.target.id;
     dispatch(getProfile(userId));
     dispatch(getRequest(request._id));
-    history.push(`/co-health/profile/${userId}`);
+    history.push(`/profile/${userId}`);
   };
 
   return (

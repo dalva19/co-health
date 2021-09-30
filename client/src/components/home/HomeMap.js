@@ -6,18 +6,18 @@ const HomeMap = () => {
 
   const markerDummyData = [
     {
-      username: "user1",
-      request: ["i need help getting my prescription", "test"],
+      username: "johnnyB",
+      request: ["i need help getting my prescription"],
       coordinates: { lat: 35.9132, lng: -79.0558 },
     },
     {
-      username: "user2",
-      request: ["i need help getting to my appt", "test"],
+      username: "dfj22",
+      request: ["i need help with a wound dressing change on my foot."],
       coordinates: { lat: 35.7915, lng: -78.7811 },
     },
     {
-      username: "user3",
-      request: ["i need help getting to my appt", "test"],
+      username: "plantGirl",
+      request: ["i need somone to sit with me for my chemo appointment"],
       coordinates: { lat: 35.8915, lng: -78.8811 },
     },
   ];

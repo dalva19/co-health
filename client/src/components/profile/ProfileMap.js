@@ -32,7 +32,7 @@ const ProfileMap = () => {
     //view public profile of community member
     const userId = e.target.id;
     dispatch(getProfile(userId));
-    history.push(`/co-health/profile/${userId}`);
+    history.push(`/profile/${userId}`);
   };
 
   return (
