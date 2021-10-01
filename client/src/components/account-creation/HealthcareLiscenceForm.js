@@ -19,6 +19,7 @@ const HealthcareLicenseForm = (props) => {
   const [lastName, setLastName] = useState(name ? name.lastName : "");
   const [licenseType, setLicenseType] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
+  const [state, setState] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleFormSubmit = (e) => {
@@ -107,10 +108,21 @@ const HealthcareLicenseForm = (props) => {
               <Form.Label>License Number</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="State"
+                placeholder="License Number"
                 value={licenseNumber}
                 required
                 onChange={(e) => setLicenseNumber(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicLicenseState">
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="State"
+                value={state}
+                required
+                onChange={(e) => setState(e.target.value)}
               />
             </Form.Group>
             <StyledButton>

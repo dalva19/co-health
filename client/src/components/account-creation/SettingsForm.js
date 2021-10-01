@@ -10,6 +10,8 @@ import { updateProfileSettings } from "../../actions/memberActions";
 import { validFields } from "../../utilities/utilities";
 //style
 import { StyledButton, StyledHeader, StyledFooter } from "../../styles/styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 const SettingsForm = (props) => {
@@ -107,7 +109,14 @@ const SettingsForm = (props) => {
             <Form.Label>Profile Pic</Form.Label>
             <StyledProfilePic>
               <div className="avatar-container">
-                <img className="user-pic" src={member.avatar} alt="Pic" />
+                {member.avatar ? (
+                  <img className="user-pic" src={member.avatar} alt="Pic" />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faUserCircle}
+                    className="icon fa-3x user"
+                  />
+                )}
               </div>
             </StyledProfilePic>
             <Avatar setAvatar={setAvatar} avatar={avatar} />
@@ -212,6 +221,9 @@ const StyledProfilePic = styled.div`
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
+  }
+  .user {
+    color: #ab417f;
   }
 `;
 

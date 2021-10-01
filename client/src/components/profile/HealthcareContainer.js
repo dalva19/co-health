@@ -15,37 +15,35 @@ const HealthcareContainer = () => {
 
   return (
     <>
-      <>
-        {coordinates ? (
-          <>
-            <div style={{ width: "100vw", height: "80vh" }}>
-              <WrappedProfileMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
-                loadingElement={<div style={{ height: "100%" }} />}
-                containerElement={<div style={{ height: "100%" }} />}
-                mapElement={<div style={{ height: "100%" }} />}
-              />
-            </div>
+      {coordinates ? (
+        <>
+          <div style={{ width: "100vw", height: "80vh" }}>
+            <WrappedProfileMap
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
+              loadingElement={<div style={{ height: "100%" }} />}
+              containerElement={<div style={{ height: "100%" }} />}
+              mapElement={<div style={{ height: "100%" }} />}
+            />
+          </div>
+          <HealthProfileContainer>
+            <HealthCareProfile />
+          </HealthProfileContainer>
+        </>
+      ) : (
+        <>
+          <div style={{ width: "100vw", height: "80vh" }}>
+            <WrappedMap
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
+              loadingElement={<div style={{ height: "100%" }} />}
+              containerElement={<div style={{ height: "100%" }} />}
+              mapElement={<div style={{ height: "100%" }} />}
+            />
             <HealthProfileContainer>
               <HealthCareProfile />
             </HealthProfileContainer>
-          </>
-        ) : (
-          <>
-            <div style={{ width: "100vw", height: "80vh" }}>
-              <WrappedMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAPS_JAVASCRIPT_API_KEY}`}
-                loadingElement={<div style={{ height: "100%" }} />}
-                containerElement={<div style={{ height: "100%" }} />}
-                mapElement={<div style={{ height: "100%" }} />}
-              />
-              <HealthProfileContainer>
-                <HealthCareProfile />
-              </HealthProfileContainer>
-            </div>
-          </>
-        )}
-      </>
+          </div>
+        </>
+      )}
     </>
   );
 };

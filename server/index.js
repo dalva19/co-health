@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const http = require("http");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
-require("dotenv/config");
+require("dotenv");
 const { urlencoded } = require("express");
 const passport = require("passport");
 const routes = require("./routes/index");
@@ -35,7 +35,6 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://127.0.0.1",
-    // "http://104.142.122.231",
   ],
   credentials: true,
   exposedHeaders: ["set-cookie"],

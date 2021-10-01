@@ -53,9 +53,9 @@ const HealthCard = ({ profile }) => {
               <>
                 <FontAwesomeIcon
                   icon={faUserCircle}
-                  className="icon fa-3x plus "
+                  className="icon fa-3x user "
                 />
-                <h2>{profile[0].username}</h2>
+                <h2 className="username">{profile[0].username}</h2>
               </>
             )}
           </div>
@@ -63,9 +63,9 @@ const HealthCard = ({ profile }) => {
 
         <Card.Body className="body">
           <Card.Title>
-            {profile[0].name.firstName ? profile[0].name.firstName : ""}
-            {""}
-            {profile[0].name.lastName ? profile[0].name.lastName : ""}
+            {profile[0].name.firstName && profile[0].name.lastName
+              ? `${profile[0].name.firstName} ${profile[0].name.lastName}`
+              : ""}
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted subtitle">
             {profile[0].credentials.license}
@@ -92,7 +92,6 @@ const HealthCard = ({ profile }) => {
                       ""
                     ) : (
                       <>
-                        {" "}
                         <FontAwesomeIcon
                           icon={faCheck}
                           className="icon-check"
@@ -130,13 +129,14 @@ const StyledCard = styled.div`
   .card-header {
     display: flex;
     align-items: center;
-  }
-  #accept {
-    background-color: #89b173;
-  }
-  .card-header {
     background-color: #ab417f;
-    color: white;
+    .username {
+      color: white;
+    }
+    .user {
+      margin-right: 0.5rem;
+      color: white;
+    }
     .avatar-container {
       height: 7vh;
       width: 7vh;
@@ -151,6 +151,9 @@ const StyledCard = styled.div`
       border-radius: 50%;
       margin-right: 1rem;
     }
+  }
+  .verification-badge {
+    margin-left: 0.5rem;
   }
   .card-footer {
     background-color: #ab417f;

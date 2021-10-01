@@ -29,7 +29,7 @@ const CommunityCard = ({ profile }) => {
                 <>
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    className="icon fa-3x plus "
+                    className="icon fa-3x user "
                   />
                   <h3>{profile[0].username}</h3>
                 </>
@@ -39,9 +39,9 @@ const CommunityCard = ({ profile }) => {
 
           <Card.Body className="body">
             <Card.Title>
-              {profile[0].name.firstName ? profile[0].name.firstName : ""}
-              {"  "}
-              {profile[0].name.lastName ? profile[0].name.lastName : ""}
+              {profile[0].name.firstName && profile[0].name.lastName
+                ? `${profile[0].name.firstName} ${profile[0].name.lastName}`
+                : ""}
             </Card.Title>
             <Card.Text>
               <strong>Community:</strong> {profile[0].address.city}
@@ -86,15 +86,14 @@ const StyledCard = styled.div`
       width: 100%;
       object-fit: cover;
       border-radius: 50%;
-      margin-right: 1rem;
+    }
+    .user {
+      margin-right: 0.5rem;
     }
   }
   .card-footer {
     background-color: #ab417f;
     color: white;
-    /* display: flex;
-    align-items: center;
-    justify-content: space-around; */
     cursor: pointer;
     .back-button {
       background-color: #ee977c;

@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
       healthcareMember: req.query.healthcareMember,
     });
 
-    if (!chat) {
+    if (chat.length === 0) {
       return res.status(404).send("No chats found");
     }
 

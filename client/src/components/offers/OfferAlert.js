@@ -91,6 +91,20 @@ const OfferAlert = ({ offer, request }) => {
               >
                 Decline
               </Button>
+              {/* 
+              <>
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className="icon-check fa-2x"
+                  onClick={handleAcceptButton}
+                  value={offer._id}
+                />
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  className="icon-close fa-2x"
+                  onClick={handleDeclineButton}
+                />
+              </> */}
             </div>
           </Alert>
         </StyledAlert>
@@ -108,6 +122,13 @@ const StyledAlert = styled.div`
   p {
     width: 15rem;
   }
+  /* .icon-check {
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+  .icon-close {
+    cursor: pointer;
+  } */
 `;
 
 export default OfferAlert;

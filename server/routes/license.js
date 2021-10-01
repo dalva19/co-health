@@ -23,7 +23,9 @@ router.get("/", async (req, res) => {
       licenseNumber: req.query.licenseNumber,
     });
 
-    if (!license) {
+    console.log(license);
+
+    if (license.length === 0) {
       return res.status(404).send("No license on file for that user");
     }
 

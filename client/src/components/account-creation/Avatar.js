@@ -2,6 +2,8 @@ import { useState } from "react";
 import ImageUploading from "react-images-uploading";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Avatar = ({ setAvatar }) => {
   const [images, setImages] = useState([]);
